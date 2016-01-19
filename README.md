@@ -1,3 +1,7 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+# WebDevSpring2016
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+Northeastern University | College of Computer and Information Science
+
+CS5610 - Web Development
+
+This repository contains the assignments and projects for the web development course
