@@ -1,0 +1,27 @@
+.form-horizontal .control-label {
+    text-align: left;
+}
+
+.glyphicon-plus {
+    font-size: 24px;
+}
+
+.glyphicon-ok {
+    font-size: 24px;
+}
+
+.glyphicon-remove {
+    font-size: 24px;
+}
+
+.glyphicon-pencil {
+    font-size: 24px;
+}
+
+.glyphicon-list-alt {
+    font-size: 24px;
+}
+
+.cs-hidden {
+    visibility: hidden;
+}
