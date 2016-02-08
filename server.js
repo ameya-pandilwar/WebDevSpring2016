@@ -15,4 +15,8 @@ app.get('/assignment', function(req, res){
    res.sendfile(public_folder + '/assignment/home.html');
 });
 
+app.get('/experiment', function(req, res){
+    res.sendfile(public_folder + '/experiment/main.html');
+});
+
 app.listen(port, ipaddress);
