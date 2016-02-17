@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Admin | Form Maker</title>
+    <title>Forms | Form Maker</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -18,8 +18,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/dashboard.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../../assignment/css/dashboard.css" rel="stylesheet">
+    <link href="../../assignment/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -33,51 +33,44 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1>Admin</h1>
-            <h3>Users</h3>
+            <h1>Forms</h1>
             <div class="table responsive">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#">Forms</a></li>
+                    <li role="presentation"><a href="fields.view.html">Fields</a></li>
+                </ul>
                 <table class="table table-striped">
                     <thead>
-                        <tr>
-                            <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Username</th>
-                            <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Password</th>
-                            <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Role</th>
-                            <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Action</th>
-                        </tr>
+                    <tr>
+                        <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Form Name</th>
+                        <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Action</th>
+                    </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="text" class="form-control" placeholder="username"/></td>
-                            <td><input type="password" class="form-control" placeholder="password"/></td>
-                            <td><input type="text" class="form-control" placeholder="role1, role2"/></td>
+                            <td><input type="text" placeholder="name"></td>
                             <td>
                                 <a href="#"><span class="glyphicon glyphicon-plus"></span></a>&emsp;
                                 <a href="#"><span class="glyphicon glyphicon-ok"></span></a>
                             </td>
                         </tr>
                         <tr>
-                            <td>alice</td>
-                            <td></td>
-                            <td>student</td>
+                            <td>Registration Form</td>
                             <td>
                                 <a href="#"><span class="glyphicon glyphicon-remove"></span></a>&emsp;
                                 <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
                             </td>
                         </tr>
                         <tr>
-                            <td>bob</td>
-                            <td></td>
-                            <td>faculty | admin</td>
+                            <td>Contact List</td>
                             <td>
                                 <a href="#"><span class="glyphicon glyphicon-remove"></span></a>&emsp;
                                 <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
                             </td>
                         </tr>
                         <tr>
-                            <td>charlie</td>
-                            <td></td>
-                            <td></td>
-                            <td class="no-wrap">
+                            <td>To Do List</td>
+                            <td>
                                 <a href="#"><span class="glyphicon glyphicon-remove"></span></a>&emsp;
                                 <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
                             </td>
