@@ -12,7 +12,7 @@ app.get('/hello', function(req, res){
 });
 
 app.get('/assignment', function(req, res){
-   res.sendfile(public_folder + '/assignment/home.html');
+   res.sendfile(public_folder + '/assignment/home.view.html');
 });
 
 app.get('/experiment', function(req, res){
