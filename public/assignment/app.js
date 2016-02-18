@@ -4,5 +4,5 @@
 
 (function(){
     angular
-        .module("formApp", ["ngRoute"]);
+        .module("FormBuilderApp", ["ngRoute"]);
 })();
