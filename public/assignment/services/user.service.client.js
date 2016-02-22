@@ -37,7 +37,9 @@
 
         function findAllUsers(callback){}
 
-        function createUser(user, callback){}
+        function createUser(user, callback){
+
+        }
 
         function deleteUserById(userId, callback){}
 
