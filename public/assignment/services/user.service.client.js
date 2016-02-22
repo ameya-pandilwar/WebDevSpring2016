@@ -33,7 +33,15 @@
 
         return service;
 
-        function findUserByCredentials(username, password, callback){}
+        function findUserByCredentials(username, password, callback){
+            for(user in users){
+                if(users[user].username==username && users[user].password==password){
+                    var success = users[user];
+                    break;
+                }
+            }
+            callback(success);
+        }
 
         function findAllUsers(callback){}
 
