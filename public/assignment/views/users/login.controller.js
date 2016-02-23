@@ -5,7 +5,7 @@
 (function(){
     angular
         .module("FormBuilderApp")
-        .controller("LoginController", LoginController)
+        .controller("LoginController", ['UserService', LoginController])
 
     function LoginController($scope, UserService, $location, $rootScope){
         $scope.login = login;

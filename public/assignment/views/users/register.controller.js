@@ -5,7 +5,7 @@
 (function(){
     angular
         .module("FormBuilderApp")
-        .controller("RegisterController", RegisterController)
+        .controller("RegisterController", ['UserService', RegisterController])
 
     function RegisterController($scope, UserService, $location, $rootScope){
         var model = this;

@@ -5,7 +5,7 @@
 (function(){
     angular
         .module("FormBuilderApp")
-        .controller("ProfileController", ProfileController);
+        .controller("ProfileController", ['UserService', ProfileController]);
 
     function ProfileController($scope, UserService, $location, $rootScope) {
         var model = this;
