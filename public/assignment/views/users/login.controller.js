@@ -5,12 +5,16 @@
 (function(){
     angular
         .module("FormBuilderApp")
-        .controller("LoginController", ['UserService', LoginController])
+        .controller("LoginController", LoginController)
 
-    function LoginController($scope, UserService, $location, $rootScope){
+    function LoginController($scope, $rootScope, $location, UserService){
+        var model = this;
         $scope.login = login;
 
         function login(username, password){
+            username = this.username;
+            password = this.password;
+
             UserService.findUserByCredentials(username, password, function(response){
                 var user = response;
                 var status = false;
