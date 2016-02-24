@@ -2,7 +2,7 @@
  * Created by ameyapandilwar on 2/21/16.
  */
 
-(function(){
+(function() {
     angular
         .module("FormBuilderApp")
         .factory("UserService", UserService);
@@ -33,25 +33,38 @@
 
         return service;
 
-        function findUserByCredentials(username, password, callback){
-            for(user in users){
-                if(users[user].username==username && users[user].password==password){
-                    var success = users[user];
-                    break;
+        function findUserByCredentials(username, password, callback) {
+            for (var u in users) {
+                if (users[u].username == username && users[u].password == password) {
+                    callback(users[u]);
                 }
             }
-            callback(success);
         }
 
-        function findAllUsers(callback){}
+        function findAllUsers(callback) {
+
+        }
 
         function createUser(user, callback){
 
         }
 
-        function deleteUserById(userId, callback){}
+        function deleteUserById(userId, callback) {
+            for (var u in users) {
+                if (users[u]._id == userId) {
+                    callback(users[u]);
+                }
+            }
+        }
 
-        function updateUser(userId, user, callback){}
+        function updateUser(userId, user, callback) {
+            for (var u in users) {
+                if (users[u]._id == userId) {
+                    users[u] = user;
+                    callback(users[u]);
+                }
+            }
+        }
 
     }
 

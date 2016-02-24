@@ -12,7 +12,6 @@
         $scope.logout = logout;
 
         function logout(){
-            this.user = null;
             $rootScope.user = null;
             $location.url('/home');
         }
