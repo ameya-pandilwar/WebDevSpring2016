@@ -2,7 +2,7 @@
  * Created by ameyapandilwar on 2/22/16.
  */
 
-(function(){
+(function() {
     angular
         .module("FormBuilderApp")
         .factory("FormService", FormService);
@@ -27,7 +27,15 @@
 
         function createFormForUser(userId, form, callback){}
 
-        function findAllFormsForUser(userId, callback){}
+        function findAllFormsForUser(userId, callback) {
+            var userForms = [];
+            for (var f in forms) {
+                if (forms[f].userId == userId) {
+                    userForms.push(forms[f]);
+                }
+            }
+            callback(userForms);
+        }
 
         function deleteFormById(formId, callback){}
 

@@ -45,7 +45,7 @@
 
         }
 
-        function createUser(user, callback){
+        function createUser(user, callback) {
 
         }
 
@@ -65,7 +65,5 @@
                 }
             }
         }
-
     }
-
 })();
