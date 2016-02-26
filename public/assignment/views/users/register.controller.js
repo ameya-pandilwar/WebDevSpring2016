@@ -19,8 +19,7 @@
             };
 
             UserService.createUser(newUser, function(callback) {
-                newUser = callback;
-                $rootScope.user = newUser;
+                $rootScope.user = callback;
                 $location.url('/profile');
             });
 

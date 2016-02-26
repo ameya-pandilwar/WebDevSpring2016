@@ -85,7 +85,7 @@
                         email: user.email
                     };
                     users[u] = updatedUser;
-                    callback(users[u]);
+                    callback(users);
                 }
             }
         }
