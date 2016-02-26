@@ -49,14 +49,13 @@
         }
 
         function createUser(user, callback) {
-            console.log(user);
             var newUser = {
                 _id: (new Date).getTime(),
-                firstName: '',
-                lastName: '',
+                firstName: user.firstName,
+                lastName: user.lastName,
                 username: user.username,
                 password: user.password,
-                roles: '',
+                roles: user.roles,
                 email: user.email
             };
             users.push(newUser);

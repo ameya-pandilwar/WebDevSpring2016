@@ -5,30 +5,23 @@
 (function(){
     angular
         .module("FormBuilderApp")
-        .controller("RegisterController", ['UserService', RegisterController])
+        .controller("RegisterController", RegisterController)
 
     function RegisterController($scope, UserService, $location, $rootScope){
-        var model = this;
-        model.register = register;
+        $scope.register = register;
 
-        function register(newUser){
-            console.log(newUser);
+        function register(){
 
             var newUser = {
-                username : model.username,
-                password : model.password,
-                email: model.email
+                username : $scope.username,
+                password : $scope.password,
+                email: $scope.email
             };
 
-            UserService.createUser(newUser).then(function(response){
-                newUser = response;
-                $rootScope.user.username = newUser.username;
-                $rootScope.user.password = newUser.password;
-                $rootScope.user.email = newUser.email;
-                $rootScope.user.userid = newUser.userid;
+            UserService.createUser(newUser, function(callback) {
+                newUser = callback;
+                $rootScope.user = newUser;
                 $location.url('/profile');
-                $rootScope.user.logged = true;
-                $rootScope.user.globalusername = newUser.username;
             });
 
         }
