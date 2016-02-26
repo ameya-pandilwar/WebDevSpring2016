@@ -49,21 +49,43 @@
         }
 
         function createUser(user, callback) {
-
+            console.log(user);
+            var newUser = {
+                _id: (new Date).getTime(),
+                firstName: '',
+                lastName: '',
+                username: user.username,
+                password: user.password,
+                roles: '',
+                email: user.email
+            };
+            users.push(newUser);
+            callback(users);
         }
 
         function deleteUserById(userId, callback) {
             for (var u in users) {
                 if (users[u]._id == userId) {
-                    callback(users[u]);
+                    users.splice(u, 1);
+                    break;
                 }
             }
+            callback(users);
         }
 
         function updateUser(userId, user, callback) {
             for (var u in users) {
                 if (users[u]._id == userId) {
-                    users[u] = user;
+                    var updatedUser = {
+                        _id: userId,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        username: user.username,
+                        password: user.password,
+                        roles: user.roles,
+                        email: user.email
+                    };
+                    users[u] = updatedUser;
                     callback(users[u]);
                 }
             }

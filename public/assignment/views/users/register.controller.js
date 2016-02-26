@@ -11,7 +11,8 @@
         var model = this;
         model.register = register;
 
-        function register(){
+        function register(newUser){
+            console.log(newUser);
 
             var newUser = {
                 username : model.username,
