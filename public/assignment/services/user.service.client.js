@@ -34,15 +34,18 @@
         return service;
 
         function findUserByCredentials(username, password, callback) {
+            var user = null;
             for (var u in users) {
                 if (users[u].username == username && users[u].password == password) {
-                    callback(users[u]);
+                    user = users[u];
+                    break;
                 }
             }
+            callback(user);
         }
 
         function findAllUsers(callback) {
-
+            callback(users);
         }
 
         function createUser(user, callback) {
