@@ -2,12 +2,13 @@
  * Created by ameyapandilwar on 2/17/16.
  */
 
-(function(){
+(function () {
+    "use strict";
     angular
         .module("FormBuilderApp")
         .config(configuration);
 
-    function configuration($routeProvider){
+    function configuration($routeProvider) {
         $routeProvider
             .when("/home", {
                 templateUrl: "views/home/home.view.html",
@@ -41,4 +42,4 @@
                 redirectTo: "/home"
             });
     }
-})();
+}());

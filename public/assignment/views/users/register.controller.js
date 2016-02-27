@@ -41,7 +41,6 @@
             }
 
             UserService.createUser($scope.user, function(callback) {
-                console.log(callback);
                 UserService.setCurrentUser(callback);
                 $location.url('/profile');
             });
@@ -49,4 +48,4 @@
         }
 
     }
-})();
+}());

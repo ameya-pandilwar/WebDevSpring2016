@@ -11,4 +11,4 @@
     function HomeController($scope, $location) {
 
     }
-})();
+}());

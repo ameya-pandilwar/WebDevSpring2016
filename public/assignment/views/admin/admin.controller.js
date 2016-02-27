@@ -11,4 +11,4 @@
     function AdminController($scope, $location) {
 
     }
-})();
+}());
