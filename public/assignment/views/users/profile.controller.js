@@ -22,17 +22,11 @@
             $scope.error = null;
             $scope.message = null;
 
-            var userId = $scope.user._id;
-            var updatedUser = {
-                username : $scope.username,
-                password : $scope.password,
-                firstName: $scope.firstName,
-                lastName: $scope.lastName,
-                email: $scope.email
-            };
+            var userId = user._id;
 
-            UserService.updateUser(userId, updatedUser, function(callback) {
-                $rootScope.user = callback;
+            UserService.updateUser(userId, user, function(callback) {
+                UserService.setCurrentUser(callback);
+                $scope.message = "User updated successfully";
                 $location.url('/profile');
             });
         }

@@ -2,12 +2,12 @@
  * Created by ameyapandilwar on 2/17/16.
  */
 
-(function(){
+(function() {
     angular
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($scope, $location, UserService){
+    function HeaderController($scope, $location, UserService) {
         $scope.logout = logout;
 
         function logout(){
