@@ -2,7 +2,8 @@
  * Created by ameyapandilwar on 2/21/16.
  */
 
-(function() {
+(function () {
+    "use strict";
     angular
         .module("FormBuilderApp")
         .factory("UserService", UserService);

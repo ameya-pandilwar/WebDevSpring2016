@@ -2,12 +2,13 @@
  * Created by ameyapandilwar on 2/17/16.
  */
 
-(function() {
+(function () {
+    "use strict";
     angular
         .module("FormBuilderApp")
         .controller("FormsController", FormsController)
 
-    function FormsController($scope, $rootScope, FormService) {
+    function FormsController($scope, FormService, UserService) {
         var selectedForm = null;
 
         $scope.addForm = addForm;
@@ -15,7 +16,7 @@
         $scope.selectForm = selectForm;
         $scope.updateForm = updateForm;
 
-        var userId = $rootScope.user._id;
+        var userId = UserService.getCurrentUser().userId;
 
         FormService.findAllFormsForUser(userId, function(callback) {
             $scope.forms = callback;
