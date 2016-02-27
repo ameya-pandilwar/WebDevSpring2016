@@ -23,6 +23,27 @@
             $scope.error = null;
             $scope.message = null;
 
+            if (user == null) {
+                $scope.error = "Please fill in the required fields";
+                return;
+            }
+            if (!user.password) {
+                $scope.error = "Please provide a password";
+                return;
+            }
+            if (!user.firstName) {
+                $scope.error = "Please provide a first name";
+                return;
+            }
+            if (!user.lastName) {
+                $scope.error = "Please provide a last name";
+                return;
+            }
+            if (!user.email) {
+                $scope.error = "Please provide an email";
+                return;
+            }
+
             var userId = user._id;
 
             UserService.updateUser(userId, user, function(callback) {
