@@ -11,11 +11,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse" ng-controller="HeaderController">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-class="{'active': $location.url() == '/register'}"><a ng-show="!user" href="#/register">Register</a></li>
-                <li ng-class="{'active': $location.url() == '/login'}"><a ng-show="!user" href="#/login">Login</a></li>
-                <li><a ng-show="user" ng-click="logout()" href="#/home">Logout</a></li>
-                <li ng-class="{'active': $location.url() == '/profile'}"><a ng-show="user" href="#/profile">{{user.username}}</a></li>
-                <li ng-class="{'active': $location.url() == '/admin'}"><a ng-show="user && user.roles.indexOf('admin') >= 0" href="#/admin">Admin</a></li>
+                <li ng-class="{'active': $location.url() == '/register'}"><a ng-show="!currentUser" href="#/register">Register</a></li>
+                <li ng-class="{'active': $location.url() == '/login'}"><a ng-show="!currentUser" href="#/login">Login</a></li>
+                <li ng-class="{'active': $location.url() == '/profile'}"><a ng-show="currentUser" href="#/profile">{{currentUser.username}}</a></li>
+                <li ng-class="{'active': $location.url() == '/admin'}"><a ng-show="currentUser.roles.indexOf('admin') >= 0" href="#/admin">Admin</a></li>
+                <li><a ng-show="currentUser" ng-click="logout()" href="#/home">Logout</a></li>
             </ul>
         </div>
     </div>

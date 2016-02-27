@@ -7,10 +7,21 @@
         .module("FormBuilderApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($scope, UserService, $location, $rootScope) {
+    function ProfileController($scope, UserService, $location) {
+        $scope.error = null;
+        $scope.message = null;
+
         $scope.update = update;
 
-        function update() {
+        $scope.currentUser = UserService.getCurrentUser();
+        if (!$scope.currentUser) {
+            $location.url("/home");
+        }
+
+        function update(user) {
+            $scope.error = null;
+            $scope.message = null;
+
             var userId = $scope.user._id;
             var updatedUser = {
                 username : $scope.username,
