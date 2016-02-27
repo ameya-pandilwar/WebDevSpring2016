@@ -25,7 +25,15 @@
 
         return service;
 
-        function createFormForUser(userId, form, callback){}
+        function createFormForUser(userId, form, callback) {
+            var newForm = {
+                _id: (new Date).getTime(),
+                title: form.title,
+                userId: userId
+            };
+            forms.push(newForm);
+            callback(newForm);
+        }
 
         function findAllFormsForUser(userId, callback) {
             var userForms = [];
@@ -37,10 +45,28 @@
             callback(userForms);
         }
 
-        function deleteFormById(formId, callback){}
+        function deleteFormById(formId, callback) {
+            for (var f in forms) {
+                if (forms[f]._id == formId) {
+                    forms.splice(f, 1);
+                    break;
+                }
+            }
+            callback(forms);
+        }
 
-        function updateFormById(formId, newForm, callback){}
-
+        function updateFormById(formId, newForm, callback) {
+            for (var f in forms) {
+                if (forms[f]._id == formId) {
+                    forms[f] = {
+                        _id: formId,
+                        title: newForm.title,
+                        userId: newForm.userId
+                    };
+                    break;
+                }
+            }
+            callback(forms);
+        }
     }
-
 })();
