@@ -1,11 +1,11 @@
 /**
- * Created by ameyapandilwar on 2/20/16.
+ * Created by ameyapandilwar on 3/1/16.
  */
 
 (function () {
     "use strict";
     angular
-        .module("FormBuilderApp")
+        .module("ProjectApp")
         .controller("MainController", MainController)
 
     function MainController($scope, $location) {
