@@ -7,14 +7,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">CS5610 Project</a>
+            <a class="navbar-brand" href="#/home">CS5610 Project</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse" ng-controller="HeaderController">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="proposal.html">Proposal</a></li>
-                <li><a href="mockups.html">Mockups</a></li>
+                <li ng-class="{'active': $location.url() == '/home'}"><a href="#/home">Home</a></li>
+                <li ng-class="{'active': $location.url() == '/proposal'}"><a href="#/proposal">Proposal</a></li>
+                <li ng-class="{'active': $location.url() == '/mockups'}"><a href="#/mockups">Mockups</a></li>
+                <li ng-class="{'active': $location.url() == '/poc'}"><a href="#/poc">PoC</a></li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </nav>

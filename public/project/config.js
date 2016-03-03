@@ -14,12 +14,17 @@
                 templateUrl: "views/home/home.view.html",
                 controller: "HomeController"
             })
-            .when("/profile", {
-                templateUrl: "views/users/profile.view.html",
-                controller: "ProfileController"
+            .when("/home", {
+                templateUrl: "landing.html"
+            })
+            .when("/proposal", {
+                templateUrl: "proposal.html"
+            })
+            .when("/mockups", {
+                templateUrl: "mockups.html"
             })
             .otherwise({
-                redirectTo: "/poc"
+                redirectTo: "/home"
             });
     }
 }());

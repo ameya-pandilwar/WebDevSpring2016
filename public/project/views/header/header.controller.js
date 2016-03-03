@@ -9,10 +9,6 @@
         .controller("HeaderController", HeaderController);
 
     function HeaderController($scope, $location) {
-        $scope.logout = logout;
 
-        function logout(){
-            $location.url('/home');
-        }
     }
 }());
