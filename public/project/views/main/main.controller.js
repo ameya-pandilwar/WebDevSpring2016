@@ -10,5 +10,11 @@
 
     function MainController($scope, $location) {
         $scope.$location = $location;
+
+        $scope.hideSidebar = hideSidebar;
+
+        function hideSidebar() {
+            return ($location.url() === '/home' || $location.url() === '/proposal' || $location.url() === '/mockups');
+        }
     }
 }());
