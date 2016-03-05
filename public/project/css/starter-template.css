@@ -111,3 +111,7 @@ body {
     display: inline-block;
     border-radius: 50%;
 }
+
+.form-horizontal .control-label {
+    text-align: left;
+}

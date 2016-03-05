@@ -23,6 +23,18 @@
             .when("/mockups", {
                 templateUrl: "mockups.html"
             })
+            .when("/admin", {
+                templateUrl: "views/admin/admin.view.html"
+            })
+            .when("/login", {
+                templateUrl: "views/users/login.view.html"
+            })
+            .when("/register", {
+                templateUrl: "views/users/register.view.html"
+            })
+            .when("/profile", {
+                templateUrl: "views/users/profile.view.html"
+            })
             .otherwise({
                 redirectTo: "/home"
             });

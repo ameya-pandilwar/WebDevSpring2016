@@ -9,6 +9,10 @@
         .controller("HeaderController", HeaderController);
 
     function HeaderController($scope, $location) {
+        $scope.showDropdown = showDropdown;
 
+        function showDropdown() {
+            return ($location.url() === '/home' || $location.url() === '/proposal' || $location.url() === '/mockups');
+        }
     }
 }());
