@@ -1,11 +1,11 @@
 /**
- * Created by ameyapandilwar on 2/17/16.
+ * Created by ameyapandilwar on 3/3/16.
  */
 
 (function () {
     "use strict";
     angular
-        .module("FormBuilderApp")
+        .module("ProjectApp")
         .controller("LoginController", LoginController)
 
     function LoginController($scope, $rootScope, $location, UserService) {

@@ -24,16 +24,28 @@
                 templateUrl: "mockups.html"
             })
             .when("/admin", {
-                templateUrl: "views/admin/admin.view.html"
+                templateUrl: "views/admin/admin.view.html",
+                controller: "AdminController"
             })
             .when("/login", {
-                templateUrl: "views/users/login.view.html"
+                templateUrl: "views/users/login.view.html",
+                controller: "LoginController"
             })
             .when("/register", {
-                templateUrl: "views/users/register.view.html"
+                templateUrl: "views/users/register.view.html",
+                controller: "RegisterController"
             })
             .when("/profile", {
-                templateUrl: "views/users/profile.view.html"
+                templateUrl: "views/users/profile.view.html",
+                controller: "ProfileController"
+            })
+            .when("/syllabus", {
+                templateUrl: "views/courses/syllabus.view.html",
+                controller: "SyllabusController"
+            })
+            .when("/schedule", {
+                templateUrl: "views/courses/schedule.view.html",
+                controller: "ScheduleController"
             })
             .otherwise({
                 redirectTo: "/home"

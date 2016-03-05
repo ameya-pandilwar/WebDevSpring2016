@@ -5,7 +5,7 @@
 (function () {
     "use strict";
     angular
-        .module("FormBuilderApp")
+        .module("ProjectApp")
         .factory("UserService", UserService);
 
     function UserService($rootScope) {

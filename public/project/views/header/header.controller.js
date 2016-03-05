@@ -8,11 +8,17 @@
         .module("ProjectApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($scope, $location) {
+    function HeaderController($scope, $location, UserService) {
         $scope.showDropdown = showDropdown;
+        $scope.logout = logout;
 
         function showDropdown() {
             return ($location.url() === '/home' || $location.url() === '/proposal' || $location.url() === '/mockups');
+        }
+
+        function logout() {
+            UserService.setCurrentUser(null);
+            $location.url('/poc');
         }
     }
 }());
