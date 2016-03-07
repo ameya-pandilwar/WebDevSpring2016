@@ -30,8 +30,8 @@
     <script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
 
-    <script src="app.js"></script>
-    <script src="config.js"></script>
+    <script src="client/app.js"></script>
+    <script src="client/config.js"></script>
 
     <script src="client/views/main/main.controller.js"></script>
     <script src="client/views/home/home.controller.js"></script>
@@ -50,11 +50,11 @@
 
 <body ng-controller="MainController">
 
-<div ng-include="'views/header/header.view.html'"></div>
+<div ng-include="'client/views/header/header.view.html'"></div>
 
 <div class="container-fluid">
     <div class="row">
-        <div ng-include="'views/sidebar/sidebar.view.html'"></div>
+        <div ng-include="'client/views/sidebar/sidebar.view.html'"></div>
         <div ng-view></div>
     </div>
 </div>

@@ -22,7 +22,7 @@ app.get('/hello', function(req, res){
 });
 
 app.get('/assignment', function(req, res){
-   res.sendfile(public_folder + '/assignment/index.html');
+   res.sendfile(public_folder + '/assignment/client/index.html');
 });
 
 app.get('/experiment', function(req, res){
