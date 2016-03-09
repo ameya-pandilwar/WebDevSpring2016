@@ -3,5 +3,5 @@
  */
 
 module.exports = function(app) {
-
+    var appointmentService = require("./services/appointment.service.js")(app);
 };
