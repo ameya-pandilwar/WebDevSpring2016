@@ -30,7 +30,7 @@ app.get('/experiment', function(req, res){
 });
 
 app.get('/project', function(req, res){
-    res.sendfile(public_folder + '/project/welcome.html');
+    res.sendfile(public_folder + '/project/client/welcome.html');
 });
 
 app.listen(port, ipaddress);

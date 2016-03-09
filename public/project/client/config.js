@@ -11,44 +11,44 @@
     function configuration($routeProvider) {
         $routeProvider
             .when("/poc", {
-                templateUrl: "views/home/home.view.html",
+                templateUrl: "client/views/home/home.view.html",
                 controller: "HomeController"
             })
             .when("/home", {
-                templateUrl: "landing.html"
+                templateUrl: "client/landing.html"
             })
             .when("/proposal", {
-                templateUrl: "proposal.html"
+                templateUrl: "client/proposal.html"
             })
             .when("/mockups", {
-                templateUrl: "mockups.html"
+                templateUrl: "client/mockups.html"
             })
             .when("/admin", {
-                templateUrl: "views/admin/admin.view.html",
+                templateUrl: "client/views/admin/admin.view.html",
                 controller: "AdminController"
             })
             .when("/login", {
-                templateUrl: "views/users/login.view.html",
+                templateUrl: "client/views/users/login.view.html",
                 controller: "LoginController"
             })
             .when("/register", {
-                templateUrl: "views/users/register.view.html",
+                templateUrl: "client/views/users/register.view.html",
                 controller: "RegisterController"
             })
             .when("/profile", {
-                templateUrl: "views/users/profile.view.html",
+                templateUrl: "client/views/users/profile.view.html",
                 controller: "ProfileController"
             })
             .when("/syllabus", {
-                templateUrl: "views/courses/syllabus.view.html",
+                templateUrl: "client/views/courses/syllabus.view.html",
                 controller: "SyllabusController"
             })
             .when("/schedule", {
-                templateUrl: "views/courses/schedule.view.html",
+                templateUrl: "client/views/courses/schedule.view.html",
                 controller: "ScheduleController"
             })
             .when("/appointment", {
-                templateUrl: "views/appointments/appointment.view.html",
+                templateUrl: "client/views/appointments/appointment.view.html",
                 controller: "AppointmentController"
             })
             .otherwise({
