@@ -29,7 +29,7 @@
                 },
                 {
                     "_id": 567, "firstName": "Edward", "lastName": "Norton",
-                    "username": "ed", "password": "ed", "role": "student", "department": "IEM"
+                    "username": "ed", "password": "ed", "role": "student", "department": "IE"
                 }
             ],
             createUser: createUser,
