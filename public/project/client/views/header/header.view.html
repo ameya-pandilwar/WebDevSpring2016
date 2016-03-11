@@ -22,7 +22,6 @@
                 <li ng-class="{'active': $location.url() == '/register'}"><a ng-show="!currentUser && !showDropdown()" href="#/register">Register</a></li>
                 <li ng-class="{'active': $location.url() == '/login'}"><a ng-show="!currentUser && !showDropdown()" href="#/login">Login</a></li>
                 <li ng-class="{'active': $location.url() == '/profile'}"><a ng-show="currentUser && !showDropdown()" href="#/profile">{{currentUser.username}}</a></li>
-                <li ng-class="{'active': $location.url() == '/admin'}"><a ng-show="currentUser.roles.indexOf('admin') >= 0 && !showDropdown()" href="#/admin">Admin</a></li>
                 <li><a ng-show="currentUser && !showDropdown()" ng-click="logout()" href="#/home">Logout</a></li>
             </ul>
         </div>
