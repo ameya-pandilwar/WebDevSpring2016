@@ -1,14 +1,14 @@
 /**
- * Created by ameyapandilwar on 2/22/16.
+ * Created by ameyapandilwar on 3/10/16.
  */
 
 (function () {
     "use strict";
     angular
         .module("ProjectApp")
-        .factory("FormService", FormService);
+        .factory("SubmissionService", SubmissionService);
 
-    function FormService() {
+    function SubmissionService() {
         var forms = [];
 
         forms = [
