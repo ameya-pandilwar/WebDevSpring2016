@@ -23,28 +23,36 @@
         function selectUser(index) {
             selectedUser = $scope.users[index];
             $scope.username = selectedUser.username;
+            $scope.department = selectedUser.department;
+            $scope.role = selectedUser.role;
         }
 
         function addUser(){
-            var newUser = {"title": $scope.username};
-            UserService.createUser(userId, newUser, function(callback) {
-                $scope.users.push(callback);
-                $scope.userName = "";
+            var newUser = {"username": $scope.username, "department": $scope.department, "role": $scope.role};
+            UserService.createUser(newUser, function(callback) {
+                $scope.users = callback;
+                $scope.username = "";
+                $scope.department = "";
+                $scope.role = "";
             });
         }
 
         function updateUser() {
-            if(selectedUser) {
-                selectedUser.title = $scope.userName;
+            if (selectedUser) {
+                selectedUser.username = $scope.username;
+                selectedUser.department = $scope.department;
+                selectedUser.role = $scope.role;
                 UserService.updateUserById(selectedUser._id, selectedUser, function(callback) {
-                    $scope.userName = "";
+                    $scope.username = "";
+                    $scope.department = "";
+                    $scope.role = "";
                 });
             }
         }
 
         function deleteUser(index) {
             UserService.deleteUserById($scope.users[index]._id, function(callback) {
-                $scope.users.splice(index, 1);
+                $scope.users = callback;
             });
         }
     }

@@ -39,7 +39,7 @@
             findUserByUsername: findUserByUsername,
             getCurrentUser: getCurrentUser,
             setCurrentUser: setCurrentUser,
-            updateUser: updateUser
+            updateUserById: updateUserById
         };
         return model;
 
@@ -82,11 +82,12 @@
                 lastName: user.lastName,
                 username: user.username,
                 password: user.password,
-                roles: user.roles,
+                department: user.department,
+                role: user.role,
                 email: user.email
             };
             model.users.push(newUser);
-            callback(newUser);
+            callback(model.users);
         }
 
         function deleteUserById(userId, callback) {
@@ -99,7 +100,7 @@
             callback(model.users);
         }
 
-        function updateUser(userId, user, callback) {
+        function updateUserById(userId, user, callback) {
             for (var u in model.users) {
                 if (model.users[u]._id == userId) {
                     var updatedUser = {
@@ -108,7 +109,8 @@
                         lastName: user.lastName,
                         username: user.username,
                         password: user.password,
-                        roles: user.roles,
+                        department: user.department,
+                        role: user.role,
                         email: user.email
                     };
                     model.users[u] = updatedUser;

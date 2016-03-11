@@ -17,8 +17,8 @@
                     <td><input ng-model="department" class="form-control" placeholder="department"/></td>
                     <td><input ng-model="role" class="form-control" placeholder="role"/></td>
                     <td>
-                        <a href="addUser()"><span class="glyphicon glyphicon-plus"></span></a>&emsp;
-                        <a href="updateUser()"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a ng-click="addUser()"><span class="glyphicon glyphicon-plus"></span></a>&emsp;
+                        <a ng-click="updateUser()"><span class="glyphicon glyphicon-ok"></span></a>
                     </td>
                 </tr>
                 <tr ng-repeat="user in users">
