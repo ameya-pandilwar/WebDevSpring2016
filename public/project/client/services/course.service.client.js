@@ -13,20 +13,21 @@
             courses: [
                 {
                     "_id": 123, "number": "CS5600", "title": "Web Development", "timing": "6 - 9 PM | W",
-                    "location": "101 Chrome Hall", "userId": 123
+                    "location": "101 Chrome Hall"
                 },
                 {
                     "_id": 234, "number": "CS8674", "title": "Master's Project", "timing": "3 - 6 PM | M",
-                    "location": "1 Hacker Way", "userId": 123
+                    "location": "1 Hacker Way"
                 },
                 {
                     "_id": 345, "number": "CS6000", "title": "Database Management", "timing": "6 - 9 PM | T, F",
-                    "location": "1 Infinite Loop", "userId": 234
+                    "location": "1 Infinite Loop"
                 }
             ],
             createCourse: createCourse,
             deleteCourseById: deleteCourseById,
             findAllCourses: findAllCourses,
+            findAllCoursesForUser: findAllCoursesForUser,
             findCourseByUserId: findCourseByUserId,
             findCourseByTitle: findCourseByTitle,
             updateCourseById: updateCourseById
@@ -35,7 +36,7 @@
 
         function findCourseByTitle (title) {
             for (var u in model.courses) {
-                if (model.courses[u].coursename === title) {
+                if (model.courses[u].title === title) {
                     return model.courses[u];
                 }
             }
@@ -45,7 +46,7 @@
         function findCourseByUserId(courseId, callback) {
             var course = null;
             for (var u in model.courses) {
-                if (model.courses[u].coursename === courseId) {
+                if (model.courses[u].title === courseId) {
                     course = model.courses[u];
                     break;
                 }
@@ -55,6 +56,18 @@
 
         function findAllCourses(callback) {
             callback(model.courses);
+        }
+
+        function findAllCoursesForUser(courseIds, callback) {
+            var courses = []
+            for (var u in model.courses) {
+                for (var id in courseIds) {
+                    if (model.courses[u].number === courseIds[id]) {
+                        courses.push(model.courses[u]);
+                    }
+                }
+            }
+            callback(courses);
         }
 
         function createCourse(course, callback) {

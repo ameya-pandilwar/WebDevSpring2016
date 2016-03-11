@@ -47,6 +47,10 @@
                 templateUrl: "client/views/courses/schedule.view.html",
                 controller: "ScheduleController"
             })
+            .when("/course", {
+                templateUrl: "client/views/courses/course.view.html",
+                controller: "CourseController"
+            })
             .when("/appointment", {
                 templateUrl: "client/views/appointments/appointment.view.html",
                 controller: "AppointmentController"

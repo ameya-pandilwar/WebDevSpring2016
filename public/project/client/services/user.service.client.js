@@ -13,7 +13,7 @@
             users: [
                 {
                     "_id": 123, "firstName": "Alice", "lastName": "Wonderland",
-                    "username": "alice", "password": "alice", "role": "student", "department": "CS"
+                    "username": "alice", "password": "alice", "role": "student", "department": "CS", "courses": ['CS5600']
                 },
                 {
                     "_id": 234, "firstName": "Bob", "lastName": "Hope",
@@ -29,7 +29,7 @@
                 },
                 {
                     "_id": 567, "firstName": "Edward", "lastName": "Norton",
-                    "username": "ed", "password": "ed", "role": "student", "department": "IE"
+                    "username": "ed", "password": "ed", "role": "student", "department": "IE", "courses": ['CS5600', 'CS8674']
                 }
             ],
             createUser: createUser,

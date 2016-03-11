@@ -1,14 +1,14 @@
 /**
- * Created by ameyapandilwar on 3/5/16.
+ * Created by ameyapandilwar on 3/11/16.
  */
 
 (function () {
     "use strict";
     angular
         .module("ProjectApp")
-        .controller("ScheduleController", ScheduleController)
+        .controller("CourseController", CourseController)
 
-    function ScheduleController($scope, CourseService) {
+    function CourseController($scope, CourseService) {
         var selectedCourse = null;
 
         $scope.addCourse = addCourse;
@@ -16,9 +16,7 @@
         $scope.selectCourse = selectCourse;
         $scope.updateCourse = updateCourse;
 
-        var courseIds = $scope.currentUser.courses;
-
-        CourseService.findAllCoursesForUser(courseIds, function(callback) {
+        CourseService.findAllCourses(function(callback) {
             $scope.courses = callback;
         });
 
