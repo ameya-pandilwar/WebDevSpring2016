@@ -2,15 +2,9 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
-var config = require('./config.json')
-var Acuity = require('acuityscheduling');
-
-var acuity = Acuity.basic(config);
-
-acuity.request('appointments', function (err, res, appointments) {
-    if (err) return console.error(err);
-    console.log(appointments);
-});
+var hmhco = require('./hmhco.json');
+var clientId = hmhco.clientId;
+var clientSecret = hmhco.clientSecret;
 
 var public_folder = __dirname + '/public';
 
@@ -32,5 +26,7 @@ app.get('/experiment', function(req, res){
 app.get('/project', function(req, res){
     res.sendfile(public_folder + '/project/client/welcome.html');
 });
+
+require("./public/project/server/app.js")(app);
 
 app.listen(port, ipaddress);

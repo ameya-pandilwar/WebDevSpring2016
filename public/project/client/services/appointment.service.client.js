@@ -8,38 +8,11 @@
         .module("ProjectApp")
         .factory("AppointmentService", AppointmentService);
 
-    function AppointmentService($rootScope) {
+    function AppointmentService($http, $q, $rootScope) {
         var model = {
-            users: [
-                {
-                    "_id": 123, "firstName": "Alice", "lastName": "Wonderland",
-                    "username": "alice", "password": "alice", "roles": ["student"]
-                },
-                {
-                    "_id": 234, "firstName": "Bob", "lastName": "Hope",
-                    "username": "bob", "password": "bob", "roles": ["admin"]
-                },
-                {
-                    "_id": 345, "firstName": "Charlie", "lastName": "Brown",
-                    "username": "charlie", "password": "charlie", "roles": ["faculty"]
-                },
-                {
-                    "_id": 456, "firstName": "Dan", "lastName": "Craig",
-                    "username": "dan", "password": "dan", "roles": ["faculty", "admin"]
-                },
-                {
-                    "_id": 567, "firstName": "Edward", "lastName": "Norton",
-                    "username": "ed", "password": "ed", "roles": ["student"]
-                }
-            ],
-            createUser: createUser,
-            deleteUserById: deleteUserById,
             findAllUsers: findAllUsers,
             findUserByCredentials: findUserByCredentials,
-            findUserByUsername: findUserByUsername,
-            getCurrentUser: getCurrentUser,
-            setCurrentUser: setCurrentUser,
-            updateUser: updateUser
+            getAppointments: getAppointments
         };
         return model;
 
@@ -56,6 +29,20 @@
 
         function findAllUsers(callback) {
             callback(model.users);
+        }
+
+        function getAppointments(callback) {
+            var deferred = $q.defer();
+
+            $http.get("/api/project/appointments")
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                })
+
+            return deferred.promise;
         }
     }
 }());

@@ -2,12 +2,18 @@
  * Created by ameyapandilwar on 3/8/16.
  */
 
-var config = require('./config.json')
+var config = require('./../config.json')
 var Acuity = require('acuityscheduling');
 
 var acuity = Acuity.basic(config);
 
-acuity.request('appointments', function (err, res, appointments) {
-    if (err) return console.error(err);
-    console.log(appointments);
-});
+module.exports = function(app) {
+    app.get("/api/project/appointments", displayAppointments);
+
+    function displayAppointments(req, res) {
+        acuity.request('appointments', function (error, response, appointments) {
+            if (error) return console.error(error);
+            res.json(appointments);
+        });
+    }
+}
