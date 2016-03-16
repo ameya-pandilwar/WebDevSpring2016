@@ -15,7 +15,7 @@ module.exports = function() {
         findFormById: findFormById,
         findAllForms: findAllForms,
         findFormByTitle: findFormByTitle,
-        findAllFieldsById: findAllFieldsById,
+        findAllFieldsForFormId: findAllFieldsForFormId,
         findFormFieldById: findFormFieldById,
         updateFormField: updateFormField,
         updateFormById: updateFormById
@@ -90,7 +90,7 @@ module.exports = function() {
         return null;
     }
 
-    function findAllFieldsById(formId) {
+    function findAllFieldsForFormId(formId) {
         var form = findFormById(formId);
         if (!form) {
             return form.fields;
