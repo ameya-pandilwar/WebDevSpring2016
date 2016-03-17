@@ -25,7 +25,9 @@
   "dependencies": {
     "acuityscheduling": "^0.1.4",
     "express": "^3.4.8",
-    "path": "^0.12.7"
+    "mongoose": "^4.4.7",
+    "path": "^0.12.7",
+    "q": "^1.4.1"
   },
   "devDependencies": {},
   "bundleDependencies": [],
