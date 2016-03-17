@@ -19,11 +19,8 @@ module.exports = function () {
     return api;
 
     function findUserByCredentials(credentials) {
-        var username = credentials.username;
-        var password = credentials.password;
-
         for (var u in users) {
-            if (users[u].username == username && users[u].password == password) {
+            if (users[u].username == credentials.username && users[u].password == credentials.password) {
                 return users[u];
             }
         }

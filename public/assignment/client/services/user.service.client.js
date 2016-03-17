@@ -8,30 +8,8 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService($rootScope) {
+    function UserService($rootScope, $http) {
         var model = {
-            users: [
-                {
-                    "_id": 123, "firstName": "Alice", "lastName": "Wonderland",
-                    "username": "alice", "password": "alice", "roles": ["student"]
-                },
-                {
-                    "_id": 234, "firstName": "Bob", "lastName": "Hope",
-                    "username": "bob", "password": "bob", "roles": ["admin"]
-                },
-                {
-                    "_id": 345, "firstName": "Charlie", "lastName": "Brown",
-                    "username": "charlie", "password": "charlie", "roles": ["faculty"]
-                },
-                {
-                    "_id": 456, "firstName": "Dan", "lastName": "Craig",
-                    "username": "dan", "password": "dan", "roles": ["faculty", "admin"]
-                },
-                {
-                    "_id": 567, "firstName": "Edward", "lastName": "Norton",
-                    "username": "ed", "password": "ed", "roles": ["student"]
-                }
-            ],
             createUser: createUser,
             deleteUserById: deleteUserById,
             findAllUsers: findAllUsers,
@@ -43,78 +21,36 @@
         };
         return model;
 
-        function setCurrentUser (user) {
+        function setCurrentUser(user) {
             $rootScope.currentUser = user;
         }
 
-        function getCurrentUser () {
+        function getCurrentUser() {
             return $rootScope.currentUser;
         }
 
-        function findUserByUsername (username) {
-            for (var u in model.users) {
-                if (model.users[u].username === username) {
-                    return model.users[u];
-                }
-            }
-            return null;
+        function findUserByUsername(username) {
+            return $http.get("/api/assignment/user/" + username);
         }
 
-        function findUserByCredentials(username, password, callback) {
-            var user = null;
-            for (var u in model.users) {
-                if (model.users[u].username === username && model.users[u].password === password) {
-                    user = model.users[u];
-                    break;
-                }
-            }
-            callback(user);
+        function findUserByCredentials(username, password) {
+            return $http.get("/api/assignment/user/username/"+username+"/password/"+password);
         }
 
-        function findAllUsers(callback) {
-            callback(model.users);
+        function findAllUsers() {
+            return $http.get("/api/assignment/user");
         }
 
-        function createUser(user, callback) {
-            var newUser = {
-                _id: new Date().getTime(),
-                firstName: user.firstName,
-                lastName: user.lastName,
-                username: user.username,
-                password: user.password,
-                roles: user.roles,
-                email: user.email
-            };
-            model.users.push(newUser);
-            callback(newUser);
+        function createUser(user) {
+            return $http.post("/api/assignment/user", user);
         }
 
-        function deleteUserById(userId, callback) {
-            for (var u in model.users) {
-                if (model.users[u]._id == userId) {
-                    model.users.splice(u, 1);
-                    break;
-                }
-            }
-            callback(model.users);
+        function deleteUserById(userId) {
+            return $http.delete("/api/assignment/user/" + userId);
         }
 
-        function updateUser(userId, user, callback) {
-            for (var u in model.users) {
-                if (model.users[u]._id == userId) {
-                    var updatedUser = {
-                        _id: userId,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        username: user.username,
-                        password: user.password,
-                        roles: user.roles,
-                        email: user.email
-                    };
-                    model.users[u] = updatedUser;
-                    callback(updatedUser);
-                }
-            }
+        function updateUser(userId, user) {
+            return $http.put("/api/assignment/user/" + userId, user);
         }
     }
 }());
