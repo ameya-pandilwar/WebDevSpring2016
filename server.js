@@ -27,6 +27,7 @@ app.get('/project', function(req, res){
     res.sendfile(public_folder + '/project/client/welcome.html');
 });
 
+require("./public/assignment/server/app.js")(app);
 require("./public/project/server/app.js")(app);
 
 app.listen(port, ipaddress);
