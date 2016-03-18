@@ -64,7 +64,7 @@ module.exports = function () {
         };
 
         users.push(newUser);
-        return newUser;
+        return users;
     }
 
     function deleteUserById(userId) {

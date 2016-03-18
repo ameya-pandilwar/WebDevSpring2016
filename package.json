@@ -24,9 +24,11 @@
   },
   "dependencies": {
     "acuityscheduling": "^0.1.4",
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
     "express": "^3.4.8",
+    "express-session": "^1.13.0",
     "mongoose": "^4.4.7",
-    "path": "^0.12.7",
     "q": "^1.4.1"
   },
   "devDependencies": {},

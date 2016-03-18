@@ -1,16 +1,27 @@
-var express = require('express');
-var app = express();
-var path = require('path');
+var bodyParser   = require('body-parser');
+var cookieParser = require('cookie-parser');
+var express      = require('express');
+var session      = require('express-session');
 
-var hmhco = require('./hmhco.json');
-var clientId = hmhco.clientId;
-var clientSecret = hmhco.clientSecret;
+var app = express();
 
 var public_folder = __dirname + '/public';
 
 app.use(express.static(public_folder));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+
+var session_secret = 'webdev2016';
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+    secret: session_secret,
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.get('/hello', function(req, res){
     res.send('hello world');
 });
