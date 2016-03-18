@@ -4,10 +4,8 @@
 
 module.exports = function(app, userModel) {
     app.post("/api/assignment/user", createUser);
-    app.get("/api/assignment/user", findUsers);
+    app.get("/api/assignment/user", findUser);
     app.get("/api/assignment/user/:id", findUserById);
-    app.get("/api/assignment/user?username=username", findUserByUsername);
-    app.get("/api/assignment/user?username=username&password=password", findUserByCredentials);
     app.put("/api/assignment/user/:id", updateUserById);
     app.delete("/api/assignment/user/:id", deleteUserById);
 
@@ -16,30 +14,22 @@ module.exports = function(app, userModel) {
         res.json(userModel.createUser(user));
     }
 
-    function findUsers(req, res) {
-        res.json(userModel.findAllUsers());
+    function findUser(req, res) {
+        var username = req.query.username;
+        var password = req.query.password;
+
+        if (username && password) {
+            res.json(userModel.findUserByCredentials({'username': username, 'password': password}));
+        } else if (username) {
+            res.json(userModel.findUserByUsername(username));
+        } else {
+            res.json(userModel.findAllUsers());
+        }
     }
 
     function findUserById(req, res) {
         var id = req.params.id;
         var user = userModel.findUserById(id);
-        res.json(user);
-    }
-
-    function findUserByUsername(req, res) {
-        var username = req.params.username;
-        var user = userModel.findUserByUsername(username);
-        res.json(user);
-    }
-
-    function findUserByCredentials(req, res) {
-        var username = req.params.username;
-        var password = req.params.password;
-        var credentials = {
-            username: username,
-            password: password
-        };
-        var user = userModel.findUserByCredentials(credentials);
         res.json(user);
     }
 
