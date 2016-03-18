@@ -36,7 +36,7 @@ module.exports = function(app, userModel) {
     function updateUserById(req, res) {
         var id = req.params.id;
         var user = req.body;
-        var userTemp = userModel.updateUserById(id, user);
+        var userTemp = userModel.updateUser(id, user);
         res.json(userModel.findAllUsers());
     }
 
