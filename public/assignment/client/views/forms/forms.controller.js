@@ -29,8 +29,8 @@
 
         function addForm(){
             var newForm = {"title": $scope.formName};
-            FormService.createFormForUser(userId, newForm, function(callback) {
-                $scope.forms.push(callback);
+            FormService.createFormForUser(userId, newForm).then(function(response) {
+                $scope.forms.push(response.data);
                 $scope.formName = "";
             });
         }
@@ -38,14 +38,14 @@
         function updateForm() {
             if(selectedForm) {
                 selectedForm.title = $scope.formName;
-                FormService.updateFormById(selectedForm._id, selectedForm, function(callback) {
+                FormService.updateFormById(selectedForm._id, selectedForm).then(function(response) {
                     $scope.formName = "";
                 });
             }
         }
 
         function deleteForm(index) {
-            FormService.deleteFormById($scope.forms[index]._id, function(callback) {
+            FormService.deleteFormById($scope.forms[index]._id).then(function(response) {
                 $scope.forms.splice(index, 1);
             });
         }
