@@ -102,13 +102,12 @@
 
         function addField(fieldType){
             var field = {"label": "", "type":optionType(fieldType),"Placeholder":"","options":"null"};
-            FieldService.createField(formId,field)
-                .then(displayFields);
+            FieldService.createFieldForForm(formId, field).then(displayFields);
         }
 
-        function optionType(fieldType){
-            for(var u in optionDetails){
-                if(optionDetails[u].name == fieldType){
+        function optionType(fieldType) {
+            for(var u in optionDetails) {
+                if(optionDetails[u].name == fieldType) {
                     return optionDetails[u].id;
                 }
             }
