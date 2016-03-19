@@ -5,211 +5,86 @@
         <li role="presentation" class="active"><a>Fields</a></li>
     </ul>
     <br>
-    <form>
-        <div ng-model="model.fields">
-            <div ng-switch="field.type" ng-repeat="field in model.fields">
-                <div ng-switch-when="TEXT">
-                    <label>{{field.label}}</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="{{field.placeholder}}">
-                        <div class="input-group-btn">
-                            <button ng-click="model.editField(field)" class="btn btn-warning" data-toggle="modal" data-target="#editField"><span class="glyphicon glyphicon-pencil"></span></button>&emsp;
-                            <button class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>&emsp;
-                            <button ng-click="model.deleteField(field)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>&emsp;
-                            <button class="btn btn-info"><span class="glyphicon glyphicon-align-justify"></span></button>
+    <form class="form-horizontal">
+        <div ng-repeat="field in model.fields">
+            <label>{{field.label}}</label>
+            <div class="input-group">
+                <div ng-switch on="field.type" >
+                    <input ng-switch-when="TEXT" type="text" class="form-control" placeholder="{{field.placeholder}}">
+                    <textarea ng-switch-when="TEXTAREA" class="form-control" placeholder="{{field.placeholder}}"></textarea>
+                    <input ng-switch-when="EMAIL" type="email" class="form-control" placeholder="{{field.placeholder}}">
+                    <input ng-switch-when="DATE" type="date" class="form-control">
+                    <select ng-switch-when="OPTIONS">
+                        <option ng-repeat="option in field.options track by $index">{{option.label}}</option>
+                    </select>
+                    <div ng-switch-when="CHECKBOXES">
+                        <div ng-repeat="option in field.options track by $index">
+                            <input type="checkbox" value="{{option.value}}">{{option.label}}
                         </div>
                     </div>
-                    <br>
+                    <div ng-switch-when="RADIOS">
+                        <div ng-repeat="option in field.options track by $index">
+                            <input type="radio" value="{{option.value}}">{{option.label}}
+                        </div>
+                    </div>
                 </div>
-
-
-                <div ng-switch-when="TEXTAREA">
-                    <label>{{field.label}}</label>
-                    <div class="input-group">
-                        <textarea class="form-control" placeholder="{{field.placeholder}}"></textarea>
-                        <div class="input-group-btn">
-                            <button ng-click="model.editField(field)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#editField"><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
-                            <button ng-click="model.deleteField(field)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-align-justify"></span></button>
-                        </div>
-                    </div>
-                    <br>
-                </div>
-
-
-                <div ng-switch-when="EMAIL">
-                    <label>{{field.label}}</label>
-                    <div class="input-group">
-                        <input type="email" class="form-control" placeholder="{{field.placeholder}}">
-                        <div class="input-group-btn">
-                            <button ng-click="model.editField(field)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#editField"><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
-                            <button ng-click="model.deleteField(field)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-align-justify"></span></button>
-                        </div>
-                    </div>
-                    <br>
-                </div>
-
-                <div ng-switch-when="DATE">
-                    <label>{{field.label}}</label>
-                    <div class="input-group">
-                        <input type="date" class="form-control">
-                        <div class="input-group-btn">
-                            <button ng-click="model.editField(field)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#editField"><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
-                            <button ng-click="model.deleteField(field)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-align-justify"></span></button>
-                        </div>
-                    </div>
-                    <br>
-                </div>
-
-                <div ng-switch-when="OPTIONS">
-                    <label>{{field.label}}</label>
-                    <div class="input-group">
-                        <select class="form-control"><option ng-repeat = "option in field.options">{{option.label}}</option></select>
-                        <div class="input-group-btn">
-                            <button ng-click="model.editField(field)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#editField"><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
-                            <button ng-click="model.deleteField(field)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-align-justify"></span></button>
-                        </div>
-                    </div>
-                    <br>
-                </div>
-
-
-                <div ng-switch-when="CHECKBOX">
-                    <label>{{field.label}}</label>
-                    <div class="input-group">
-                        <div class="checkbox" ng-repeat="option in field.options track by $index">
-                            <label><input type="checkbox" value="{{option.value}}">{{option.label}}</label>
-                            <br>
-                        </div>
-                        <div class="input-group-btn">
-                            <button ng-click="model.editField(field)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#editField"><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
-                            <button ng-click="model.deleteField(field)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-align-justify"></span></button>
-                        </div>
-                    </div>
-                    <br>
-                </div>
-
-
-                <div ng-switch-default>
-                    <label>{{field.label}}</label>
-                    <div class="input-group">
-                        <div class="radio" ng-repeat="option in field.options track by $index" class="radio">
-                            <label><input type="radio" name="{{option.label}}" value="{{option.value}}">{{option.label}}</label>
-                        </div>
-                        <div class="input-group-btn">
-                            <button ng-click="model.editField(field)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#editField"><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
-                            <button ng-click="model.deleteField(field)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-align-justify"></span></button>
-                        </div>
-                    </div>
-                    <br>
+                <div class="input-group-btn">
+                    <button ng-click ="model.editField(field)" class="btn btn-warning" data-toggle="modal" data-target="#editField"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button ng-click ="model.repeatField(field)" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
+                    <button ng-click ="model.deleteField(field._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button class="btn btn-info"><span class="glyphicon glyphicon-align-justify"></span></button>
                 </div>
             </div>
+            <br>
         </div>
 
-        <label for="newfield">Add New Field</label>
+        <label>Add New Field</label>
         <div class="input-group">
-            <select ng-model = "fieldType" class="form-control" id="newfield">
-                <option>Single Line Text Field</option>
-                <option>Multi-Line Text Field</option>
-                <option>Date Field</option>
-                <option>Dropdown Field</option>
-                <option>Checkboxes Field</option>
-                <option>Radio Buttons Field</option>
+            <select ng-model = "model.fieldType" class="form-control">
+                <option value="TEXT">Single Line Text Field</option>
+                <option value="TEXTAREA">Multi Line Text Field</option>
+                <option value="DATE">Date Field</option>
+                <option value="OPTIONS">Dropdown Field</option>
+                <option value="CHECKBOXES">Checkboxes Field</option>
+                <option value="RADIOS">Radio Buttons Field</option>
             </select>
             <div class="input-group-btn">
-                <button ng-click="model.addField(fieldType)" type ="button" class = "btn btn-success">
-                    <span class="glyphicon glyphicon-plus"></span></button>
+                <button ng-click="model.addField(model.fieldType)" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
             </div>
         </div>
     </form>
 
     <div id="editField" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss ="modal">&times;</button>
-                    <h4 class="modal-title">{{model.currentField.label}}</h4>
+                    <button class="close" data-dismiss ="modal">&times;</button>
+                    <h4 class="modal-title">{{model.fieldEdit.label}}</h4>
                 </div>
-                <div class="modal-body" ng-switch on="model.fieldEdit.type">
-                    <div ng-switch-when = "TEXT">
-                        <h3>Single Line Field</h3>
-                        <form>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
                             <label>Label</label>
-                            <input ng-model = "model.fieldEdit.label" class="form-control" type="text" placeholder="Edit Label">
-                            <br>
+                            <input ng-model = "model.label" class="form-control" type="text" placeholder="Edit Label">
+                        </div>
+
+                        <div class="form-group" ng-show = "model.fieldEdit.placeholder">
                             <label>Placeholder</label>
-                            <input ng-model = "model.fieldEdit.palceholder" class="form-control" type="text" placeholder="Edit Placeholder">
-                        </form>
-                    </div>
+                            <input ng-model = "model.placeholder" class="form-control" type="text" placeholder="Edit Placeholder">
+                        </div>
 
-                    <div ng-switch-when = "TEXTAREA">
-                        <h3>Multi Line Field</h3>
-                        <form>
-                            <label>Label</label>
-                            <input ng-model = "model.fieldEdit.label" class="form-control" type="text" placeholder="Edit label">
-                            <br>
-                            <label>Placeholder</label>
-                            <textarea ng-model = "model.fieldEdit.palceholder" class="form-control" type="text" placeholder="Edit placeholder"></textarea>
-                        </form>
-                    </div>
-
-                    <div ng-switch-when ="DATE">
-                        <h3>Date Field</h3>
-                        <form>
-                            <label>Label</label>
-                            <input ng-model = "model.fieldEdit.label" class="form-control" type="text" placeholder="Edit Label">
-                        </form>
-                    </div>
-
-                    <div ng-switch-when ="OPTIONS">
-                        <h3>Dropdown Field</h3>
-                        <form>
-                            <label>Label</label>
-                            <input ng-model = "model.fieldEdit.label" class="form-control" type="text" placeholder="Edit label">
-                            <br>
+                        <div class="form-group" ng-show="model.fieldEdit.options">
                             <label>Options</label>
-                            <textarea ng-model = "model.fieldEdit.palceholder" class="form-control" type="text" placeholder="Edit placeholder"></textarea>
-                        </form>
-                    </div>
-
-                    <div ng-switch-when ="RADIO">
-                        <h3>Radio Buttons</h3>
-                        <form>
-                            <label>Label</label>
-                            <input ng-model = "model.fieldEdit.label" class="form-control" type="text" placeholder="Edit label">
-                            <br>
-                            <label>Options</label>
-                            <textarea ng-model = "model.optionText" class="form-control" placeholder="Edit Options" ng-list="&#10;" ng-trim="false"></textarea>
-                        </form>
-                    </div>
-
-                    <div ng-switch-default>
-                        <h3>checkbox</h3>
-                        <form>
-                            <label>Label</label>
-                            <input ng-model = "model.fieldEdit.label" class="form-control" type="text" placeholder="Edit label">
-                            <br>
-                            <label>Options</label>
-                            <textarea ng-model = "model.optionText" class="form-control" placeholder="Edit options" ng-list="&#10;" ng-trim="false"></textarea>
-                        </form>
-                    </div>
+                            <textarea ng-model="model.options" class="form-control" placeholder="Edit Options"></textarea>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="modal-footer">
                     <button  type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button ng-click="model.commitEdit(model.fieldEdit)" type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                    <button ng-click="model.commitEdit()" type="button" class="btn btn-default" data-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>

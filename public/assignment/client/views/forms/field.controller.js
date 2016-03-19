@@ -2,115 +2,133 @@
  * Created by ameyapandilwar on 2/17/16.
  */
 
-(function () {
+(function() {
     "use strict";
-    angular
-        .module("FormBuilderApp")
-        .controller("FieldController", FieldController)
 
-    function FieldController(FieldService, FormService, $routeParams, $rootScope) {
+    angular.module("FormBuilderApp")
+        .controller("FieldController", FieldController);
+
+    function FieldController($routeParams, FieldService, FormService) {
         var vm = this;
 
-        var formId ="000";
+        var formId;
         vm.currentField = null;
-        vm.fieldEdit=null;
+        vm.fieldEdit = null;
         vm.commitEdit = commitEdit;
         vm.editField = editField;
         vm.deleteField = deleteField;
-        vm.addField=addField;
-
-        var currentUser = $rootScope.currentUser;
-
-        vm.options = [
-            'Single Line Text Field',
-            'Multi Line Text Field',
-            'Date Field',
-            'Dropdown Field',
-            'Checkboxes Field',
-            'Radio Buttons Field'
-        ];
+        vm.addField = addField;
+        vm.repeatField = repeatField;
 
         if($routeParams.formId) {
             formId = $routeParams.formId;
         }
 
-        var optionDetails =
-            [
-                {name: "Single Line Text Field",id:"TEXT"},
-                {name: "Multi Line Text Field" ,id:"TEXTAREA"},
-                {name: "Dropdown Field", id:"OPTIONS"},
-                {name: "Checkbox Field", id:"CHECKBOX"},
-                {name: "Radio Buttons Field", id:"RADIO"},
-                {name: "Date Field", id:"DATE"}
-            ];
-
-        if(currentUser === null) {
-            $location.url("/home");
-        } else {
-            displayFields();
-        }
-
-        function displayFields() {
+        function initialize() {
+            FieldService.getFieldsForForm(formId).then(function(response) {
+                    vm.fields = response.data;
+                });
 
             FormService.findFormById(formId).then(function(response) {
                     vm.form = response.data;
-                    vm.fields = response.data.fields;
                 });
         }
 
+        initialize();
+
         function editField(field){
             vm.fieldEdit = field;
-            var value = !(vm.fieldEdit.type == "TEXT" || vm.fieldEdit.type == "TEXTAREA" || vm.fieldEdit.type == "EMAIL");
+            vm.label = field.label;
 
-            if(value){
+            var op =field.options;
+
+            if(op){
                 var optionList = [];
-                var op =vm.fieldEdit.options;
                 for(var u in op){
-                    optionList.push(op[u].label+ ":" +op[u].id)
-                }
-                vm.optionText = optionList.join("\n");
-            }
-        }
-
-        function commitEdit(field){
-            vm.fieldEdit = field;
-            var value = !(field.type == 'TEXT' || field.type == 'TEXTAREA'|| vm.fieldEdit.type == "EMAIL");
-
-            if(value){
-                var optionList =[];
-                console.log("optionText" +vm.optionText);
-                var op = vm.optionText;
-                for(var u in op){
-                    var val = op[u].split(':');
-                    optionList.push({
-                        label:val[0],
-                        id:val[1]
-                    });
+                    optionList.push(op[u].label+ ":" +op[u].value+ "\n")
                 }
                 vm.fieldEdit.options = optionList;
             }
-            else {
-                FieldService.updateField(formId, vm.fieldEdit._id, vm.fieldEdit).then(displayFields);
-                vm.fieldEdit = null;
+            if(field.placeholder){
+                vm.placeholder = field.placeholder;
             }
         }
 
-        function deleteField(field){
-            vm.currentField = null;
-            FieldService.deleteFieldFromForm(formId, field._id).then(displayFields);
+        function commitEdit(){
+            if(vm.fieldEdit.options){
+                var opt = vm.options.split("\n");
+                var optionList =[];
+
+                for(var u in opt){
+                    var val = opt[u].split(":");
+                    optionList.push({"label":val[0],"value":val[1]});
+                }
+                vm.fieldEdit.options = optionList;
+            }
+
+            if(vm.fieldEdit.placeholder) {
+                vm.fieldEdit.placeholder = vm.placeholder
+            }
+
+            vm.fieldEdit.label = vm.label;
+
+            FieldService.updateField(formId, vm.fieldEdit._id, vm.fieldEdit).then(initialize());
+            vm.label = null;
+            vm.placeholder = null;
+            vm.options = null;
+        }
+
+        function deleteField(fieldId) {
+            FieldService.deleteFieldFromForm(formId, fieldId).then(initialize());
         }
 
         function addField(fieldType){
-            var field = {"label": "", "type":optionType(fieldType),"Placeholder":"","options":"null"};
-            FieldService.createFieldForForm(formId, field).then(displayFields);
+            var field;
+            switch(fieldType) {
+                case "TEXT":
+                    field = {"_id": null, "label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
+                    break;
+                case "TEXTAREA":
+                    field = {"_id": null, "label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
+                    break;
+                case "DATE":
+                    field = {"_id": null, "label": "New Date Field", "type": "DATE"};
+                    break;
+                case "OPTIONS":
+                    field = {
+                        "_id": null, "label": "New Dropdown", "type": "OPTIONS", "options": [
+                            {"label": "Option 1", "value": "OPTION_1"},
+                            {"label": "Option 2", "value": "OPTION_2"},
+                            {"label": "Option 3", "value": "OPTION_3"}
+                        ]
+                    };
+                    break;
+
+                case "CHECKBOXES":
+                    field = {
+                        "_id": null, "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+                            {"label": "Option A", "value": "OPTION_A"},
+                            {"label": "Option B", "value": "OPTION_B"},
+                            {"label": "Option C", "value": "OPTION_C"}
+                        ]
+                    };
+                    break;
+                case "RADIOS":
+                    field = {
+                        "_id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
+                            {"label": "Option X", "value": "OPTION_X"},
+                            {"label": "Option Y", "value": "OPTION_Y"},
+                            {"label": "Option Z", "value": "OPTION_Z"}
+                        ]
+                    };
+                    break;
+            }
+            FieldService.createFieldForForm(formId, field).then(initialize());
         }
 
-        function optionType(fieldType) {
-            for(var u in optionDetails) {
-                if(optionDetails[u].name == fieldType) {
-                    return optionDetails[u].id;
-                }
-            }
+        function repeatField(field){
+            FieldService.createFieldForForm(formId, field).then(initialize());
         }
     }
-}());
+
+})();
