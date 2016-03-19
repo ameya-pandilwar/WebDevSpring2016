@@ -6,9 +6,9 @@
     "use strict";
     angular
         .module("FormBuilderApp")
-        .controller("FormsController", FormsController)
+        .controller("FormController", FormController)
 
-    function FormsController($scope, FormService, UserService) {
+    function FormController($scope, FormService, UserService) {
         var selectedForm = null;
 
         $scope.addForm = addForm;

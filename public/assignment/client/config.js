@@ -19,12 +19,12 @@
                 controller: "AdminController"
             })
             .when("/forms", {
-                templateUrl: "client/views/forms/forms.view.html",
-                controller: "FormsController"
+                templateUrl: "client/views/forms/form.view.html",
+                controller: "FormController"
             })
             .when("/fields", {
-                templateUrl: "client/views/forms/fields.view.html",
-                controller: "FieldsController"
+                templateUrl: "client/views/forms/field.view.html",
+                controller: "FieldController"
             })
             .when("/login", {
                 templateUrl: "client/views/users/login.view.html",

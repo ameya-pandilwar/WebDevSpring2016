@@ -6,9 +6,9 @@
     "use strict";
     angular
         .module("FormBuilderApp")
-        .controller("FieldsController", FieldsController)
+        .controller("FieldController", FieldController)
 
-    function FieldsController($scope, $location) {
+    function FieldController($scope, $location) {
 
     }
 }());
