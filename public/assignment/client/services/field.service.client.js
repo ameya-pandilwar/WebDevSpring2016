@@ -5,9 +5,9 @@
 (function() {
     angular
         .module("FormBuilderApp")
-        .factory("FieldsService", fieldsService);
+        .factory("FieldService", fieldService);
 
-    function fieldsService($http) {
+    function fieldService($http) {
         var service = {
             createFieldForForm: createFieldForForm,
             getFieldsForForm: getFieldsForForm,

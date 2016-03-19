@@ -11,7 +11,9 @@ module.exports = function(app, userModel) {
 
     function createUser(req, res) {
         var user = req.body;
-        res.json(userModel.createUser(user));
+        var newUser = userModel.createUser(user);
+        req.session.currentUser = newUser;
+        res.json(newUser);
     }
 
     function findUser(req, res) {
@@ -36,8 +38,8 @@ module.exports = function(app, userModel) {
     function updateUserById(req, res) {
         var id = req.params.id;
         var user = req.body;
-        var userTemp = userModel.updateUser(id, user);
-        res.json(userModel.findAllUsers());
+        var updatedUser = userModel.updateUser(id, user);
+        res.json(updatedUser);
     }
 
     function deleteUserById(req, res) {

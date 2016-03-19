@@ -2,7 +2,7 @@
     <h1>Forms</h1>
     <div class="table responsive">
         <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#">Forms</a></li>
+            <li role="presentation" class="active"><a>Forms</a></li>
             <li role="presentation"><a href="#/fields">Fields</a></li>
         </ul>
         <table class="table table-striped">
@@ -16,15 +16,15 @@
                 <tr>
                     <td><input ng-model="formName" class="form-control" type="text" placeholder="name"></td>
                     <td>
-                        <a ng-click="addForm()"><span class="glyphicon glyphicon-plus"></span></a>&emsp;
-                        <a ng-click="updateForm()"><span class="glyphicon glyphicon-ok"></span></a>
+                        <button class="btn btn-info" ng-click="addForm()"><span class="glyphicon glyphicon-plus"></span></button>&emsp;
+                        <button class="btn btn-success" ng-click="updateForm()"><span class="glyphicon glyphicon-ok"></span></button>
                     </td>
                 </tr>
                 <tr ng-repeat="form in forms">
-                    <td>{{form.title}}</td>
+                    <td><a href="#/form/{{form._id}}/fields">{{form.title}}</a></td>
                     <td>
-                        <a ng-click="deleteForm($index)"><span class="glyphicon glyphicon-remove"></span></a>&emsp;
-                        <a ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <button class="btn btn-danger" ng-click="deleteForm($index)"><span class="glyphicon glyphicon-remove"></span></button>&emsp;
+                        <button class="btn btn-warning"  ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil"></span></button>
                     </td>
                 </tr>
             </tbody>

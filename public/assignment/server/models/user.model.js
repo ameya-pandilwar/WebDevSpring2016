@@ -54,7 +54,7 @@ module.exports = function () {
 
     function createUser(user) {
         var newUser = {
-            _id: (new Date).getTime(),
+            _id: (new Date).getTime().toString(),
             username: user.username,
             password: user.password,
             firstName: user.firstName,
@@ -64,7 +64,7 @@ module.exports = function () {
         };
 
         users.push(newUser);
-        return users;
+        return newUser;
     }
 
     function deleteUserById(userId) {
