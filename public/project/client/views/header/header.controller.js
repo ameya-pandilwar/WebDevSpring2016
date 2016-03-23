@@ -5,7 +5,7 @@
 (function () {
     "use strict";
     angular
-        .module("ProjectApp")
+        .module("CatalogApp")
         .controller("HeaderController", HeaderController);
 
     function HeaderController($scope, $location, UserService) {
