@@ -5,20 +5,31 @@
 (function () {
     "use strict";
     angular
-        .module("ProjectApp")
+        .module("CatalogApp")
         .controller("CourseController", CourseController)
 
-    function CourseController($scope, CourseService) {
-        var selectedCourse = null;
+    function CourseController($scope, $rootScope, $location, CourseService) {
+        var selectedCourse = CourseService.getCurrentCourse();
+        $scope.course = selectedCourse;
 
         $scope.addCourse = addCourse;
         $scope.deleteCourse = deleteCourse;
         $scope.selectCourse = selectCourse;
         $scope.updateCourse = updateCourse;
+        $scope.viewCourses = viewCourses;
+        $scope.viewModule = viewModule;
 
-        CourseService.findAllCourses(function(callback) {
-            $scope.courses = callback;
-        });
+        function viewCourses() {
+            CourseService.findAllCourses().then(function(response) {
+                $scope.courses = response.data;
+            });
+        }
+
+        function viewModule(index) {
+            var selectedModule = selectedCourse.modules[index];
+            $rootScope.selectedModule = selectedModule;
+            $location.url("/module/" + selectedModule);
+        }
 
         function selectCourse(index) {
             selectedCourse = $scope.courses[index];
@@ -29,8 +40,8 @@
 
         function addCourse(){
             var newCourse = {"number": $scope.number, "timing": $scope.timing, "location": $scope.location};
-            CourseService.createCourse(newCourse, function(callback) {
-                $scope.courses = callback;
+            CourseService.createCourse(newCourse).then(function(response) {
+                $scope.courses = response.data;
                 $scope.number = "";
                 $scope.timing = "";
                 $scope.location = "";
@@ -42,7 +53,7 @@
                 selectedCourse.number = $scope.number;
                 selectedCourse.timing = $scope.timing;
                 selectedCourse.location = $scope.location;
-                CourseService.updateCourseById(selectedCourse._id, selectedCourse, function(callback) {
+                CourseService.updateCourseById(selectedCourse._id, selectedCourse).then(function(response) {
                     $scope.number = "";
                     $scope.timing = "";
                     $scope.location = "";
@@ -51,9 +62,10 @@
         }
 
         function deleteCourse(index) {
-            CourseService.deleteCourseById($scope.courses[index]._id, function(callback) {
-                $scope.courses = callback;
+            CourseService.deleteCourseById($scope.courses[index]._id).then(function(response) {
+                $scope.courses = response.data;
             });
         }
+
     }
 }());
