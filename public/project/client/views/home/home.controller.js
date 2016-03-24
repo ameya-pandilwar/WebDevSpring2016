@@ -5,7 +5,7 @@
 (function () {
     "use strict";
     angular
-        .module("ProjectApp")
+        .module("CatalogApp")
         .controller("HomeController", HomeController)
 
     function HomeController($scope, $location) {
