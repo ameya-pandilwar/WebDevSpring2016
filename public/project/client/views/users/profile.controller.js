@@ -1,14 +1,14 @@
 /**
- * Created by ameyapandilwar on 3/3/16.
+ * Created by ameyapandilwar on 3/20/16.
  */
 
 (function () {
     "use strict";
     angular
-        .module("ProjectApp")
+        .module("CatalogApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($scope, UserService, $location) {
+    function ProfileController($scope, $location, UserService) {
         $scope.error = null;
         $scope.message = null;
 
@@ -46,8 +46,8 @@
 
             var userId = user._id;
 
-            UserService.updateUser(userId, user, function(callback) {
-                UserService.setCurrentUser(callback);
+            UserService.updateUserById(userId, user).then(function(response) {
+                UserService.setCurrentUser(response.data);
                 $scope.message = "User updated successfully";
                 $location.url('/profile');
             });
