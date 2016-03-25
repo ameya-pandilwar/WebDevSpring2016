@@ -1,11 +1,11 @@
 /**
- * Created by ameyapandilwar on 3/1/16.
+ * Created by ameyapandilwar on 3/20/16.
  */
 
 (function () {
     "use strict";
     angular
-        .module("ProjectApp")
+        .module("CatalogApp")
         .controller("MainController", MainController)
 
     function MainController($scope, $location) {
@@ -14,7 +14,7 @@
         $scope.hideSidebar = hideSidebar;
 
         function hideSidebar() {
-            return ($location.url() === '/home' || $location.url() === '/proposal' || $location.url() === '/mockups');
+            return ($location.url() === '/home' || $location.url() === '/course');
         }
     }
 }());
