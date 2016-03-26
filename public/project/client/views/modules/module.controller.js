@@ -8,7 +8,7 @@
         .module("CatalogApp")
         .controller("ModuleController", ModuleController)
 
-    function ModuleController($scope, $rootScope, CourseService) {
+    function ModuleController($scope, $rootScope, $location, CourseService) {
         var selectedCourse = CourseService.getCurrentCourse();
         $scope.course = selectedCourse;
 
@@ -17,12 +17,19 @@
         $scope.selectModule = selectModule;
         $scope.updateModule = updateModule;
         $scope.searchModule = searchModule;
+        $scope.viewModule = viewModule;
 
         function selectModule(index) {
             selectedCourse = $scope.courses[index];
             $scope.number = selectedCourse.number;
             $scope.timing = selectedCourse.timing;
             $scope.location = selectedCourse.location;
+        }
+
+        function viewModule(index) {
+            var selectedModule = selectedCourse.modules[index];
+            $rootScope.selectedModule = selectedModule;
+            $location.url("/module/" + selectedModule);
         }
 
         function addModule(){

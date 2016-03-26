@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="list-group" ng-show="moduleSearchResult">
-        <div ng-click="viewCourse($index)" class="list-group-item">
+        <div class="list-group-item">
             <table style="width: 100%">
                 <tr>
                     <td><h3 class="list-group-item-heading">Module {{moduleSearchResult}}</h3></td>
@@ -25,10 +25,10 @@
     <br>
 
     <div class="list-group">
-        <div ng-click="viewCourse($index)" class="list-group-item" ng-repeat="module in currentCourse.modules">
+        <div class="list-group-item" ng-repeat="module in currentCourse.modules">
             <table style="width: 100%">
                 <tr>
-                    <td><h3 class="list-group-item-heading"><a href="#/module/{{module}}">Module {{module}}</a></h3></td>
+                    <td><h3 class="list-group-item-heading"><a ng-click="viewModule($index)">Module {{module}}</a></h3></td>
                     <td align="right">
                         <a ng-click="deleteModule($index)"><span class="glyphicon glyphicon-remove-circle"></span></a>
                     </td>
