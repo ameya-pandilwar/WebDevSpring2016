@@ -1,27 +1,18 @@
 /**
- * Created by ameyapandilwar on 3/1/16.
+ * Created by ameyapandilwar on 3/18/16.
  */
 
 (function () {
     "use strict";
     angular
-        .module("ProjectApp")
+        .module("CatalogApp")
         .config(configuration);
 
     function configuration($routeProvider) {
         $routeProvider
-            .when("/poc", {
+            .when("/home", {
                 templateUrl: "client/views/home/home.view.html",
                 controller: "HomeController"
-            })
-            .when("/home", {
-                templateUrl: "client/landing.html"
-            })
-            .when("/proposal", {
-                templateUrl: "client/proposal.html"
-            })
-            .when("/mockups", {
-                templateUrl: "client/mockups.html"
             })
             .when("/admin", {
                 templateUrl: "client/views/admin/admin.view.html",
@@ -39,21 +30,21 @@
                 templateUrl: "client/views/users/profile.view.html",
                 controller: "ProfileController"
             })
-            .when("/syllabus", {
-                templateUrl: "client/views/courses/syllabus.view.html",
-                controller: "SyllabusController"
+            .when("/module", {
+                templateUrl: "client/views/modules/module.view.html",
+                controller: "ModuleController"
             })
-            .when("/schedule", {
-                templateUrl: "client/views/courses/schedule.view.html",
-                controller: "ScheduleController"
+            .when("/module/:id", {
+                templateUrl: "client/views/modules/detail.view.html",
+                controller: "ModuleController"
             })
             .when("/course", {
+                templateUrl: "client/views/courses/brochure.view.html",
+                controller: "BrochureController"
+            })
+            .when("/course/:id", {
                 templateUrl: "client/views/courses/course.view.html",
                 controller: "CourseController"
-            })
-            .when("/appointment", {
-                templateUrl: "client/views/appointments/appointment.view.html",
-                controller: "AppointmentController"
             })
             .otherwise({
                 redirectTo: "/home"
