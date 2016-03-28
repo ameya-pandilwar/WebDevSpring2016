@@ -42,7 +42,8 @@
             })
             .when("/register", {
                 templateUrl: "client/views/users/register.view.html",
-                controller: "RegisterController"
+                controller: "RegisterController",
+                controllerAs: "model"
             })
             .otherwise({
                 redirectTo: "/home"
