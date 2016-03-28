@@ -8,39 +8,40 @@
         .module("FormBuilderApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($scope, UserService, $location) {
-        $scope.error = null;
-        $scope.message = null;
+    function ProfileController(UserService, $location) {
+        var vm = this;
+        vm.error = null;
+        vm.message = null;
 
-        $scope.update = update;
+        vm.update = update;
 
-        $scope.currentUser = UserService.getCurrentUser();
-        if (!$scope.currentUser) {
+        vm.currentUser = UserService.getCurrentUser();
+        if (!vm.currentUser) {
             $location.url("/home");
         }
 
         function update(user) {
-            $scope.error = null;
-            $scope.message = null;
+            vm.error = null;
+            vm.message = null;
 
             if (user == null) {
-                $scope.error = "Please fill in the required fields";
+                vm.error = "Please fill in the required fields";
                 return;
             }
             if (!user.password) {
-                $scope.error = "Please provide a password";
+                vm.error = "Please provide a password";
                 return;
             }
             if (!user.firstName) {
-                $scope.error = "Please provide a first name";
+                vm.error = "Please provide a first name";
                 return;
             }
             if (!user.lastName) {
-                $scope.error = "Please provide a last name";
+                vm.error = "Please provide a last name";
                 return;
             }
             if (!user.email) {
-                $scope.error = "Please provide an email";
+                vm.error = "Please provide an email";
                 return;
             }
 
@@ -48,7 +49,7 @@
 
             UserService.updateUser(userId, user).then(function(response) {
                 UserService.setCurrentUser(response.data);
-                $scope.message = "User updated successfully";
+                vm.message = "User updated successfully";
                 $location.url('/profile');
             });
         }

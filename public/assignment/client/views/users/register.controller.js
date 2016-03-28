@@ -20,7 +20,7 @@
                 return;
             }
             if (!user.username) {
-                this.message = "Please provide a username";
+                vm.message = "Please provide a username";
                 return;
             }
             if (!user.password || !user.verifypassword) {

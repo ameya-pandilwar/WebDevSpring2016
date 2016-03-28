@@ -38,7 +38,8 @@
             })
             .when("/profile", {
                 templateUrl: "client/views/users/profile.view.html",
-                controller: "ProfileController"
+                controller: "ProfileController",
+                controllerAs: "model"
             })
             .when("/register", {
                 templateUrl: "client/views/users/register.view.html",
