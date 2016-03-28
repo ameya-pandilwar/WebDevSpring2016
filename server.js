@@ -3,6 +3,7 @@ var cookieParser = require('cookie-parser');
 var express      = require('express');
 var multer       = require('multer')
 var session      = require('express-session');
+var mongoose     = require('mongoose');
 
 var app = express();
 
