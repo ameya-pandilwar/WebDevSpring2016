@@ -8,7 +8,7 @@
         .module("FormBuilderApp")
         .controller("SidebarController", SidebarController);
 
-    function SidebarController($scope, $location) {
+    function SidebarController($location) {
 
     }
 }());
