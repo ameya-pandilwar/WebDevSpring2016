@@ -20,7 +20,8 @@
             })
             .when("/forms", {
                 templateUrl: "client/views/forms/form.view.html",
-                controller: "FormController"
+                controller: "FormController",
+                controllerAs: "model"
             })
             .when("/fields", {
                 templateUrl: "client/views/forms/field.view.html",
