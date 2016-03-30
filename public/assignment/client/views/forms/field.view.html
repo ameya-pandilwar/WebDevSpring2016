@@ -14,7 +14,7 @@
                     <textarea ng-switch-when="TEXTAREA" class="form-control" placeholder="{{field.placeholder}}"></textarea>
                     <input ng-switch-when="EMAIL" type="email" class="form-control" placeholder="{{field.placeholder}}">
                     <input ng-switch-when="DATE" type="date" class="form-control">
-                    <select ng-switch-when="OPTIONS">
+                    <select ng-switch-when="OPTIONS" class="form-control">
                         <option ng-repeat="option in field.options track by $index">{{option.label}}</option>
                     </select>
                     <div ng-switch-when="CHECKBOXES">
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <button ng-click="model.commitEdit()" type="button" class="btn btn-default" data-dismiss="modal">OK</button>
                 </div>
             </div>
