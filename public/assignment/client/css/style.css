@@ -5,3 +5,8 @@
 .cs-hidden {
     visibility: hidden;
 }
+
+.brand-icon {
+    vertical-align: middle;
+    height: 25px;
+}
