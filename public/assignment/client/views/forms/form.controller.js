@@ -45,6 +45,7 @@
                         vm.forms = response.data;
                     })
                     vm.formName = "";
+                    selectedForm = null;
                 });
             }
         }
