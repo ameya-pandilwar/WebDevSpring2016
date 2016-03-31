@@ -2,9 +2,14 @@
  * Created by ameyapandilwar on 3/7/16.
  */
 
-var forms = require("./form.mock.json");
+var q = require('q');
+var uuid = require('node-uuid');
 
-module.exports = function() {
+module.exports = function(db, mongoose) {
+
+    var FormSchema = require("./form.schema.server.js")(mongoose);
+
+    var FormModel = mongoose.model('FormModel', FormSchema);
 
     var api = {
         createFormField: createFormField,
