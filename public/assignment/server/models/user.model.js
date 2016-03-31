@@ -2,9 +2,14 @@
  * Created by ameyapandilwar on 3/7/16.
  */
 
-var users = require("./user.mock.json");
+var q = require('q');
+var uuid = require('node-uuid');
 
-module.exports = function () {
+module.exports = function (db, mongoose) {
+
+    var UserSchema = require("./user.schema.server.js")(mongoose);
+
+    var UserModel = mongoose.model('UserModel', UserSchema);
 
     var api = {
         createUser: createUser,
