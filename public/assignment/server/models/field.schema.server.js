@@ -8,7 +8,7 @@ module.exports = function (mongoose) {
         label: String,
         type: {
             type: String,
-            enum: ['TEXT', 'EMAIL', 'PASSWORD', 'OPTIONS', 'DATE', 'RADIOS', 'CHECKBOXES']
+            enum: ['TEXT', 'EMAIL', 'TEXTAREA', 'PASSWORD', 'OPTIONS', 'DATE', 'RADIOS', 'CHECKBOXES']
         },
         placeholder: String,
         options: [
@@ -16,6 +16,6 @@ module.exports = function (mongoose) {
                 label: String,
                 value: String
             }]
-    }, {collection: 'assignment.field'});
+    }, {collection: 'field'});
     return FieldSchema;
 }

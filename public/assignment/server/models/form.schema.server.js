@@ -12,6 +12,6 @@ module.exports = function (mongoose) {
         fields: FieldSchema,
         created: Date,
         update: Date
-    }, {collection: 'assignment.form'});
+    }, {collection: 'form'});
     return FormSchema;
 }

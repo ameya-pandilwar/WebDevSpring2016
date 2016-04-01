@@ -11,6 +11,6 @@ module.exports = function (mongoose) {
         lastName: String,
         email: [String],
         roles: [String]
-    }, {collection: 'assignment.user'});
+    }, {collection: 'user'});
     return UserSchema;
 };
