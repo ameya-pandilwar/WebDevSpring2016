@@ -9,23 +9,23 @@ var app = express();
 
 var public_folder = __dirname + '/public';
 
-var connectionString = 'mongodb://localhost/WebDev2016'
+var connectionUrl = 'mongodb://localhost/webdev2016'
 
 app.use(express.static(public_folder));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
-    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+    connectionUrl = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
             process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
             process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
             process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
             process.env.OPENSHIFT_APP_NAME;
     }
 
-var session_secret = 'WebDev2016';
+var session_secret = 'webdev2016';
 
-var db = mongoose.connect(connectionString);
+var db = mongoose.connect(connectionUrl);
 
 app.use(multer());
 app.use(bodyParser.json());
