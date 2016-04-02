@@ -9,7 +9,7 @@ var app = express();
 
 var public_folder = __dirname + '/public';
 
-var connectionUrl = 'mongodb://localhost/webdev2016'
+var connectionUrl = 'mongodb://localhost/webdev'
 
 app.use(express.static(public_folder));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
@@ -23,7 +23,7 @@ if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
             process.env.OPENSHIFT_APP_NAME;
     }
 
-var session_secret = 'webdev2016';
+var session_secret = 'webdev';
 
 var db = mongoose.connect(connectionUrl);
 
