@@ -5,13 +5,11 @@
 module.exports = function (mongoose) {
     var FieldSchema = require("./field.schema.server.js")(mongoose);
 
-    var FormSchema = mongoose.Schema({
-        _id: String,
+    return mongoose.Schema({
         userId: String,
-        title: String,
-        fields: FieldSchema,
-        created: Date,
-        update: Date
+        title: {type: String, default: 'New Form'},
+        fields: [FieldSchema],
+        created: {type: Date, default: Date.now()},
+        updated: {type: Date, default: Date.now()}
     }, {collection: 'form'});
-    return FormSchema;
-}
+};
