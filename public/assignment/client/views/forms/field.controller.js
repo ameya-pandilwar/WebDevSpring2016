@@ -40,15 +40,16 @@
             vm.fieldEdit = field;
             vm.label = field.label;
 
-            var op =field.options;
+            var op = field.options;
 
-            if(op){
+            if (op) {
                 var optionList = [];
                 for(var u in op){
                     optionList.push(op[u].label+ ":" +op[u].value+ "\n")
                 }
                 vm.fieldEdit.options = optionList;
             }
+
             if(field.placeholder){
                 vm.placeholder = field.placeholder;
             }
@@ -72,62 +73,67 @@
 
             vm.fieldEdit.label = vm.label;
 
-            FieldService.updateField(formId, vm.fieldEdit._id, vm.fieldEdit).then(initialize());
+            FieldService.updateField(formId, vm.fieldEdit._id, vm.fieldEdit).then(function(response){initialize()});
             vm.label = null;
             vm.placeholder = null;
             vm.options = null;
         }
 
         function deleteField(fieldId) {
-            FieldService.deleteFieldFromForm(formId, fieldId).then(initialize());
+            FieldService.deleteFieldFromForm(formId, fieldId).then(function(response){initialize()});
         }
 
         function addField(fieldType){
             var field;
             switch(fieldType) {
                 case "TEXT":
-                    field = {"_id": null, "label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
+                    field = {"label": "New Text Field", "type": "TEXT", "placeholder": "New Text Field"};
                     break;
                 case "TEXTAREA":
-                    field = {"_id": null, "label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
+                    field = {"label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Textarea Field"};
                     break;
-                case "DATE":
-                    field = {"_id": null, "label": "New Date Field", "type": "DATE"};
+                case "EMAIL":
+                    field = {"label": "New Email Field", "type": "EMAIL", "placeholder": "New Email Field"};
+                    break;
+                case "PASSWORD":
+                    field = {"label": "New Password Field", "type": "PASSWORD", "placeholder": "New Passowrd Field"};
                     break;
                 case "OPTIONS":
                     field = {
-                        "_id": null, "label": "New Dropdown", "type": "OPTIONS", "options": [
+                        "label": "New Dropdown", "type": "OPTIONS", "options": [
                             {"label": "Option 1", "value": "OPTION_1"},
                             {"label": "Option 2", "value": "OPTION_2"},
                             {"label": "Option 3", "value": "OPTION_3"}
                         ]
                     };
                     break;
-
-                case "CHECKBOXES":
-                    field = {
-                        "_id": null, "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
-                            {"label": "Option A", "value": "OPTION_A"},
-                            {"label": "Option B", "value": "OPTION_B"},
-                            {"label": "Option C", "value": "OPTION_C"}
-                        ]
-                    };
+                case "DATE":
+                    field = {"label": "New Date Field", "type": "DATE"};
                     break;
                 case "RADIOS":
                     field = {
-                        "_id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
+                        "label": "New Radio Buttons", "type": "RADIOS", "options": [
                             {"label": "Option X", "value": "OPTION_X"},
                             {"label": "Option Y", "value": "OPTION_Y"},
                             {"label": "Option Z", "value": "OPTION_Z"}
                         ]
                     };
                     break;
+                case "CHECKBOXES":
+                    field = {
+                        "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+                            {"label": "Option A", "value": "OPTION_A"},
+                            {"label": "Option B", "value": "OPTION_B"},
+                            {"label": "Option C", "value": "OPTION_C"}
+                        ]
+                    };
+                    break;
             }
-            FieldService.createFieldForForm(formId, field).then(initialize());
+            FieldService.createFieldForForm(formId, field).then(function(response){initialize()});
         }
 
         function repeatField(field){
-            FieldService.createFieldForForm(formId, field).then(initialize());
+            FieldService.createFieldForForm(formId, field).then(function(response){initialize()});
         }
     }
 

@@ -13,6 +13,7 @@
                     <input ng-switch-when="TEXT" type="text" class="form-control" placeholder="{{field.placeholder}}">
                     <textarea ng-switch-when="TEXTAREA" class="form-control" placeholder="{{field.placeholder}}"></textarea>
                     <input ng-switch-when="EMAIL" type="email" class="form-control" placeholder="{{field.placeholder}}">
+                    <input ng-switch-when="PASSWORD" type="password" class="form-control" placeholder="{{field.placeholder}}">
                     <input ng-switch-when="DATE" type="date" class="form-control">
                     <select ng-switch-when="OPTIONS" class="form-control">
                         <option ng-repeat="option in field.options track by $index">{{option.label}}</option>
@@ -43,6 +44,8 @@
             <select ng-model = "model.fieldType" class="form-control">
                 <option value="TEXT">Single Line Text Field</option>
                 <option value="TEXTAREA">Multi Line Text Field</option>
+                <option value="EMAIL">Email Field</option>
+                <option value="PASSWORD">Password Field</option>
                 <option value="DATE">Date Field</option>
                 <option value="OPTIONS">Dropdown Field</option>
                 <option value="CHECKBOXES">Checkboxes Field</option>

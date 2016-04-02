@@ -31,7 +31,9 @@
         function addForm(){
             var newForm = {"title": vm.formName};
             FormService.createFormForUser(userId, newForm).then(function(response) {
-                vm.forms = response.data;
+                FormService.findAllFormsForUser(userId).then(function(response) {
+                    vm.forms = response.data;
+                });
                 vm.formName = "";
             });
         }
