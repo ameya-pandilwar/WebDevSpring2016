@@ -13,6 +13,9 @@
         vm.login = login;
 
         function login() {
+            if (!vm.username && !vm.password) {
+                return;
+            }
             UserService.findUserByCredentials(vm.username, vm.password).then(function(response) {
                 UserService.setCurrentUser(response.data);
                 $location.url('/profile');
