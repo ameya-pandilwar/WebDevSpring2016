@@ -1,9 +1,11 @@
-var bodyParser   = require('body-parser');
-var cookieParser = require('cookie-parser');
-var express      = require('express');
-var multer       = require('multer')
-var session      = require('express-session');
-var mongoose     = require('mongoose');
+var bodyParser      = require('body-parser');
+var cookieParser    = require('cookie-parser');
+var express         = require('express');
+var multer          = require('multer')
+var session         = require('express-session');
+var mongoose        = require('mongoose');
+var passport        = require('passport');
+var localStrategy   = require('passport-local');
 
 var app = express();
 
@@ -36,6 +38,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/hello', function(req, res){
     res.send('hello world');
