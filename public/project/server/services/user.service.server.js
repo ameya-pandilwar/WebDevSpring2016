@@ -1,19 +1,23 @@
 /**
- * Created by ameyapandilwar on 3/25/16.
+ * Created by ameyapandilwar on 3/7/16.
  */
 
 module.exports = function(app, userModel) {
-    app.post("/api/catalog/user", createUser);
-    app.get("/api/catalog/user", findUser);
-    app.get("/api/catalog/user/:id", findUserById);
-    app.put("/api/catalog/user/:id", updateUserById);
-    app.delete("/api/catalog/user/:id", deleteUserById);
+    app.post("/api/ds/catalog/user", createUser);
+    app.get("/api/ds/catalog/user", findUser);
+    app.get("/api/ds/catalog/user/:id", findUserById);
+    app.put("/api/ds/catalog/user/:id", updateUserById);
+    app.delete("/api/ds/catalog/user/:id", deleteUserById);
+    app.put("/api/ds/catalog/user/:id/enroll", enrollUserInCourse);
 
     function createUser(req, res) {
         var user = req.body;
-        var newUser = userModel.createUser(user);
-        req.session.currentUser = newUser;
-        res.json(newUser);
+        userModel.createUser(user).then(function(user) {
+            req.session.currentUser = user;
+            res.json(user);
+        }, function(err) {
+            res.status(400).send(err);
+        });
     }
 
     function findUser(req, res) {
@@ -21,30 +25,58 @@ module.exports = function(app, userModel) {
         var password = req.query.password;
 
         if (username && password) {
-            res.json(userModel.findUserByCredentials({'username': username, 'password': password}));
+            userModel.findUserByCredentials({username: username, password: password}).then(function(user) {
+                req.session.currentUser = user;
+                res.json(user);
+            }, function(err) {
+                res.status(400).send(err);
+            });
         } else if (username) {
-            res.json(userModel.findUserByUsername(username));
+            userModel.findUserByUsername(username).then(function(user) {
+                res.json(user);
+            }, function(err) {
+                res.status(400).send(err);
+            });
         } else {
-            res.json(userModel.findAllUsers());
+            userModel.findAllUsers().then(function(users) {
+                res.json(users);
+            }, function(err) {
+                res.status(400).send(err);
+            });
         }
     }
 
     function findUserById(req, res) {
         var id = req.params.id;
-        var user = userModel.findUserById(id);
-        res.json(user);
+        userModel.findUserById(id).then(function(user) {
+            res.json(user);
+        }, function(err) {
+            res.status(400).send(err);
+        });
     }
 
     function updateUserById(req, res) {
-        var id = req.params.id;
-        var user = req.body;
-        var updatedUser = userModel.updateUser(id, user);
-        res.json(updatedUser);
+        userModel.updateUser(req.params.id, req.body).then(function(user) {
+            res.json(user);
+        }, function(err) {
+            res.status(400).send(err);
+        });
     }
 
     function deleteUserById(req, res) {
-        var id = req.params.id;
-        var user = userModel.deleteUserById(id);
-        res.json(userModel.findAllUsers());
+        userModel.deleteUserById(req.params.id).then(function(user) {
+            res.json(200);
+        }, function(err) {
+            res.status(400).send(err);
+        });
     }
+
+    function enrollUserInCourse(req, res) {
+        userModel.enrollUserInCourse(req.params.id, req.body).then(function(user) {
+            res.json(user);
+        }, function(err) {
+            res.status(400).send(err);
+        });
+    }
+
 };
