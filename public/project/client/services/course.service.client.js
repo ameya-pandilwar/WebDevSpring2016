@@ -12,6 +12,7 @@
         var service = {
             createCourse: createCourse,
             deleteCourseById: deleteCourseById,
+            findCourseById: findCourseById,
             findAllCourses: findAllCourses,
             findAllCoursesForUser: findAllCoursesForUser,
             findCourseByUserId: findCourseByUserId,
@@ -21,21 +22,31 @@
             updateCourseById: updateCourseById,
             addModuleToCourse: addModuleToCourse,
             deleteModuleFromCourse: deleteModuleFromCourse,
-            searchModuleInCourse: searchModuleInCourse
+            searchModuleInCourse: searchModuleInCourse,
+            updateModulesByCourseId: updateModulesByCourseId,
+            registerUserToCourse: registerUserToCourse
         };
 
         return service;
 
-        function addModuleToCourse(courseId) {
-            return $http.put('/api/catalog/course/' + courseId + '/module');
+        function addModuleToCourse(courseId, module) {
+            return $http.post('/api/ds/catalog/course/' + courseId + '/module', module);
         }
 
-        function deleteModuleFromCourse(courseId, index) {
-            return $http.put('/api/catalog/course/' + courseId + '/module/' + index);
+        function findCourseById(courseId) {
+            return $http.get('/api/ds/catalog/course/' + courseId + '/module');
+        }
+
+        function deleteModuleFromCourse(courseId, moduleId) {
+            return $http.put('/api/ds/catalog/course/' + courseId + '/module/' + moduleId);
         }
 
         function searchModuleInCourse(courseId, moduleId) {
-            return $http.get('/api/catalog/course/' + courseId + '/module/' + moduleId);
+            return $http.get('/api/ds/catalog/course/' + courseId + '/module/' + moduleId);
+        }
+
+        function updateModulesByCourseId(courseId, modules) {
+            return $http.put('/api/ds/catalog/course/' + courseId + '/module', modules);
         }
 
         function findCourseByTitle(title) {
@@ -59,11 +70,11 @@
         }
 
         function findAllCourses() {
-            return $http.get("/api/catalog/course");
+            return $http.get("/api/ds/catalog/course");
         }
 
         function findAllCoursesForUser(courseIds, callback) {
-            var courses = []
+            var courses = [];
             for (var u in model.courses) {
                 for (var id in courseIds) {
                     if (model.courses[u].number === courseIds[id]) {
@@ -75,23 +86,27 @@
         }
 
         function createCourse(course) {
-            return $http.post('/api/catalog/course', course);
+            return $http.post('/api/ds/catalog/course', course);
         }
 
         function deleteCourseById(courseId) {
-            return $http.delete('/api/catalog/course/' + courseId);
+            return $http.delete('/api/ds/catalog/course/' + courseId);
         }
 
         function updateCourseById(courseId, course) {
-            return $http.put('/api/catalog/course/' + courseId, course);
+            return $http.put('/api/ds/catalog/course/' + courseId, course);
         }
 
         function getCurrentCourse() {
             return $rootScope.currentCourse;
         }
 
-        function setCurrentCourse (course) {
+        function setCurrentCourse(course) {
             $rootScope.currentCourse = course;
+        }
+
+        function registerUserToCourse(username, courseId) {
+            return $http.put('/api/ds/catalog/course/' + courseId + '/register/' + username);
         }
     }
 }());
