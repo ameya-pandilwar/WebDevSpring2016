@@ -2,56 +2,98 @@
  * Created by ameyapandilwar on 3/8/16.
  */
 
-var courses = require("./course.mock.json");
+var q = require('q');
 
-module.exports = function() {
+module.exports = function(db, mongoose) {
+
+    var CourseSchema = require("./course.schema.server.js")(mongoose);
+    var CourseModel = mongoose.model('CatalogCourse', CourseSchema);
 
     var api = {
         viewCourses: viewCourses,
         createCourse: createCourse,
         deleteCourseById: deleteCourseById,
         findAllCourses: viewCourses,
+        findCourseById: findCourseById,
         findAllCoursesForUser: findAllCoursesForUser,
         findCourseByUserId: findCourseByUserId,
         findCourseByTitle: findCourseByTitle,
         updateCourseById: updateCourseById,
         addModuleToCourse: addModuleToCourse,
         deleteModuleFromCourse: deleteModuleFromCourse,
-        searchModuleInCourse: searchModuleInCourse
+        searchModuleInCourse: searchModuleInCourse,
+        findModulesForCourse: findModulesForCourse,
+        updateModulesInCourse: updateModulesInCourse,
+        registerUserToCourse: registerUserToCourse
     };
 
     return api;
 
     function viewCourses() {
-        return courses;
+        var deferred = q.defer();
+
+        CourseModel.find(
+            function(err, res) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(res);
+                }
+            });
+
+        return deferred.promise;
+    }
+
+    function findModulesForCourse(courseId) {
+        return CourseModel.findById(courseId);
     }
 
     function findCourseByTitle(title) {
-        for (var u in courses) {
-            if (courses[u].title === title) {
-                return courses[u];
-            }
-        }
-        return null;
+        return CourseModel.findOne({title: title});
     }
 
     function searchModuleInCourse(courseId, moduleId) {
-        var course = findCourseById(courseId);
-        for (var m in course.modules) {
-            if (m === moduleId) {
-                return m;
+        var deferred = q.defer();
+
+        CourseModel.findById(courseId, function(err, course) {
+            for (var m in course.modules) {
+                if (m.title === moduleId) {
+                    deferred.resolve(m);
+                }
             }
-        }
-        return null;
+        });
+
+        return deferred.promise;
     }
 
-    function findCourseById(courseId) {
-        for (var u in courses) {
-            if (courses[u]._id === parseInt(courseId)) {
-                return courses[u];
-            }
-        }
-        return null;
+    function updateModulesInCourse(courseId, modules) {
+        var deferred = q.defer();
+
+        getCourseById(courseId).then(function(course){
+            course.modules = modules;
+
+            course.save(function(err, savedCourse){
+                getModulesByCourseId(courseId).then(function(modules){
+                    deferred.resolve(modules);
+                });
+            });
+        });
+
+        return deferred.promise;
+    }
+
+    function getCourseById(id){
+        var deferred = q.defer();
+
+        CourseModel.findById(id, function(err, course){
+            deferred.resolve(course);
+        });
+
+        return deferred.promise;
+    }
+
+    function findCourseById(id) {
+        return CourseModel.findById(id);
     }
 
     function findCourseByUserId(courseId) {
@@ -78,71 +120,103 @@ module.exports = function() {
     }
 
     function createCourse(course) {
-        var newCourse = {
-            _id: new Date().getTime(),
-            number: course.number,
-            title: course.title,
-            timing: course.timing,
-            location: course.location,
-            userId: course.userId
-        };
-        courses.push(newCourse);
-        return courses;
-    }
+        var deferred = q.defer();
 
-    function deleteCourseById(courseId) {
-        for (var u in courses) {
-            if (courses[u]._id == courseId) {
-                courses.splice(u, 1);
-                break;
+        CourseModel.create(course, function (err, res) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(res);
             }
-        }
-        return courses;
+        });
+
+        return deferred.promise;
     }
 
-    function updateCourseById(courseId, course) {
-        for (var u in courses) {
-            if (courses[u]._id == courseId) {
-                var updatedCourse = {
-                    _id: courseId,
-                    number: course.number,
-                    title: course.title,
-                    timing: course.timing,
-                    location: course.location,
-                    userId: course.userId
-                };
-                courses[u] = updatedCourse;
-                return updatedCourse;
-            }
-        }
-    }
+    function deleteCourseById(id) {
+        var deferred = q.defer();
 
-    function addModuleToCourse(courseId) {
-        for (var u in courses) {
-            if (courses[u]._id == courseId) {
-                var modules = courses[u].modules;
-                if (modules === undefined || modules.length < 1) {
-                    modules = [];
-                    modules.push(1);
+        CourseModel.remove({_id: id},
+            function(err, res) {
+                if (err) {
+                    deferred.reject(err);
                 } else {
-                    modules.push(parseInt(modules[modules.length - 1]) + 1);
+                    deferred.resolve(res);
                 }
-                courses[u].modules = modules;
-                return courses[u];
-            }
-        }
-        return courses;
+            });
+
+        return deferred.promise;
     }
 
-    function deleteModuleFromCourse(courseId, id) {
-        for (var u in courses) {
-            if (courses[u]._id == courseId) {
-                var modules = courses[u].modules;
-                modules.splice(id, 1);
-                courses[u].modules = modules;
-                return courses[u];
-            }
-        }
-        return courses;
+    function updateCourseById(id, course) {
+        var deferred = q.defer();
+
+        CourseModel.update(
+            {_id: id},
+            {$set: course},
+            function (err, res) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(res);
+                }
+            });
+
+        return deferred.promise;
+    }
+
+    function addModuleToCourse(id, module) {
+        var deferred = q.defer();
+
+        CourseModel.findById(id, function(err, course){
+            course.modules.push(module);
+            course.save(function(err, saved){
+                getModulesByCourseId(saved._id).then(function(modules){
+                    deferred.resolve(modules);
+                });
+            });
+        });
+
+        return deferred.promise;
+    }
+
+    function getModulesByCourseId(id){
+        var deferred = q.defer();
+
+        CourseModel.findById(id, function(err, course){
+            deferred.resolve(course.modules);
+        });
+
+        return deferred.promise;
+    }
+
+    function deleteModuleFromCourse(courseId, moduleId) {
+        var deferred = q.defer();
+
+        CourseModel.findById(courseId, function(err, course){
+            course.modules.id(moduleId).remove();
+            course.save(function(err, course){
+                getModulesByCourseId(course._id).then(function(modules){
+                    deferred.resolve(modules);
+                });
+            });
+        });
+
+        return deferred.promise;
+    }
+
+    function registerUserToCourse(id, username) {
+        var deferred = q.defer();
+
+        CourseModel.findById(id, function(err, course){
+            course.users.push(username);
+            course.save(function(err, saved){
+                getCourseById(saved._id).then(function(course){
+                    deferred.resolve(course);
+                });
+            });
+        });
+
+        return deferred.promise;
     }
 };
