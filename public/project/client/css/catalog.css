@@ -1,0 +1,35 @@
+.navbar { font-family: 'Crushed', sans-serif !important; }
+
+.page-header { font-family: 'Crushed', sans-serif !important; }
+
+body { font-family: 'Belgrano', sans-serif !important; }
+
+.ngdialog.ngdialog-theme-default .ngdialog-button.ngdialog-button-primary {
+    background: #009933;
+    color: #fff;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-button.ngdialog-button-primary:hover {
+    background: #006622;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-button.ngdialog-button-primary:disabled{
+    background: rgba(0, 153, 51, 0.50);
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-button.ngdialog-button-secondary {
+    background: #cc0000;
+    color: #fff;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-button.ngdialog-button-secondary:hover {
+    background: #990000;
+}
+
+.no-borders {
+    border: none;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
