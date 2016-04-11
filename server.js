@@ -50,14 +50,14 @@ app.get('/assignment', function(req, res){
 });
 
 app.get('/experiment', function(req, res){
-    res.sendfile(public_folder + '/experiment/main.html');
+    res.sendfile(public_folder + '/experiment/index.html');
 });
 
 app.get('/project', function(req, res){
-    res.sendfile(public_folder + '/project/client/welcome.html');
+    res.sendfile(public_folder + '/project/client/index.html');
 });
 
 require("./public/assignment/server/app.js")(app, db, mongoose);
-require("./public/project/server/app.js")(app);
+require("./public/project/server/app.js")(app, db, mongoose);
 
 app.listen(port, ipaddress);
