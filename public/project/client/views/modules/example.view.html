@@ -1,0 +1,65 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">{{model.course.title}} | <small>Module #{{currentModule.number}} - {{currentModule.title}}</small></h1>
+
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="#/course/{{model.course.number}}/module/{{currentModule.number}}">Overview</a></li>
+        <li role="presentation"><a href="#/course/{{model.course.number}}/module/{{currentModule.number}}/lectures">Lectures</a></li>
+        <li role="presentation" class="active"><a>Examples</a></li>
+        <li role="presentation"><a href="#/course/{{model.course.number}}/module/{{currentModule.number}}/assignments">Assignments</a></li>
+    </ul>
+
+    <br>
+    <h3 class="page-header">Example</h3>
+
+    <ul class="nav nav-pills">
+        <li role="presentation" ng-class="{'active': $location.url() == '/course/' + model.course.number + '/module/' + currentModule.number + '/example/' + example.number}" ng-repeat="example in currentModule.examples">
+            <a ng-click="model.viewExample($index)">{{example.title}}</a>
+        </li>
+    </ul>
+
+    <br>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{model.example.number}} | {{model.example.title}}</h3>
+        </div>
+    </div>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default" ng-repeat="demo in model.example.demos">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {{demo.title}}
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    {{demo.base}}<br>
+                    {{demo.src}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat="example in currentModule.examples">
+            <table style="width: 100%">
+                <tr>
+                    <td><h3 class="list-group-item-heading"><a ng-click="model.viewExample($index)">{{example.title}}</a></h3></td>
+                    <td align="right">
+                        <a ng-click="model.editExample($index)"><span class="glyphicon glyphicon-edit"></span></a>&emsp;
+                        <a ng-click="model.deleteExample($index)"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div align="right">
+        <a ng-click="model.addExample()"><span class="glyphicon glyphicon-plus"></span></a>
+    </div>
+
+</div>
