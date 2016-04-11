@@ -1,0 +1,17 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">My Courses</h1>
+
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat="course in model.currentUser.courses">
+            <table style="width: 100%">
+                <tr>
+                    <td><h3 class="list-group-item-heading"><a ng-click="model.viewModule($index)">{{course.number}}</a></h3></td>
+                    <td align="right">
+                        <a ng-click="model.deleteModule($index)"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                    </td>
+                </tr>
+                <tr><td colspan="2" class="list-group-item-text">{{course.title}}</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
