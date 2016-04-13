@@ -25,7 +25,7 @@ if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
             process.env.OPENSHIFT_APP_NAME;
     }
 
-var session_secret = 'webdev';
+var session_secret = process.env.SESSION_SECRET;
 
 var db = mongoose.connect(connectionUrl);
 
@@ -40,10 +40,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.get('/hello', function(req, res){
-    res.send('hello world');
-});
 
 app.get('/assignment', function(req, res){
    res.sendfile(public_folder + '/assignment/client/index.html');
