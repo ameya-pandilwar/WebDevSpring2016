@@ -35,18 +35,15 @@
                 vm.message = "Please provide an email";
                 return;
             }
-            //UserService.findUserByUsername(user.username).then(function(response) {
-            //    user = response.data;
-                //if (user != null) {
-                //    vm.message = "User already exists";
-                //    return;
-                //} else {
-                    UserService.createUser(vm.user).then(function(response) {
-                        UserService.setCurrentUser(response.data);
-                        $location.url('/profile');
-                    });
-                //}
-            //});
+
+            UserService.register(vm.user).then(function(response) {
+                if (response.data != null) {
+                    UserService.setCurrentUser(response.data);
+                    $location.url('/profile');
+                } else {
+                    vm.message = "Username already exists";
+                }
+            });
         }
     }
 }());

@@ -3,7 +3,6 @@
  */
 
 var q = require('q');
-var uuid = require('node-uuid');
 
 module.exports = function(db, mongoose) {
 

@@ -5,5 +5,5 @@
 (function () {
     "use strict";
     angular
-        .module("FormBuilderApp", ["ngRoute", "apDirectives", "ui.bootstrap"]);
+        .module("FormBuilderApp", ["ngRoute", "apDirectives"]);
 }());

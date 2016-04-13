@@ -9,6 +9,8 @@ module.exports = function(app, userModel) {
     var auth = authorized;
 
     app.post('/api/assignment/login', passport.authenticate('local'), login);
+    app.post('/api/assignment/logout', logout);
+    app.get('/api/assignment/loggedin', loggedin);
     app.post('/api/assignment/register', auth, createUser);
     app.get('/api/assignment/user', findUser);
     app.get('/api/assignment/user/:id', findUserById);
@@ -31,6 +33,35 @@ module.exports = function(app, userModel) {
         }, function(err) {
             res.status(400).send(err);
         });
+    }
+
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        userModel.findById(user._id).then(function(user) {
+            done(null, user);
+        }, function(err) {
+            done(err, null);
+        });
+    }
+
+    function loggedin(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
+    function logout(req, res) {
+        req.logOut();
+        res.send(200);
+    }
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
     }
 
     function createUser(req, res) {

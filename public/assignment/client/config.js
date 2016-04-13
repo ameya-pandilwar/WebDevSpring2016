@@ -12,11 +12,19 @@
         $routeProvider
             .when("/home", {
                 templateUrl: "client/views/home/home.view.html",
-                controller: "HomeController"
+                controller: "HomeController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkCurrentUser
+                }
             })
             .when("/admin", {
                 templateUrl: "client/views/admin/admin.view.html",
-                controller: "AdminController"
+                controller: "AdminController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkAdmin
+                }
             })
             .when("/forms", {
                 templateUrl: "client/views/forms/form.view.html",
@@ -41,7 +49,10 @@
             .when("/profile", {
                 templateUrl: "client/views/users/profile.view.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedIn
+                }
             })
             .when("/register", {
                 templateUrl: "client/views/users/register.view.html",
@@ -52,4 +63,53 @@
                 redirectTo: "/home"
             });
     }
+
+    var checkAdmin = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http.get('/api/assignment/loggedin').success(function(user) {
+            $rootScope.errorMessage = null;
+
+            if (user !== '0' && user.roles.indexOf('admin') != -1) {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http.get('/api/assignment/loggedin').success(function(user) {
+            $rootScope.errorMessage = null;
+
+            if (user !== '0') {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            } else {
+                $rootScope.errorMessage = 'You need to be logged in to view this.';
+                deferred.reject();
+                $location.url('/login');
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    var checkCurrentUser = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http.get('/api/assignment/loggedin').success(function(user) {
+            $rootScope.errorMessage = null;
+            if (user !== '0') {
+                $rootScope.currentUser = user;
+            }
+            deferred.resolve();
+        });
+
+        return deferred.promise;
+    };
+
 }());

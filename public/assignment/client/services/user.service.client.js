@@ -8,18 +8,16 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService($rootScope, $http) {
+    function UserService($http, $rootScope) {
         var model = {
             deleteUserById: deleteUserById,
             findAllUsers: findAllUsers,
-            findUserByCredentials: findUserByCredentials,
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
             getCurrentUser: getCurrentUser,
             setCurrentUser: setCurrentUser,
             updateUser: updateUser,
             login: login,
-            loggedin: loggedin,
             logout:logout,
             register: register
         };
@@ -33,16 +31,16 @@
             return $http.post('/api/assignment/login', user);
         }
 
+        function logout() {
+            return $http.post('/api/assignment/logout', user);
+        }
+
         function deleteUserById(userId) {
             return $http.delete('/api/assignment/user/' + userId);
         }
 
         function findAllUsers() {
             return $http.get('/api/assignment/user');
-        }
-
-        function findUserByCredentials(username, password) {
-            return $http.get('/api/assignment/user?username=' + username + '&password=' + password);
         }
 
         function findUserById(id) {
