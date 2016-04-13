@@ -2,12 +2,36 @@
  * Created by ameyapandilwar on 3/7/16.
  */
 
+var passport      = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 module.exports = function(app, userModel) {
-    app.post("/api/assignment/user", createUser);
-    app.get("/api/assignment/user", findUser);
-    app.get("/api/assignment/user/:id", findUserById);
-    app.put("/api/assignment/user/:id", updateUserById);
-    app.delete("/api/assignment/user/:id", deleteUserById);
+    var auth = authorized;
+
+    app.post('/api/assignment/login', passport.authenticate('local'), login);
+    app.post('/api/assignment/register', auth, createUser);
+    app.get('/api/assignment/user', findUser);
+    app.get('/api/assignment/user/:id', findUserById);
+    app.put('/api/assignment/user/:id', auth, updateUserById);
+    app.delete('/api/assignment/user/:id', auth, deleteUserById);
+    app.get('/api/assignment/user/logout', logout);
+
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+    function login(req, res) {
+        res.json(req.user);
+    }
+
+    function localStrategy(username, password, response) {
+        userModel.findUserByCredentials({username: username, password: password}).then(function(user) {
+            req.session.currentUser = user;
+            res.json(user);
+        }, function(err) {
+            res.status(400).send(err);
+        });
+    }
 
     function createUser(req, res) {
         var user = req.body;
