@@ -6,25 +6,29 @@
             <thead>
                 <tr>
                     <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Username</th>
-                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Password</th>
+                    <th>Password</th>
                     <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Role</th>
                     <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text" class="form-control" placeholder="username"/></td>
-                    <td><input type="password" class="form-control" placeholder="password"/></td>
-                    <td><input type="text" class="form-control" placeholder="role1, role2"/></td>
+                    <td><input type="text" class="form-control" ng-model="model.username" placeholder="Username"/></td>
+                    <td><input type="password" class="form-control" ng-model="model.password" placeholder="Password"/></td>
+                    <td><input type="text" class="form-control" ng-model="model.firstName" placeholder="First Name"/></td>
+                    <td><input type="text" class="form-control" ng-model="model.lastName" placeholder="Last Name"/></td>
+                    <td><input type="text" class="form-control" ng-model="model.roles" placeholder="Roles"/></td>
                     <td>
                         <a href="#"><span class="glyphicon glyphicon-plus"></span></a>&emsp;
                         <a href="#"><span class="glyphicon glyphicon-ok"></span></a>
                     </td>
                 </tr>
-                <tr>
-                    <td>alice</td>
+                <tr ng-repeat="user in model.users">
+                    <td>{{user.username}}</td>
                     <td></td>
-                    <td>student</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.roles.join(",")}}</td>
                     <td>
                         <a href="#"><span class="glyphicon glyphicon-remove"></span></a>&emsp;
                         <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>

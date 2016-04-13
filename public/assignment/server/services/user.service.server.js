@@ -18,6 +18,12 @@ module.exports = function(app, userModel) {
     app.delete('/api/assignment/user/:id', auth, deleteUserById);
     app.get('/api/assignment/user/logout', logout);
 
+    app.post("/api/assignment/admin/user",auth,createUser);
+    app.get("/api/assignment/admin/user", auth, findUser);
+    app.get("/api/assignment/admin/user/:id", findUserById);
+    app.put("/api/assignment/admin/user/:id", auth, updateUserById);
+    app.delete("/api/assignment/admin/user/:userId", auth, deleteUserById);
+
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);

@@ -29,17 +29,26 @@
             .when("/forms", {
                 templateUrl: "client/views/forms/form.view.html",
                 controller: "FormController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedIn
+                }
             })
             .when("/fields", {
                 templateUrl: "client/views/forms/field.view.html",
                 controller: "FieldController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedIn
+                }
             })
             .when("/form/:formId/fields", {
                 templateUrl: "client/views/forms/field.view.html",
                 controller: "FieldController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedIn
+                }
             })
             .when("/login", {
                 templateUrl: "client/views/users/login.view.html",
