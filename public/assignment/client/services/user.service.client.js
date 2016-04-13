@@ -10,7 +10,6 @@
 
     function UserService($rootScope, $http) {
         var model = {
-            createUser: createUser,
             deleteUserById: deleteUserById,
             findAllUsers: findAllUsers,
             findUserByCredentials: findUserByCredentials,
@@ -18,12 +17,20 @@
             findUserByUsername: findUserByUsername,
             getCurrentUser: getCurrentUser,
             setCurrentUser: setCurrentUser,
-            updateUser: updateUser
+            updateUser: updateUser,
+            login: login,
+            loggedin: loggedin,
+            logout:logout,
+            register: register
         };
         return model;
 
-        function createUser(user) {
-            return $http.post('/api/assignment/user', user);
+        function register(user) {
+            return $http.post('/api/assignment/register', user);
+        }
+
+        function login(user) {
+            return $http.post('/api/assignment/login', user);
         }
 
         function deleteUserById(userId) {
