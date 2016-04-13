@@ -73,12 +73,39 @@ module.exports = function(formModel) {
             );
     }
 
+    function sortField(formId, startIndex, endIndex) {
+        var deferred = q.defer();
+
+        form.findById(formId, function(err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                var userForm = doc;
+                userForm.fields.splice(endIndex,0,userForm.fields.splice(startIndex,1)[0]);
+                form.update(
+                    {"_id": formId},
+                    {$set:{"fields": userForm.fields}},
+                    function(err, doc) {
+                        if(err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc);
+                        }
+                    }
+                );
+            }
+        });
+
+        return deferred.promise;
+    }
+
     return {
         findAllFieldsForFormId: findFieldsByFormId,
         findFormFieldById: findFieldByFormIdAndFieldId,
         deleteFormFieldById: deleteFieldByFormIdAndFieldId,
         createFormField: createFieldInForm,
         updateFormField: updateFieldInForm,
-        updateFormFields: updateFieldsInForm
+        updateFormFields: updateFieldsInForm,
+        sortField: sortField
     }
 };

@@ -19,6 +19,7 @@
         vm.deleteField = deleteField;
         vm.addField = addField;
         vm.repeatField = repeatField;
+        vm.sortField = sortField;
 
         if($routeParams.formId) {
             formId = $routeParams.formId;
@@ -135,6 +136,11 @@
         function repeatField(field){
             FieldService.createFieldForForm(formId, field).then(function(response){initialize()});
         }
-    }
 
+        function sortField(start, end) {
+            FieldService.sortField(formId, start, end).then(function (response) {
+                vm.fields = response.data;
+            });
+        }
+    }
 })();

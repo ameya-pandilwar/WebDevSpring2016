@@ -9,7 +9,7 @@ module.exports = function (app, fieldModel) {
     app.post("/api/assignment/form/:formId/field", createFormField);
     app.put("/api/assignment/form/:formId/field/:fieldId", updateFormField);
     app.put("/api/assignment/form/:formId/fields", updateFormFields);
-
+    app.put("/api/assignment/:formId/field", sortField);
 
     function findAllFieldsForFormId(req, res) {
         fieldModel.findAllFieldsForFormId(req.params.formId).then(function(fields) {
@@ -57,6 +57,23 @@ module.exports = function (app, fieldModel) {
         }, function(err) {
             res.status(400).send(err);
         });
+    }
+
+    function sortField(req, res){
+        var formId = req.params.formId;
+        var startIndex = req.query.startIndex;
+        var endIndex = req.query.endIndex;
+        if (startIndex && endIndex) {
+            fieldModel.sortField(formId, startIndex, endIndex).then(function(stat) {
+                    return fieldModel.findAllFieldsForForm(formId);
+            }, function(err) {
+                res.status(400).send(err);
+            }).then(function(doc) {
+                res.json(doc);
+            }, function(err) {
+                res.status(400).send(err);
+            });
+        }
     }
 
 };
