@@ -28,6 +28,7 @@
         }
 
         function login(user) {
+            console.log(user);
             return $http.post('/api/assignment/login', user);
         }
 
@@ -52,7 +53,7 @@
         }
 
         function getCurrentUser() {
-            return $rootScope.currentUser;
+            return $http.get('/api/assignment/loggedin');
         }
 
         function setCurrentUser(user) {

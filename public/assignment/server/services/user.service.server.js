@@ -2,11 +2,15 @@
  * Created by ameyapandilwar on 3/7/16.
  */
 
-var passport      = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-
 module.exports = function(app, userModel) {
+    var passport      = require('passport');
+    var LocalStrategy = require('passport-local').Strategy;
     var auth = authorized;
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+    var bcrypt = require("bcrypt-nodejs");
 
     app.post('/api/assignment/login', passport.authenticate('local'), login);
     app.post('/api/assignment/logout', logout);
@@ -18,17 +22,17 @@ module.exports = function(app, userModel) {
     app.delete('/api/assignment/user/:id', auth, deleteUserById);
     app.get('/api/assignment/user/logout', logout);
 
-    app.post("/api/assignment/admin/user",auth,createUser);
+    app.post("/api/assignment/admin/user",auth, createUser);
     app.get("/api/assignment/admin/user", auth, findUser);
     app.get("/api/assignment/admin/user/:id", findUserById);
     app.put("/api/assignment/admin/user/:id", auth, updateUserById);
     app.delete("/api/assignment/admin/user/:userId", auth, deleteUserById);
 
-    passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
+
 
     function login(req, res) {
+        var user = req.user;
+        console.log(user);
         res.json(req.user);
     }
 

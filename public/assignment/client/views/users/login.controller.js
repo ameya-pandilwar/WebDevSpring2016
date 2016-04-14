@@ -16,17 +16,17 @@
             if (!vm.username && !vm.password) {
                 return;
             }
-            UserService.login(vm.username, vm.password).then(
-                function(response) {
-                    if (response) {
-                        UserService.setCurrentUser(response.data);
-                        $location.url('/profile');
-                    }
-                },
-                function(err) {
-                    vm.error = "Username/Password is incorrect or doesn't exist";
+            UserService.login({username: vm.username, password: vm.password}).then(function(response) {
+                console.log(response);
+                if (response) {
+                    UserService.setCurrentUser(response.data);
+                    $location.url('/profile');
                 }
-            );
+            },
+            function(err) {
+                console.log(err);
+                vm.error = "Username/Password is incorrect or doesn't exist";
+            });
         }
     }
 }());
