@@ -5,10 +5,32 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Username</th>
-                    <th>Password</th>
-                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Role</th>
-                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Action</th>
+                    <td><a href="" ng-click="sortType='username'; sortReverse = !sortReverse">
+                        <span ng-show = "sortType == 'username' &&  !sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                        <span ng-show = "sortType == 'username' &&   sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                            Username
+                        </a>
+                    </td>
+
+                    <td><a>Password</a></td>
+
+                    <td><a href="" ng-click="sortType='firstName'; sortReverse = !sortReverse">
+                        <span ng-show = "sortType == 'firstName' &&  !sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                        <span ng-show = "sortType == 'firstName' &&   sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                            First Name
+                        </a>
+                    </td>
+
+                    <td><a href="" ng-click="sortType='lastName'; sortReverse = !sortReverse">
+                        <span ng-show = "sortType == 'lastName' && !sortReverse" class="glyphicon glyphicon-triangle-top"></span>
+                        <span ng-show = "sortType == 'lastName' &&  sortReverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                            Last Name
+                        </a>
+                    </td>
+
+                    <td><a>Roles</a></td>
+
+                    <td><a>Action</a></td>
                 </tr>
             </thead>
             <tbody>
@@ -23,30 +45,12 @@
                         <a href="#"><span class="glyphicon glyphicon-ok"></span></a>
                     </td>
                 </tr>
-                <tr ng-repeat="user in model.users">
+                <tr ng-repeat="user in model.users | orderBy:sortType:sortReverse">
                     <td>{{user.username}}</td>
                     <td></td>
                     <td>{{user.firstName}}</td>
                     <td>{{user.lastName}}</td>
                     <td>{{user.roles.join(",")}}</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-remove"></span></a>&emsp;
-                        <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>bob</td>
-                    <td></td>
-                    <td>faculty | admin</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-remove"></span></a>&emsp;
-                        <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>charlie</td>
-                    <td></td>
-                    <td></td>
                     <td>
                         <a href="#"><span class="glyphicon glyphicon-remove"></span></a>&emsp;
                         <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
