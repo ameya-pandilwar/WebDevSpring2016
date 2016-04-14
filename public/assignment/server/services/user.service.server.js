@@ -18,7 +18,7 @@ module.exports = function(app, userModel) {
     app.post('/api/assignment/register', register);
     app.get('/api/assignment/user', findUser);
     app.get('/api/assignment/user/:id', findUserById);
-    app.put('/api/assignment/user/:id', auth, updateUserById);
+    app.put('/api/assignment/user/:id', updateUserById);
     app.delete('/api/assignment/user/:id', auth, deleteUserById);
     app.get('/api/assignment/user/logout', logout);
 
@@ -149,7 +149,10 @@ module.exports = function(app, userModel) {
     }
 
     function updateUserById(req, res) {
-        userModel.updateUser(req.params.id, req.body).then(function(user) {
+        var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
+        userModel.updateUser(req.params.id, user).then(function(user) {
+            req.session.currentUser = user;
             res.json(user);
         }, function(err) {
             res.status(400).send(err);

@@ -17,10 +17,14 @@
 
         vm.update = update;
 
-        UserService.getCurrentUser().then(function(response) {
-            user = response.data;
-            vm.currentUser = user;
-        });
+        function init() {
+            UserService.getCurrentUser().then(function (response) {
+                user = response.data;
+                vm.currentUser = user;
+                vm.currentUser.password = "";
+            });
+        }
+        init();
 
         function update(user) {
             vm.error = null;
@@ -47,12 +51,11 @@
                 return;
             }
 
-            var userId = user._id;
-
-            UserService.updateUser(userId, user).then(function(response) {
-                UserService.setCurrentUser(response.data);
-                vm.message = "User updated successfully";
-                $location.url('/profile');
+            UserService.updateUser(user._id, user).then(function(response) {
+                if (response.data) {
+                    vm.message = "User updated successfully";
+                    $location.path('/profile');
+                }
             });
         }
     }
