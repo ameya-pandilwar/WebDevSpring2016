@@ -13,12 +13,14 @@
         vm.error = null;
         vm.message = null;
 
+        var user = null;
+
         vm.update = update;
 
-        vm.currentUser = UserService.getCurrentUser();
-        if (!vm.currentUser) {
-            $location.url("/home");
-        }
+        UserService.getCurrentUser().then(function(response) {
+            user = response.data;
+            vm.currentUser = user;
+        });
 
         function update(user) {
             vm.error = null;
@@ -40,7 +42,7 @@
                 vm.error = "Please provide a last name";
                 return;
             }
-            if (!user.email) {
+            if (!user.emails) {
                 vm.error = "Please provide an email";
                 return;
             }

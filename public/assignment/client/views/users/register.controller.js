@@ -31,15 +31,16 @@
                 vm.message = "Passwords must match";
                 return;
             }
-            if (!user.email) {
+            if (!user.emails) {
                 vm.message = "Please provide an email";
                 return;
             }
 
             UserService.register(vm.user).then(function(response) {
+                console.log(response);
                 if (response.data != null) {
                     UserService.setCurrentUser(response.data);
-                    $location.url('/profile');
+                    $location.path('/profile');
                 } else {
                     vm.message = "Username already exists";
                 }

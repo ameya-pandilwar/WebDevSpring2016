@@ -18,7 +18,7 @@
             setCurrentUser: setCurrentUser,
             updateUser: updateUser,
             login: login,
-            logout:logout,
+            logout: logout,
             register: register
         };
         return model;
@@ -28,12 +28,11 @@
         }
 
         function login(user) {
-            console.log(user);
             return $http.post('/api/assignment/login', user);
         }
 
         function logout() {
-            return $http.post('/api/assignment/logout', user);
+            return $http.post('/api/assignment/logout');
         }
 
         function deleteUserById(userId) {

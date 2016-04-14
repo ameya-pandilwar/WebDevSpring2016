@@ -15,7 +15,7 @@ module.exports = function(app, userModel) {
     app.post('/api/assignment/login', passport.authenticate('local'), login);
     app.post('/api/assignment/logout', logout);
     app.get('/api/assignment/loggedin', loggedin);
-    app.post('/api/assignment/register', auth, createUser);
+    app.post('/api/assignment/register', register);
     app.get('/api/assignment/user', findUser);
     app.get('/api/assignment/user/:id', findUserById);
     app.put('/api/assignment/user/:id', auth, updateUserById);
@@ -28,20 +28,21 @@ module.exports = function(app, userModel) {
     app.put("/api/assignment/admin/user/:id", auth, updateUserById);
     app.delete("/api/assignment/admin/user/:userId", auth, deleteUserById);
 
-
-
     function login(req, res) {
-        var user = req.user;
-        console.log(user);
         res.json(req.user);
     }
 
-    function localStrategy(username, password, response) {
-        userModel.findUserByCredentials({username: username, password: password}).then(function(user) {
-            req.session.currentUser = user;
-            res.json(user);
+    function localStrategy(username, password, done){
+        userModel.findUserByUsername(username).then(function (user) {
+            if(user && bcrypt.compareSync(password, user.password)) {
+                return done(null, user);
+            } else {
+                return done(null, false);
+            }
         }, function(err) {
-            res.status(400).send(err);
+            if (err) {
+                return done(err);
+            }
         });
     }
 
@@ -50,7 +51,7 @@ module.exports = function(app, userModel) {
     }
 
     function deserializeUser(user, done) {
-        userModel.findById(user._id).then(function(user) {
+        userModel.findUserById(user._id).then(function(user) {
             done(null, user);
         }, function(err) {
             done(err, null);
@@ -72,6 +73,34 @@ module.exports = function(app, userModel) {
         } else {
             next();
         }
+    }
+
+    function register(req, res) {
+        var newUser = req.body;
+        newUser.roles = ['student'];
+
+        userModel.findUserByUsername(newUser.username).then(function(user) {
+            if(user) {
+                res.json(null);
+            } else {
+                newUser.password = bcrypt.hashSync(newUser.password);
+                return userModel.createUser(newUser);
+            }
+        }, function(err) {
+            res.status(400).send(err);
+        }).then(function(user) {
+            if(user) {
+                req.login(user, function(err) {
+                    if(err) {
+                        res.status(400).send(err);
+                    } else {
+                        res.json(user);
+                    }
+                });
+            }
+        }, function(err) {
+            res.status(400).send(err);
+        });
     }
 
     function createUser(req, res) {
