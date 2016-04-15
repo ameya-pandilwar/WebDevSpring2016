@@ -6,7 +6,7 @@
     </ul>
     <br>
     <form class="form-horizontal">
-        <div ng-model="model.fields" ap-sortable ap-sortable-callback="model.sortField(start, end)">
+        <div ng-model="model.fields">
             <div ng-repeat="field in model.fields">
                 <label>{{field.label}}</label>
                 <div class="input-group">
