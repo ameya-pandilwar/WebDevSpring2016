@@ -10,7 +10,9 @@
 
     function UserService($http, $rootScope) {
         var model = {
+            createUser: createUser,
             deleteUserById: deleteUserById,
+            updateUserByAdmin: updateUserByAdmin,
             findAllUsers: findAllUsers,
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
@@ -22,6 +24,10 @@
             register: register
         };
         return model;
+
+        function createUser(user) {
+            return $http.post('/api/assignment/admin/user', user);
+        }
 
         function register(user) {
             return $http.post('/api/assignment/register', user);
@@ -36,7 +42,11 @@
         }
 
         function deleteUserById(userId) {
-            return $http.delete('/api/assignment/user/' + userId);
+            return $http.delete('/api/assignment/admin/user/' + userId);
+        }
+
+        function updateUserByAdmin(userId, user) {
+            return $http.put('/api/assignment/admin/user/' + userId, user);
         }
 
         function findAllUsers() {

@@ -19,14 +19,14 @@ module.exports = function(app, userModel) {
     app.get('/api/assignment/user', findUser);
     app.get('/api/assignment/user/:id', findUserById);
     app.put('/api/assignment/user/:id', updateUserById);
-    app.delete('/api/assignment/user/:id', auth, deleteUserById);
+    app.delete('/api/assignment/user/:id', deleteUserById);
     app.get('/api/assignment/user/logout', logout);
 
-    app.post("/api/assignment/admin/user",auth, createUser);
+    app.post("/api/assignment/admin/user", auth, createUser);
     app.get("/api/assignment/admin/user", auth, findUser);
     app.get("/api/assignment/admin/user/:id", findUserById);
     app.put("/api/assignment/admin/user/:id", auth, updateUserById);
-    app.delete("/api/assignment/admin/user/:userId", auth, deleteUserById);
+    app.delete("/api/assignment/admin/user/:id", auth, deleteUserById);
 
     function login(req, res) {
         res.json(req.user);
@@ -106,7 +106,7 @@ module.exports = function(app, userModel) {
     function createUser(req, res) {
         var user = req.body;
         userModel.createUser(user).then(function(user) {
-            req.session.currentUser = user;
+            //req.session.currentUser = user;
             res.json(user);
         }, function(err) {
             res.status(400).send(err);
