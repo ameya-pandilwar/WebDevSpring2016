@@ -1,28 +1,34 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1>Admin</h1>
+
+    <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
+
     <h3>Users</h3>
     <div class="table responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th><a ng-click="model.performSort('username', userNameBottom)">
-                        <span type="button" class="glyphicon glyphicon-triangle-bottom" ng-show="userNameBottom == -1"></span>
-                        <span type="button" class="glyphicon glyphicon-triangle-top" ng-show="userNameBottom == 1"></span></a>
-                        Username
+                    <th>
+                        <a ng-click="model.performSort('username', userNameBottom)">
+                            <span type="button" class="glyphicon glyphicon-triangle-bottom" ng-show="userNameBottom == 1"></span>
+                            <span type="button" class="glyphicon glyphicon-triangle-top" ng-show="userNameBottom == -1"></span>
+                        </a>Username
                     </th>
 
                     <td><a>Password</a></td>
 
-                    <th><a ng-click="model.performSort('firstName', firstNameBottom)">
-                        <span type="button" class="glyphicon glyphicon-triangle-bottom" ng-show="firstNameBottom == -1"></span>
-                        <span type="button" class="glyphicon glyphicon-triangle-top" ng-show="firstNameBottom == 1"></span></a>
-                        First Name
+                    <th>
+                        <a ng-click="model.performSort('firstName', firstNameBottom)">
+                            <span type="button" class="glyphicon glyphicon-triangle-bottom" ng-show="firstNameBottom == 1"></span>
+                            <span type="button" class="glyphicon glyphicon-triangle-top" ng-show="firstNameBottom == -1"></span>
+                        </a>First Name
                     </th>
 
-                    <th><a ng-click="model.performSort('lastName', lastNameBottom)">
-                        <span type="button" class="glyphicon glyphicon-triangle-bottom" ng-show="lastNameBottom == -1"></span>
-                        <span type="button" class="glyphicon glyphicon-triangle-top" ng-show="lastNameBottom == 1"></span></a>
-                        Last Name
+                    <th>
+                        <a ng-click="model.performSort('lastName', lastNameBottom)">
+                            <span type="button" class="glyphicon glyphicon-triangle-bottom" ng-show="lastNameBottom == 1"></span>
+                            <span type="button" class="glyphicon glyphicon-triangle-top" ng-show="lastNameBottom == -1"></span>
+                        </a>Last Name
                     </th>
 
                     <td><a>Roles</a></td>

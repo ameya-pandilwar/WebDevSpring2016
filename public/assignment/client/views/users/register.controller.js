@@ -37,7 +37,6 @@
             }
 
             UserService.register(vm.user).then(function(response) {
-                console.log(response);
                 if (response.data != null) {
                     UserService.setCurrentUser(response.data);
                     $location.path('/profile');

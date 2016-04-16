@@ -76,8 +76,12 @@
             }
         }
 
-        function createUser(newUser) {
-            UserService.createUser(newUser).then(function(response) {
+        function createUser(user) {
+            if (!user.password) {
+                vm.error = "Password is required";
+                return;
+            }
+            UserService.createUser(user).then(function(response) {
                 vm.user = null;
                 init();
             });
@@ -103,7 +107,11 @@
         }
 
         function updateUser(user) {
-            if(vm.index != -1) {
+            if (!user.password) {
+                vm.error = "Password is required";
+                return;
+            }
+            if (vm.index != -1) {
                 UserService.updateUserByAdmin(user._id, user).then(function(response) {
                     init();
                     vm.index = -1;
