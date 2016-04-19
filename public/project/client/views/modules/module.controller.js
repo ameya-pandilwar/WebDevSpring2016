@@ -15,20 +15,13 @@
         };
     }
 
-    function ModuleController($scope, $rootScope, $location, ngDialog, CourseService, ModuleService) {
+    function ModuleController($scope, $location, ngDialog, CourseService, ModuleService, $routeParams, $sce) {
         var vm = this;
-        var selectedCourse = CourseService.getCurrentCourse();
-        vm.course = selectedCourse;
-
-        vm.lecture = ModuleService.getCurrentLecture();
-        vm.assignment = ModuleService.getCurrentAssignment();
-        vm.example = ModuleService.getCurrentExample();
 
         vm.addModule = addModule;
         vm.deleteModule = deleteModule;
         vm.editModule = editModule;
         vm.selectModule = selectModule;
-        vm.updateModule = updateModule;
         vm.searchModule = searchModule;
         vm.viewModule = viewModule;
 
@@ -39,84 +32,124 @@
 
         vm.addExample = addExample;
         vm.deleteExample = deleteExample;
+        vm.editExample = editExample;
         vm.viewExample = viewExample;
 
         vm.addAssignment = addAssignment;
         vm.deleteAssignment = deleteAssignment;
+        vm.editAssignment = editAssignment;
         vm.viewAssignment = viewAssignment;
 
         vm.addLearningElement = addLearningElement;
         vm.deleteLearningElement = deleteLearningElement;
+        vm.editLearningElement = editLearningElement;
+
+        vm.addDemo = addDemo;
+        vm.deleteDemo = deleteDemo;
+        vm.editDemo = editDemo;
+
+        vm.addDependency = addDependency;
+        vm.deleteDependency = deleteDependency;
+        vm.editDependency = editDependency;
+
+        vm.viewOverview = viewOverview;
+        vm.renderHtml = renderHtml;
+
+        vm.tinymceOptions = {
+            plugins: "link image",
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist'
+        };
+
+        var courseId = $routeParams.courseId;
+        var moduleId = $routeParams.moduleId;
+
+        if (courseId && moduleId) {
+            CourseService.getCourseByNumber(courseId).then(function(response) {
+                vm.course = response.data;
+                CourseService.setCurrentCourse(vm.course);
+
+                ModuleService.getModuleByNumber(courseId, moduleId).then(function(response) {
+                    ModuleService.setCurrentModule(response.data);
+                });
+            });
+        } else if (courseId) {
+            CourseService.getCourseByNumber(courseId).then(function(response) {
+                vm.course = response.data;
+                CourseService.setCurrentCourse(vm.course);
+            });
+        }
+
+        vm.course = CourseService.getCurrentCourse();
+
+        vm.lecture = ModuleService.getCurrentLecture();
+        vm.example = ModuleService.getCurrentExample();
+        vm.assignment = ModuleService.getCurrentAssignment();
 
         // Module
 
         function selectModule(index) {
-            selectedCourse = vm.courses[index];
-            vm.number = selectedCourse.number;
-            vm.timing = selectedCourse.timing;
-            vm.location = selectedCourse.location;
+            vm.course = vm.courses[index];
+            vm.number = vm.course.number;
+            vm.timing = vm.course.timing;
+            vm.location = vm.course.location;
         }
 
         function viewModule(index) {
-            var selectedModule = selectedCourse.modules[index];
+            var selectedModule = vm.course.modules[index];
             ModuleService.setCurrentModule(selectedModule);
-            $location.url("/course/" + selectedCourse.number + "/module/" + selectedModule.number);
+            $location.url("/course/" + vm.course.number + "/module/" + selectedModule.number);
         }
 
         function addModule() {
-            var number = selectedCourse.modules.length > 0 ? selectedCourse.modules[selectedCourse.modules.length - 1].number + 1 : 1;
-            var module = {"number": number, "title": Date.now(), "description": ""}
-            CourseService.addModuleToCourse(selectedCourse._id, module).then(function(response) {
-                $rootScope.currentCourse.modules = response.data;
-                vm.course.modules = $rootScope.currentCourse.modules;
-            });
-        }
+            var number = vm.course.modules.length > 0 ? vm.course.modules[vm.course.modules.length - 1].number + 1 : 1;
+            vm.element = "module";
 
-        function editModule(index){
-            vm.addingType = "module";
-            vm.currentModule = vm.course.modules[index];
+            vm.title = "";
+            vm.description = "";
 
-            showUpdateDialog(function(model){
-                var selectedModule = vm.currentModule;
-                selectedModule.title = model.title;
-                selectedModule.description = model.description;
+            showAddDialog(function(model) {
+                var module = {
+                    "number": number,
+                    "title": model.title,
+                    "description": model.description
+                };
 
-                for (var m in vm.course.modules) {
-                    if (vm.course.modules[index]._id === vm.course.modules[m]._id) {
-                        vm.course.modules[m] = selectedModule;
-                    }
-                }
-
-                CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
+                CourseService.addModuleToCourse(vm.course._id, module).then(function(response) {
                     vm.course.modules = response.data;
                 });
             });
-            vm.module = null;
         }
 
-        function updateModule() {
-            if (selectedCourse) {
-                selectedCourse.number = vm.number;
-                selectedCourse.timing = vm.timing;
-                selectedCourse.location = vm.location;
-                CourseService.updateCourseById(selectedCourse._id, selectedCourse, function(callback) {
-                    vm.number = "";
-                    vm.timing = "";
-                    vm.location = "";
+        function editModule(module) {
+            vm.element = "module";
+            vm.cModule = module;
+
+            showUpdateDialog(function(model) {
+                vm.cModule.title = model.title;
+                vm.cModule.description = model.description;
+
+                for (var m in vm.course.modules) {
+                    if (vm.course.modules[m]._id === vm.cModule._id) {
+                        vm.course.modules[m] = vm.cModule;
+                    }
+                }
+
+                CourseService.updateModulesByCourseId(vm.course._id, vm.course.modules).then(function(response) {
+                    vm.course.modules = response.data;
                 });
-            }
+            });
+            //vm.module = null;
         }
 
-        function deleteModule(index) {
-            CourseService.deleteModuleFromCourse(selectedCourse._id, selectedCourse.modules[index]._id).then(function(response) {
-                $rootScope.currentCourse.modules = response.data;
-                vm.course.modules = $rootScope.currentCourse.modules;
+        function deleteModule(module) {
+            CourseService.deleteModuleFromCourse(vm.course._id, module._id).then(function(response) {
+                vm.course.modules = response.data;
             });
         }
 
         function searchModule() {
             var moduleId = vm.search;
-            CourseService.searchModuleInCourse(selectedCourse._id, moduleId).then(function(response) {
+            CourseService.searchModuleInCourse(vm.course._id, moduleId).then(function(response) {
                 vm.moduleSearchResult = response.data;
             });
         }
@@ -127,7 +160,11 @@
             var currentModule = ModuleService.getCurrentModule();
             var number = currentModule.lectures.length > 0 ? currentModule.lectures[currentModule.lectures.length - 1].number + 1 : 1;
 
-            vm.addingType = "lecture";
+            vm.element = "lecture";
+
+            vm.title = "";
+            vm.overview = "";
+
             showAddDialog(function(model) {
                 var lecture = {
                     "number": number,
@@ -136,73 +173,50 @@
                     "learningElements": []
                 };
 
-                currentModule.lectures.push(lecture);
-
-                for (var m in vm.course.modules) {
-                    if (currentModule._id === vm.course.modules[m]._id) {
-                        vm.course.modules[m] = currentModule;
-                    }
-                }
-
-                CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                    vm.course.modules = response.data;
+                CourseService.addLecture(vm.course._id, currentModule._id, lecture).then(function(response) {
+                    currentModule.lectures = response.data;
                 });
             });
-            vm.title = "";
-            vm.overview = "";
         }
 
-        function deleteLecture(index) {
+        function deleteLecture(lecture) {
             var currentModule = ModuleService.getCurrentModule();
 
-            currentModule.lectures.splice(index, 1);
+            CourseService.removeLecture(vm.course._id, currentModule._id, lecture._id).then(function(response) {
+                currentModule.lectures = response.data;
+            });
 
-            for (var m in vm.course.modules) {
-                if (currentModule._id === vm.course.modules[m]._id) {
-                    vm.course.modules[m] = currentModule;
-                }
+            viewLecture(0);
+        }
+
+        function editLecture(lecture) {
+            var currentModule = ModuleService.getCurrentModule();
+            vm.cLecture = lecture;
+            vm.element = "lecture";
+
+            showUpdateDialog(function(model) {
+                vm.cLecture.title = model.title;
+                vm.cLecture.overview = model.overview;
+
+                CourseService.updateLecture(vm.course._id, currentModule._id, lecture._id, lecture).then(function(response) {
+                    currentModule.lectures = response.data;
+                });
+            });
+        }
+
+        function viewLecture(lecture) {
+            var currentModule = ModuleService.getCurrentModule();
+            var lectureId = 1;
+
+            if (currentModule.lectures.length > 0) {
+                vm.lecture = lecture != 0 ? lecture : currentModule.lectures[0];
+                lectureId = vm.lecture.number;
+            } else {
+                vm.lecture = null;
             }
-
-            CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                vm.course.modules = response.data;
-            });
-        }
-
-        function editLecture(index){
-            var currentModule = ModuleService.getCurrentModule();
-            vm.currentLecture = currentModule.lectures[index];
-            vm.addingType = "lecture";
-
-            showUpdateDialog(function(model){
-                vm.currentLecture.title = model.title;
-                vm.currentLecture.overview = model.overview;
-
-                for (var l in currentModule.lectures) {
-                    if (vm.currentLecture._id === currentModule.lectures[l]._id) {
-                        currentModule.lectures[l] = vm.currentLecture;
-                    }
-                }
-
-                for (var m in vm.course.modules) {
-                    if (currentModule._id === vm.course.modules[m]._id) {
-                        vm.course.modules[m] = currentModule;
-                    }
-                }
-
-                CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                    vm.course.modules = response.data;
-                });
-            });
-            vm.module = null;
-        }
-
-        function viewLecture(index) {
-            var currentModule = ModuleService.getCurrentModule();
-            vm.lecture = currentModule.lectures[index];
-
             ModuleService.setCurrentLecture(vm.lecture);
 
-            $location.url("/course/" + selectedCourse.number + "/module/" + currentModule.number + "/lecture/" + vm.lecture.number);
+            $location.url("/course/" + vm.course.number + "/module/" + currentModule.number + "/lecture/" + lectureId);
         }
 
         // Example
@@ -211,7 +225,9 @@
             var currentModule = ModuleService.getCurrentModule();
             var number = currentModule.examples.length > 0 ? currentModule.examples[currentModule.examples.length - 1].number + 1 : 1;
 
-            vm.addingType = "example";
+            vm.element = "example";
+            vm.title = "";
+
             showAddDialog(function(model) {
                 var example = {
                     "number": number,
@@ -219,44 +235,47 @@
                     "demos": []
                 };
 
-                currentModule.examples.push(example);
-
-                for (var m in vm.course.modules) {
-                    if (currentModule._id === vm.course.modules[m]._id) {
-                        vm.course.modules[m] = currentModule;
-                    }
-                }
-
-                CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                    vm.course.modules = response.data;
+                CourseService.addExample(vm.course._id, currentModule._id, example).then(function(response) {
+                    currentModule.examples = response.data;
                 });
             });
-            vm.title = "";
         }
 
-        function deleteExample(index) {
+        function deleteExample(example) {
             var currentModule = ModuleService.getCurrentModule();
 
-            currentModule.examples.splice(index, 1);
+            CourseService.removeExample(vm.course._id, currentModule._id, example._id).then(function(response) {
+                currentModule.examples = response.data;
+            });
+        }
 
-            for (var m in vm.course.modules) {
-                if (currentModule._id === vm.course.modules[m]._id) {
-                    vm.course.modules[m] = currentModule;
-                }
-            }
+        function editExample(example) {
+            var currentModule = ModuleService.getCurrentModule();
+            vm.cExample = example;
+            vm.element = "example";
 
-            CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                vm.course.modules = response.data;
+            showUpdateDialog(function(model){
+                vm.cExample.title = model.title;
+
+                CourseService.updateExample(vm.course._id, currentModule._id, example._id, vm.cExample).then(function(response) {
+                    currentModule.examples = response.data;
+                });
             });
         }
 
         function viewExample(index) {
             var currentModule = ModuleService.getCurrentModule();
-            vm.example = currentModule.examples[index];
+            var exampleId = 1;
 
+            if (currentModule.examples.length > 0) {
+                vm.example = currentModule.examples[index];
+                exampleId = vm.example.number;
+            } else {
+                vm.example = null;
+            }
             ModuleService.setCurrentExample(vm.example);
 
-            $location.url("/course/" + selectedCourse.number + "/module/" + currentModule.number + "/example/" + vm.example.number);
+            $location.url("/course/" + vm.course.number + "/module/" + currentModule.number + "/example/" + exampleId);
         }
 
         // Assignment
@@ -265,7 +284,10 @@
             var currentModule = ModuleService.getCurrentModule();
             var number = currentModule.assignments.length > 0 ? currentModule.assignments[currentModule.assignments.length - 1].number + 1 : 1;
 
-            vm.addingType = "assignment";
+            vm.element = "assignment";
+            vm.title = "";
+            vm.src = "";
+
             showAddDialog(function(model) {
                 var assignment = {
                     "number": number,
@@ -273,45 +295,50 @@
                     "src": model.src
                 };
 
-                currentModule.assignments.push(assignment);
-
-                for (var m in vm.course.modules) {
-                    if (currentModule._id === vm.course.modules[m]._id) {
-                        vm.course.modules[m] = currentModule;
-                    }
-                }
-
-                CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                    vm.course.modules = response.data;
+                CourseService.addAssignment(vm.course._id, currentModule._id, assignment).then(function(response) {
+                    currentModule.assignments = response.data;
                 });
             });
-            vm.title = "";
-            vm.src = "";
         }
 
-        function deleteAssignment(index) {
+        function deleteAssignment(assignment) {
             var currentModule = ModuleService.getCurrentModule();
 
-            currentModule.assignments.splice(index, 1);
+            CourseService.removeAssignment(vm.course._id, currentModule._id, assignment._id).then(function(response) {
+                currentModule.assignments = response.data;
+            });
 
-            for (var m in vm.course.modules) {
-                if (currentModule._id === vm.course.modules[m]._id) {
-                    vm.course.modules[m] = currentModule;
-                }
-            }
+            viewAssignment(0);
+        }
 
-            CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                vm.course.modules = response.data;
+        function editAssignment(assignment) {
+            var currentModule = ModuleService.getCurrentModule();
+            vm.cAssignment = assignment;
+            vm.element = "assignment";
+
+            showUpdateDialog(function(model){
+                vm.cAssignment.title = model.title;
+                vm.cAssignment.src = model.src;
+
+                CourseService.updateAssignment(vm.course._id, currentModule._id, assignment._id, assignment).then(function(response){
+                    currentModule.assignments = response.data;
+                });
             });
         }
 
-        function viewAssignment(index) {
+        function viewAssignment(assignment) {
             var currentModule = ModuleService.getCurrentModule();
-            vm.assignment = currentModule.assignments[index];
+            var assignmentId = 1;
 
+            if (currentModule.assignments.length > 0) {
+                vm.assignment = assignment != 0 ? assignment : currentModule.assignments[0];
+                assignmentId = vm.assignment.number;
+            } else {
+                vm.assignment = null;
+            }
             ModuleService.setCurrentAssignment(vm.assignment);
 
-            $location.url("/course/" + selectedCourse.number + "/module/" + currentModule.number + "/assignment/" + vm.assignment.number);
+            $location.url("/course/" + vm.course.number + "/module/" + currentModule.number + "/assignment/" + assignmentId);
         }
 
         // LearningElement
@@ -319,56 +346,130 @@
         function addLearningElement(lecture) {
             var currentModule = ModuleService.getCurrentModule();
 
-            vm.addingType = "learning element";
+            vm.element = "learning element";
+            vm.type = "PDF";
+            vm.title = "";
+            vm.overview = "";
+
             showAddDialog(function(model) {
-                var learningElement = {
+                var le = {
                     "title": model.title,
                     "type": model.type,
                     "src": model.src,
-                    "height": model.height,
-                    "width": model.width,
                     "html": model.html
                 };
 
-                lecture.learningElements.push(learningElement);
+                CourseService.addLearningElement(vm.course._id, currentModule._id, lecture._id, le).then(function(response) {
 
-                for (var m in vm.course.modules) {
-                    if (currentModule._id === vm.course.modules[m]._id) {
-                        for (var l in currentModule.lectures) {
-                            if (lecture._id === currentModule.lectures[l]._id) {
-                                currentModule.lectures[l] = lecture;
-                            }
-                        }
-                        vm.course.modules[m] = currentModule;
-                    }
-                }
-
-                CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                    vm.course.modules = response.data;
                 });
             });
-            vm.title = "";
-            vm.overview = "";
         }
 
-        function deleteLearningElement(index, lecture) {
+        function deleteLearningElement(lecture, le) {
             var currentModule = ModuleService.getCurrentModule();
 
-            lecture.learningElements.splice(index, 1);
+            CourseService.removeLearningElement(vm.course._id, currentModule._id, lecture._id, le._id).then(function(response) {
 
-            for (var m in vm.course.modules) {
-                if (currentModule._id === vm.course.modules[m]._id) {
-                    for (var l in currentModule.lectures) {
-                        if (lecture._id === currentModule.lectures[l]._id) {
-                            currentModule.lectures[l] = lecture;
-                        }
-                    }
-                    vm.course.modules[m] = currentModule;
-                }
-            }
+            });
+        }
 
-            CourseService.updateModulesByCourseId(selectedCourse._id, vm.course.modules).then(function(response) {
-                vm.course.modules = response.data;
+        function editLearningElement(lecture, le) {
+            var currentModule = ModuleService.getCurrentModule();
+            vm.cLE = le;
+            vm.element = "learning element";
+
+            showUpdateDialog(function(model) {
+                vm.cLE.title = model.title;
+                vm.cLE.type = model.type;
+                vm.cLE.src = model.src;
+
+                CourseService.updateLearningElement(vm.course._id, currentModule._id, lecture._id, le._id, le).then(function(response) {
+
+                });
+            });
+        }
+
+        // Demo
+
+        function addDemo(example) {
+            var currentModule = ModuleService.getCurrentModule();
+
+            vm.element = "demo";
+            vm.title = "";
+
+            showAddDialog(function(model) {
+                var demo = {
+                    "title": model.title
+                };
+
+                CourseService.addDemo(vm.course._id, currentModule._id, example._id, demo).then(function(response) {
+
+                });
+            });
+        }
+
+        function deleteDemo(example, demo) {
+            var currentModule = ModuleService.getCurrentModule();
+
+            CourseService.removeDemo(vm.course._id, currentModule._id, example._id, demo._id).then(function(response) {
+
+            });
+        }
+
+        function editDemo(example, demo) {
+            var currentModule = ModuleService.getCurrentModule();
+            vm.cDemo = demo;
+            vm.element = "demo";
+
+            showUpdateDialog(function(model) {
+                vm.cDemo.title = model.title;
+                vm.cDemo.base = model.base;
+                vm.cDemo.src = model.src;
+
+                CourseService.updateDemo(vm.course._id, currentModule._id, example._id, demo._id, demo).then(function(response) {
+
+                });
+            });
+        }
+
+        // Dependency
+
+        function addDependency(example, demo) {
+            var currentModule = ModuleService.getCurrentModule();
+
+            vm.element = "dependency";
+            vm.title = "";
+
+            showAddDialog(function(model) {
+                var dependency = {
+                    "src": model.src
+                };
+
+                CourseService.addDependency(vm.course._id, currentModule._id, example._id, demo._id, dependency).then(function(response) {
+
+                });
+            });
+        }
+
+        function deleteDependency(example, demo, dependency) {
+            var currentModule = ModuleService.getCurrentModule();
+
+            CourseService.removeDependency(vm.course._id, currentModule._id, example._id, demo._id, dependency._id).then(function(response) {
+
+            });
+        }
+
+        function editDependency(example, demo, dependency) {
+            var currentModule = ModuleService.getCurrentModule();
+            vm.cDependency = dependency;
+            vm.element = "dependency";
+
+            showUpdateDialog(function(model){
+                vm.cDependency.src = model.src;
+
+                CourseService.updateDependency(vm.course._id, currentModule._id, example._id, demo._id, dependency._id, dependency).then(function(response) {
+
+                });
             });
         }
 
@@ -380,5 +481,13 @@
             ngDialog.openConfirm({template: 'views/modules/update.html', scope: $scope}).then(confirm, cancel);
         }
 
+        function viewOverview() {
+            var currentModule = ModuleService.getCurrentModule();
+            $location.url("/course/" + vm.course.number + "/module/" + currentModule.number);
+        }
+
+        function renderHtml(text) {
+            return $sce.trustAsHtml(text);
+        }
     }
 }());

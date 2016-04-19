@@ -25,7 +25,7 @@ if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
             process.env.OPENSHIFT_APP_NAME;
     }
 
-var session_secret = process.env.SESSION_SECRET;
+var session_secret = process.env.SESSION_SECRET || process.env.OPENSHIFT_APP_NAME;
 
 var db = mongoose.connect(connectionUrl);
 

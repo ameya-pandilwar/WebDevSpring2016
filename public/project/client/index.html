@@ -23,8 +23,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="./css/starter-template.css" rel="stylesheet">
-    <link href="./css/catalog.css" rel="stylesheet">
+    <link href="client/css/starter-template.css" rel="stylesheet">
+    <link href="client/css/catalog.css" rel="stylesheet">
+    <link href="client/css/animate.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -32,40 +33,43 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="./js/catalog.js"></script>
+    <script src="client/js/catalog.js"></script>
 
     <script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.5.9/js/ngDialog.min.js"></script>
 
-    <script src="./app.js"></script>
-    <script src="./config.js"></script>
+    <script type="text/javascript" src="client/js/tinymce-dist/tinymce.js"></script>
+    <script type="text/javascript" src="client/js/angular-ui-tinymce/src/tinymce.js"></script>
 
-    <script src="./views/header/header.controller.js"></script>
-    <script src="./views/home/home.controller.js"></script>
-    <script src="./views/main/main.controller.js"></script>
-    <script src="./views/sidebar/sidebar.controller.js"></script>
-    <script src="./views/users/login.controller.js"></script>
-    <script src="./views/users/profile.controller.js"></script>
-    <script src="./views/users/register.controller.js"></script>
-    <script src="./views/modules/module.controller.js"></script>
-    <script src="./views/courses/course.controller.js"></script>
-    <script src="./views/courses/brochure.controller.js"></script>
-    <script src="./views/admin/admin.controller.js"></script>
-    <script src="./views/users/user.controller.js"></script>
+    <script src="client/app.js"></script>
+    <script src="client/config.js"></script>
 
-    <script src="./services/user.service.client.js"></script>
-    <script src="./services/course.service.client.js"></script>
-    <script src="./services/module.service.client.js"></script>
+    <script src="client/views/header/header.controller.js"></script>
+    <script src="client/views/home/home.controller.js"></script>
+    <script src="client/views/main/main.controller.js"></script>
+    <script src="client/views/sidebar/sidebar.controller.js"></script>
+    <script src="client/views/users/login.controller.js"></script>
+    <script src="client/views/users/profile.controller.js"></script>
+    <script src="client/views/users/register.controller.js"></script>
+    <script src="client/views/modules/module.controller.js"></script>
+    <script src="client/views/courses/course.controller.js"></script>
+    <script src="client/views/courses/brochure.controller.js"></script>
+    <script src="client/views/admin/admin.controller.js"></script>
+    <script src="client/views/users/user.controller.js"></script>
+
+    <script src="client/services/user.service.client.js"></script>
+    <script src="client/services/course.service.client.js"></script>
+    <script src="client/services/module.service.client.js"></script>
 </head>
 
 <body ng-controller="MainController">
 
-<div ng-include="'./views/header/header.view.html'"></div>
+<div ng-include="'client/views/header/header.view.html'"></div>
 
 <div class="container-fluid">
     <div class="row">
-        <div ng-hide="hideSidebar()" ng-include="'./views/sidebar/sidebar.view.html'"></div>
+        <div ng-hide="hideSidebar()" ng-include="'client/views/sidebar/sidebar.view.html'"></div>
         <div ng-view></div>
     </div>
 </div>
@@ -74,10 +78,11 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
+<script src="client/directives/angular-gist.min.js"></script>
 </body>
 </html>

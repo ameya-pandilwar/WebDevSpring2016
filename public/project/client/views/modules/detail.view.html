@@ -1,24 +1,32 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">{{model.course.title}} | <small>Module #{{currentModule.number}} - {{currentModule.title}}</small></h1>
+    <h1 class="page-header"><i class="fa fa-terminal"></i> {{model.course.title}} | <small>Module #{{currentModule.number}} - {{currentModule.title}}</small></h1>
 
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a>Overview</a></li>
-        <li role="presentation"><a href="#/course/{{model.course.number}}/module/{{currentModule.number}}/lectures">Lectures</a></li>
-        <li role="presentation"><a href="#/course/{{model.course.number}}/module/{{currentModule.number}}/examples">Examples</a></li>
-        <li role="presentation"><a href="#/course/{{model.course.number}}/module/{{currentModule.number}}/assignments">Assignments</a></li>
+        <li role="presentation" class="active"><a>
+            <span class="glyphicon glyphicon-globe"></span> Overview</a>
+        </li>
+        <li role="presentation"><a ng-click="model.viewLecture(0)">
+            <span class="glyphicon glyphicon-facetime-video"></span> Lectures</a>
+        </li>
+        <li role="presentation"><a ng-click="model.viewExample(0)">
+            <span class="glyphicon glyphicon-play-circle"></span> Examples</a>
+        </li>
+        <li role="presentation"><a ng-click="model.viewAssignment(0)">
+            <span class="glyphicon glyphicon-paperclip"></span> Assignments</a>
+        </li>
     </ul>
 
     <br>
 
     <h3 class="page-header">Overview</h3>
-    <div class="alert alert-info" style="margin-bottom:25px">
+    <div class="alert alert-info" style="margin-bottom:25px" ng-show="currentModule.description">
         <p align="justify">{{currentModule.description}}</p>
     </div>
 
     <div ng-repeat="lecture in currentModule.lectures">
         <h3>{{lecture.title}}</h3>
-        <p>{{lecture.overview}}</p>
-        <a class="btn btn-warning" href="#/course/{{model.course.number}}/module/{{currentModule.number}}/lecture/{{lecture.number}}">
+        <p ng-bind-html="model.renderHtml(lecture.overview)" align="justify"></p>
+        <a class="btn btn-warning" ng-click="model.viewLecture(lecture)">
             <i class="fa fa-eye" aria-hidden="true"></i> View Lecture
         </a>
         <hr>

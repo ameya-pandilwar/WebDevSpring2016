@@ -13,14 +13,20 @@
         vm.error = null;
         vm.message = null;
 
+        var user = null;
+
         vm.update = update;
 
         CourseService.setCurrentCourse(null);
 
-        vm.currentUser = UserService.getCurrentUser();
-        if (!vm.currentUser) {
-            $location.url("/home");
+        function init() {
+            UserService.getCurrentUser().then(function (response) {
+                user = response.data;
+                vm.currentUser = user;
+                vm.currentUser.password = "";
+            });
         }
+        init();
 
         function update(user) {
             vm.error = null;
@@ -48,9 +54,10 @@
             }
 
             UserService.updateUserById(user._id, user).then(function(response) {
-                UserService.setCurrentUser(user);
-                vm.message = "User updated successfully";
-                $location.url('/profile');
+                if (response.data) {
+                    vm.message = "User updated successfully";
+                    $location.path('/profile');
+                }
             });
         }
     }

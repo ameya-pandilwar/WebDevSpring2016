@@ -13,14 +13,21 @@
         vm.error = null;
         vm.message = null;
 
+        var user = null;
+
         vm.update = update;
+        vm.removeCourse = removeCourse;
+        vm.viewCourse = viewCourse;
 
         CourseService.setCurrentCourse(null);
 
-        vm.currentUser = UserService.getCurrentUser();
-        if (!vm.currentUser) {
-            $location.url("/home");
+        function init() {
+            UserService.getCurrentUser().then(function (response) {
+                user = response.data;
+                vm.currentUser = user;
+            });
         }
+        init();
 
         function update(user) {
             vm.error = null;
@@ -52,6 +59,19 @@
                 vm.message = "User updated successfully";
                 $location.url('/profile');
             });
+        }
+
+        function removeCourse(course) {
+            UserService.disenrollUserFromCourse(vm.currentUser._id, course.number).then(function(response) {
+                UserService.setCurrentUser(response.data);
+                vm.currentUser = UserService.getCurrentUser();
+            });
+
+            CourseService.deregisterUserFromCourse(vm.currentUser.username, course._id).then(function(response) {});
+        }
+
+        function viewCourse(course) {
+            $location.url('/course/' + course.number);
         }
     }
 }());

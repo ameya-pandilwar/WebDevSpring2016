@@ -8,7 +8,7 @@
         .module("CatalogApp")
         .factory("UserService", UserService);
 
-    function UserService($rootScope, $http) {
+    function UserService($http, $rootScope) {
         var service = {
             createUser: createUser,
             deleteUserById: deleteUserById,
@@ -18,7 +18,11 @@
             getCurrentUser: getCurrentUser,
             setCurrentUser: setCurrentUser,
             updateUserById: updateUserById,
-            enrollUserInCourse: enrollUserInCourse
+            enrollUserInCourse: enrollUserInCourse,
+            disenrollUserFromCourse: disenrollUserFromCourse,
+            login: login,
+            logout: logout,
+            register: register
         };
         return service;
 
@@ -47,7 +51,7 @@
         }
 
         function getCurrentUser() {
-            return $rootScope.currentUser;
+            return $http.get('/api/ds/catalog/loggedin');
         }
 
         function setCurrentUser(user) {
@@ -59,8 +63,24 @@
         }
 
         function enrollUserInCourse(userId, course) {
-            var enrollCourse = {number: course.number, title: course.title};
-            return $http.put('/api/ds/catalog/user/' + userId + '/enroll', enrollCourse);
+            var course = {_id: course._id, number: course.number, title: course.title};
+            return $http.put('/api/ds/catalog/user/' + userId + '/enroll', course);
+        }
+
+        function disenrollUserFromCourse(userId, courseNumber) {
+            return $http.put('/api/ds/catalog/user/' + userId + '/disenroll/' + courseNumber);
+        }
+
+        function login(user) {
+            return $http.post('/api/ds/catalog/login', user);
+        }
+
+        function logout() {
+            return $http.post('/api/ds/catalog/logout');
+        }
+
+        function register(user) {
+            return $http.post('/api/ds/catalog/register', user);
         }
     }
 }());

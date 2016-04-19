@@ -1,5 +1,21 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-show="model.course">
-    <h1 class="page-header">{{model.course.number}} | {{model.course.title}}</h1>
+    <h1 class="page-header"><i class="fa fa-terminal"></i> {{model.course.number}} | {{model.course.title}}</h1>
 
     <h3 class="page-header">Syllabus</h3>
+    <table style="width: 100%">
+        <tr>
+            <td align="right">
+                <a ng-click="model.editSyllabus()" ng-hide="model.isEditable"><span class="glyphicon glyphicon-edit"></span></a>
+                <a ng-click="model.saveSyllabus()" ng-hide="!(model.isEditable)"><span class="glyphicon glyphicon-floppy-disk"></span></a>
+            </td>
+        </tr>
+    </table>
+
+    <div ng-hide="!(model.isEditable)">
+        <textarea ui-tinymce="model.tinymceOptions" ng-model="model.course.syllabus"></textarea>
+    </div>
+
+    <br/>
+
+    <div ng-bind-html="model.renderHtml(model.course.syllabus)"></div>
 </div>
