@@ -90,7 +90,11 @@
         }
 
         function isVisible(user) {
-            return (user.roles.indexOf('admin') >= 0 || user.roles.indexOf('faculty') >= 0);
+            if (user) {
+                return (user.roles.indexOf('admin') >= 0 || user.roles.indexOf('faculty') >= 0);
+            } else {
+                return false;
+            }
         }
     }
 }());
