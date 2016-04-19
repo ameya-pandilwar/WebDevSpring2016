@@ -54,6 +54,7 @@
 
         vm.viewOverview = viewOverview;
         vm.renderHtml = renderHtml;
+        vm.isVisible = isVisible;
 
         vm.tinymceOptions = {
             plugins: "link image",
@@ -550,6 +551,10 @@
 
         function renderHtml(text) {
             return $sce.trustAsHtml(text);
+        }
+
+        function isVisible(user) {
+            return (user.roles.indexOf('admin') >= 0 || user.roles.indexOf('faculty') >= 0);
         }
     }
 }());

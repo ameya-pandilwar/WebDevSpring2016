@@ -18,6 +18,7 @@
         vm.modifyCourse = modifyCourse;
         vm.searchCourse = searchCourse;
         vm.clearSearch = clearSearch;
+        vm.isVisible = isVisible;
 
         function init() {
             CourseService.findAllCourses().then(function (response) {
@@ -101,6 +102,10 @@
 
         function showUpdateDialog(confirm, cancel){
             ngDialog.openConfirm({template: 'client/views/courses/update.html', scope: $scope}).then(confirm, cancel);
+        }
+
+        function isVisible(user) {
+            return (user.roles.indexOf('admin') >= 0 || user.roles.indexOf('faculty') >= 0);
         }
     }
 }());

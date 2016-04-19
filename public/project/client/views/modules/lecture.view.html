@@ -21,7 +21,7 @@
         <tr>
             <td><h3 class="page-header">Lecture</h3></td>
             <td align="right">
-                <a ng-click="model.addLecture()" ng-show="currentUser.roles.indexOf('admin') >= 0">
+                <a ng-click="model.addLecture()" ng-show="model.isVisible(currentUser)">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </td>
@@ -65,9 +65,9 @@
         </div>
     </div>
 
-    <br ng-show="currentUser.roles.indexOf('admin') >= 0">
+    <br ng-show="model.isVisible(currentUser)">
 
-    <div class="list-group" ng-show="currentUser.roles.indexOf('admin') >= 0">
+    <div class="list-group" ng-show="model.isVisible(currentUser)">
         <div class="list-group-item" ng-repeat="lecture in currentModule.lectures">
             <table style="width: 100%">
                 <tr>

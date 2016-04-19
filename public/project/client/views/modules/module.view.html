@@ -4,7 +4,7 @@
     <table style="width: 100%">
         <tr>
             <td><h3 class="page-header">Modules</h3></td>
-            <td align="right" ng-show="currentUser.roles.indexOf('admin') >= 0">
+            <td align="right" ng-show="model.isVisible(currentUser)">
                 <a ng-click="model.addModule()"><span class="glyphicon glyphicon-plus"></span></a>
             </td>
         </tr>
@@ -15,7 +15,7 @@
             <table style="width: 100%">
                 <tr>
                     <td><h3 class="list-group-item-heading"><a ng-click="model.viewModule($index)">{{module.title}}</a></h3></td>
-                    <td align="right"ng-show="currentUser.roles.indexOf('admin') >= 0">
+                    <td align="right"ng-show="model.isVisible(currentUser)">
                         <a ng-click="model.editModule(module)"><span class="glyphicon glyphicon-edit"></span></a>&emsp;
                         <a ng-click="model.deleteModule(module)"><span class="glyphicon glyphicon-remove-circle"></span></a>
                     </td>
