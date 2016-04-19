@@ -13,6 +13,7 @@
             findAllCourses: findAllCourses,
             findCourseById: findCourseById,
             getCourseByNumber: getCourseByNumber,
+            searchCourse: searchCourse,
 
             createCourse: createCourse,
             deleteCourseById: deleteCourseById,
@@ -60,6 +61,10 @@
 
         function getCourseByNumber(courseNumber) {
             return $http.get('/api/ds/catalog/course/' + courseNumber);
+        }
+
+        function searchCourse(courseName) {
+            return $http.get('/api/ds/catalog/course/search/' + courseName);
         }
 
         function addModuleToCourse(courseId, module) {

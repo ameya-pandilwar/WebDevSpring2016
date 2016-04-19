@@ -18,6 +18,7 @@
             getCurrentUser: getCurrentUser,
             setCurrentUser: setCurrentUser,
             updateUserById: updateUserById,
+            updateUserToAdmin: updateUserToAdmin,
             enrollUserInCourse: enrollUserInCourse,
             disenrollUserFromCourse: disenrollUserFromCourse,
             login: login,
@@ -60,6 +61,10 @@
 
         function updateUserById(userId, user) {
             return $http.put('/api/ds/catalog/user/' + userId, user);
+        }
+
+        function updateUserToAdmin(userId, user) {
+            return $http.put('/api/ds/catalog/user/' + userId + '/admin', user);
         }
 
         function enrollUserInCourse(userId, course) {

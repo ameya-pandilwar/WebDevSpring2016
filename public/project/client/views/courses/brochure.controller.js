@@ -16,10 +16,15 @@
         vm.newCourse = newCourse;
         vm.removeCourse = removeCourse;
         vm.modifyCourse = modifyCourse;
+        vm.searchCourse = searchCourse;
+        vm.clearSearch = clearSearch;
 
-        CourseService.findAllCourses().then(function(response) {
-            vm.courses = response.data;
-        });
+        function init() {
+            CourseService.findAllCourses().then(function (response) {
+                vm.courses = response.data;
+            });
+        }
+        init();
 
         function viewCourse(index) {
             selectedCourse = vm.courses[index];
@@ -73,6 +78,17 @@
             });
             vm.number = "";
             vm.title = "";
+        }
+
+        function searchCourse(name) {
+            CourseService.searchCourse(name).then(function(response) {
+                vm.courses = response.data;
+            });
+        }
+
+        function clearSearch() {
+            vm.searchText = "";
+            init();
         }
 
         function showAddDialog(confirm, cancel){

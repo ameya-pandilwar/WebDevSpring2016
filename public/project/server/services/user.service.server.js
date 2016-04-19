@@ -19,6 +19,7 @@ module.exports = function(app, userModel) {
     app.get("/api/ds/catalog/user", findUser);
     app.get("/api/ds/catalog/user/:id", findUserById);
     app.put("/api/ds/catalog/user/:id", updateUserById);
+    app.put("/api/ds/catalog/user/:id/admin", updateUserToAdmin);
     app.delete("/api/ds/catalog/user/:id", deleteUserById);
 
     app.post("/api/ds/catalog/admin/user", auth, createUser);
@@ -153,6 +154,15 @@ module.exports = function(app, userModel) {
         user.password = bcrypt.hashSync(user.password);
         userModel.updateUser(req.params.id, user).then(function(user) {
             req.session.currentUser = user;
+            res.json(user);
+        }, function(err) {
+            res.status(400).send(err);
+        });
+    }
+
+    function updateUserToAdmin(req, res) {
+        var user = req.body;
+        userModel.updateUser(req.params.id, user).then(function(user) {
             res.json(user);
         }, function(err) {
             res.status(400).send(err);

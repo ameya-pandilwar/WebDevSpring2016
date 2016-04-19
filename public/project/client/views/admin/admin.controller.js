@@ -64,7 +64,7 @@
         function makeAdmin(index) {
             var selectedUser = vm.users[index];
             selectedUser.roles.push('admin');
-            UserService.updateUserById(selectedUser._id, selectedUser).then(function(response) {
+            UserService.updateUserToAdmin(selectedUser._id, selectedUser).then(function(response) {
                 UserService.findAllUsers().then(function(response) {
                     vm.users = response.data;
                 });

@@ -14,6 +14,7 @@ module.exports = function(db, mongoose) {
         createCourse: createCourse,
         deleteCourseById: deleteCourseById,
         updateCourseById: updateCourseById,
+        searchCourseByName: searchCourseByName,
 
         addModuleToCourse: addModuleToCourse,
         findModulesForCourse: findModulesForCourse,
@@ -76,6 +77,10 @@ module.exports = function(db, mongoose) {
             });
 
         return deferred.promise;
+    }
+
+    function searchCourseByName(name) {
+        return CourseModel.find({'title': {'$regex': new RegExp(name.toLowerCase(), 'i')}});
     }
 
     function findModulesForCourse(courseId) {

@@ -67,7 +67,9 @@
                 vm.currentUser = UserService.getCurrentUser();
             });
 
-            CourseService.deregisterUserFromCourse(vm.currentUser.username, course._id).then(function(response) {});
+            CourseService.deregisterUserFromCourse(vm.currentUser.username, course._id).then(function(response) {
+
+            });
         }
 
         function viewCourse(course) {

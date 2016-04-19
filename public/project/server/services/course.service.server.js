@@ -7,6 +7,7 @@ module.exports = function(app, courseModel) {
     app.post("/api/ds/catalog/course", createCourse);
     app.delete("/api/ds/catalog/course/:id", deleteCourseById);
     app.put("/api/ds/catalog/course/:id", updateCourseById);
+    app.get("/api/ds/catalog/course/search/:name", searchCourseByName);
 
     app.post("/api/ds/catalog/course/:id/module", addModuleToCourse);
     app.get("/api/ds/catalog/course/:id/module", findModulesForCourse);
@@ -87,6 +88,14 @@ module.exports = function(app, courseModel) {
     function updateModulesInCourse(req, res) {
         courseModel.updateModulesInCourse(req.params.courseId, req.body).then(function(modules) {
             res.json(modules);
+        });
+    }
+
+    function searchCourseByName(req, res) {
+        courseModel.searchCourseByName(req.params.name).then(function(courses) {
+            res.json(courses);
+        }, function(err) {
+            res.status(400).send(err);
         });
     }
 
