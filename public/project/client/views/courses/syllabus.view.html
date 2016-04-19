@@ -4,7 +4,7 @@
     <h3 class="page-header">Syllabus</h3>
     <table style="width: 100%">
         <tr>
-            <td align="right">
+            <td align="right" ng-show="currentUser.roles.indexOf('admin') >= 0">
                 <a ng-click="model.editSyllabus()" ng-hide="model.isEditable"><span class="glyphicon glyphicon-edit"></span></a>
                 <a ng-click="model.saveSyllabus()" ng-hide="!(model.isEditable)"><span class="glyphicon glyphicon-floppy-disk"></span></a>
             </td>

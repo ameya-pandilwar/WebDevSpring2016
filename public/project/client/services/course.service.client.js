@@ -36,6 +36,7 @@
             addLecture: addLecture,
             removeLecture: removeLecture,
             updateLecture: updateLecture,
+            getLectureById: getLectureById,
 
             addLearningElement: addLearningElement,
             removeLearningElement: removeLearningElement,
@@ -44,6 +45,7 @@
             addExample: addExample,
             removeExample: removeExample,
             updateExample: updateExample,
+            getExampleById: getExampleById,
 
             addDemo: addDemo,
             removeDemo: removeDemo,
@@ -140,6 +142,10 @@
             return $http.put("/api/ds/catalog/course/" + courseId + "/module/" + moduleId + "/example/" + exampleId, example);
         }
 
+        function getExampleById(courseId, moduleId, exampleId) {
+            return $http.get("/api/ds/catalog/course/" + courseId + "/module/" + moduleId + "/example/" + exampleId);
+        }
+
         function addDemo(courseId, moduleId, exampleId, demo) {
             return $http.post("/api/ds/catalog/course/" + courseId + "/module/" + moduleId + "/example/" + exampleId + "/demo", demo);
         }
@@ -174,6 +180,10 @@
 
         function updateLecture(courseId, moduleId, lectureId, lecture) {
             return $http.put("/api/ds/catalog/course/" + courseId + "/module/" + moduleId + "/lecture/" + lectureId, lecture);
+        }
+
+        function getLectureById(courseId, moduleId, lectureId) {
+            return $http.get("/api/ds/catalog/course/" + courseId + "/module/" + moduleId + "/lecture/" + lectureId);
         }
 
         function addLearningElement(courseId, moduleId, lectureId, le) {

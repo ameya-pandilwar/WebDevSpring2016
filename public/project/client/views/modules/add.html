@@ -8,8 +8,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} description" ng-model="model.description" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="module">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.title && model.description)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)>Confirm</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.title && model.description)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)><i class="fa fa-check-circle"></i>&emsp;Confirm</button>
     </div>
 
     <!--lecture-->
@@ -22,8 +22,8 @@
         <textarea ui-tinymce="model.tinymceOptions" ng-model="model.overview"></textarea>
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="lecture">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.title && model.overview)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)>Confirm</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.title && model.overview)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)><i class="fa fa-check-circle"></i>&emsp;Confirm</button>
     </div>
 
     <!--learning element-->
@@ -43,8 +43,8 @@
         <div ng-hide="!(model.type == 'HTML')"><textarea ui-tinymce="model.tinymceOptions" ng-model="model.src"></textarea></div>
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="learning element">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.title && model.type && model.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)>Confirm</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.title && model.type && model.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)><i class="fa fa-check-circle"></i>&emsp;Confirm</button>
     </div>
 
     <!--assignment-->
@@ -55,8 +55,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} src" ng-model="model.src" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="assignment">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.title && model.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)>Confirm</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.title && model.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)><i class="fa fa-check-circle"></i>&emsp;Confirm</button>
     </div>
 
     <!--example-->
@@ -66,8 +66,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} title" ng-model="model.title" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="example">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)>Confirm</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)><i class="fa fa-check-circle"></i>&emsp;Confirm</button>
     </div>
 
     <!--demo-->
@@ -77,8 +77,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} title" ng-model="model.title" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="demo">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)>Confirm</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)><i class="fa fa-check-circle"></i>&emsp;Confirm</button>
     </div>
 
     <!--dependency-->
@@ -88,8 +88,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} src" ng-model="model.src" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="dependency">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)>Confirm</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)><i class="fa fa-check-circle"></i>&emsp;Confirm</button>
     </div>
 
 </div>

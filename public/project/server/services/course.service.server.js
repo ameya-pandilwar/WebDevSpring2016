@@ -26,6 +26,7 @@ module.exports = function(app, courseModel) {
     app.post("/api/ds/catalog/course/:courseId/module/:moduleId/lecture", addLecture);
     app.delete("/api/ds/catalog/course/:courseId/module/:moduleId/lecture/:lectureId", removeLecture);
     app.put("/api/ds/catalog/course/:courseId/module/:moduleId/lecture/:lectureId", updateLecture);
+    app.get("/api/ds/catalog/course/:courseId/module/:moduleId/lecture/:lectureId", getLectureById);
 
     app.post("/api/ds/catalog/course/:courseId/module/:moduleId/lecture/:lectureId/le", addLearningElement);
     app.delete("/api/ds/catalog/course/:courseId/module/:moduleId/lecture/:lectureId/le/:leId", removeLearningElement);
@@ -34,6 +35,7 @@ module.exports = function(app, courseModel) {
     app.post("/api/ds/catalog/course/:courseId/module/:moduleId/example", addExample);
     app.delete("/api/ds/catalog/course/:courseId/module/:moduleId/example/:exampleId", removeExample);
     app.put("/api/ds/catalog/course/:courseId/module/:moduleId/example/:exampleId", updateExample);
+    app.get("/api/ds/catalog/course/:courseId/module/:moduleId/example/:exampleId", getExampleById);
 
     app.post("/api/ds/catalog/course/:courseId/module/:moduleId/example/:exampleId/demo", addDemo);
     app.delete("/api/ds/catalog/course/:courseId/module/:moduleId/example/:exampleId/demo/:demoId", removeDemo);
@@ -164,6 +166,12 @@ module.exports = function(app, courseModel) {
         });
     }
 
+    function getExampleById(req, res) {
+        courseModel.getExampleById(req.params.courseId, req.params.moduleId, req.params.exampleId).then(function(example) {
+            res.json(example);
+        });
+    }
+
     function addDemo(req, res) {
         courseModel.addDemo(req.params.courseId, req.params.moduleId, req.params.exampleId, req.body).then(function(demos) {
             res.json(demos);
@@ -215,6 +223,12 @@ module.exports = function(app, courseModel) {
     function updateLecture(req, res) {
         courseModel.updateLecture(req.params.courseId, req.params.moduleId, req.params.lectureId, req.body).then(function(lectures) {
             res.json(lectures);
+        });
+    }
+
+    function getLectureById(req, res) {
+        courseModel.getLectureById(req.params.courseId, req.params.moduleId, req.params.lectureId).then(function(lecture) {
+            res.json(lecture);
         });
     }
 

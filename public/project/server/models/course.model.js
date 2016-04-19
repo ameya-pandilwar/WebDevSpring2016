@@ -40,6 +40,7 @@ module.exports = function(db, mongoose) {
         addLecture: addLecture,
         removeLecture: removeLecture,
         updateLecture: updateLecture,
+        getLectureById: getLectureById,
 
         addLearningElement: addLearningElement,
         removeLearningElement: removeLearningElement,
@@ -49,6 +50,7 @@ module.exports = function(db, mongoose) {
         getExamples: getExamples,
         removeExample: removeExample,
         updateExample: updateExample,
+        getExampleById: getExampleById,
 
         addDemo: addDemo,
         removeDemo: removeDemo,
@@ -418,6 +420,16 @@ module.exports = function(db, mongoose) {
         return deferred.promise;
     }
 
+    function getExampleById(courseId, moduleId, exampleId) {
+        var deferred = q.defer();
+
+        getCourseById(courseId).then(function(course) {
+            deferred.resolve(course.modules.id(moduleId).examples.id(exampleId));
+        });
+
+        return deferred.promise;
+    }
+
     function getDemos(courseId, moduleId, exampleId){
         var deferred = q.defer();
         getCourseById(courseId).then(function(course){
@@ -595,6 +607,16 @@ module.exports = function(db, mongoose) {
                     deferred.resolve(lectures);
                 });
             });
+        });
+
+        return deferred.promise;
+    }
+
+    function getLectureById(courseId, moduleId, lectureId) {
+        var deferred = q.defer();
+
+        getCourseById(courseId).then(function(course) {
+            deferred.resolve(course.modules.id(moduleId).lectures.id(lectureId));
         });
 
         return deferred.promise;

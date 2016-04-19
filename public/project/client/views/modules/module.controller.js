@@ -138,12 +138,14 @@
                     vm.course.modules = response.data;
                 });
             });
-            //vm.module = null;
         }
 
         function deleteModule(module) {
-            CourseService.deleteModuleFromCourse(vm.course._id, module._id).then(function(response) {
-                vm.course.modules = response.data;
+            vm.title = module.title;
+            showRemoveDialog(function() {
+                CourseService.deleteModuleFromCourse(vm.course._id, module._id).then(function (response) {
+                    vm.course.modules = response.data;
+                });
             });
         }
 
@@ -247,6 +249,8 @@
             CourseService.removeExample(vm.course._id, currentModule._id, example._id).then(function(response) {
                 currentModule.examples = response.data;
             });
+
+            viewExample(0);
         }
 
         function editExample(example) {
@@ -360,7 +364,13 @@
                 };
 
                 CourseService.addLearningElement(vm.course._id, currentModule._id, lecture._id, le).then(function(response) {
-
+                    CourseService.getLectureById(vm.course._id, currentModule._id, lecture._id).then(function(response) {
+                        vm.lecture = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                        currentModule.lectures = response.data.lectures;
+                        CourseService.setCurrentModule(currentModule);
+                    });
                 });
             });
         }
@@ -369,7 +379,13 @@
             var currentModule = ModuleService.getCurrentModule();
 
             CourseService.removeLearningElement(vm.course._id, currentModule._id, lecture._id, le._id).then(function(response) {
-
+                CourseService.getLectureById(vm.course._id, currentModule._id, lecture._id).then(function(response) {
+                    vm.lecture = response.data;
+                });
+                ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                    currentModule.lectures = response.data.lectures;
+                    CourseService.setCurrentModule(currentModule);
+                });
             });
         }
 
@@ -384,7 +400,13 @@
                 vm.cLE.src = model.src;
 
                 CourseService.updateLearningElement(vm.course._id, currentModule._id, lecture._id, le._id, le).then(function(response) {
-
+                    CourseService.getLectureById(vm.course._id, currentModule._id, lecture._id).then(function(response) {
+                        vm.lecture = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                        currentModule.lectures = response.data.lectures;
+                        CourseService.setCurrentModule(currentModule);
+                    });
                 });
             });
         }
@@ -403,7 +425,13 @@
                 };
 
                 CourseService.addDemo(vm.course._id, currentModule._id, example._id, demo).then(function(response) {
-
+                    CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function(response) {
+                        vm.example = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                        currentModule.examples = response.data.examples;
+                        CourseService.setCurrentModule(currentModule);
+                    });
                 });
             });
         }
@@ -412,7 +440,13 @@
             var currentModule = ModuleService.getCurrentModule();
 
             CourseService.removeDemo(vm.course._id, currentModule._id, example._id, demo._id).then(function(response) {
-
+                CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function(response) {
+                    vm.example = response.data;
+                });
+                ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                    currentModule.examples = response.data.examples;
+                    CourseService.setCurrentModule(currentModule);
+                });
             });
         }
 
@@ -427,7 +461,13 @@
                 vm.cDemo.src = model.src;
 
                 CourseService.updateDemo(vm.course._id, currentModule._id, example._id, demo._id, demo).then(function(response) {
-
+                    CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function(response) {
+                        vm.example = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                        currentModule.examples = response.data.examples;
+                        CourseService.setCurrentModule(currentModule);
+                    });
                 });
             });
         }
@@ -446,7 +486,13 @@
                 };
 
                 CourseService.addDependency(vm.course._id, currentModule._id, example._id, demo._id, dependency).then(function(response) {
-
+                    CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function(response) {
+                        vm.example = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                        currentModule.examples = response.data.examples;
+                        CourseService.setCurrentModule(currentModule);
+                    });
                 });
             });
         }
@@ -455,7 +501,13 @@
             var currentModule = ModuleService.getCurrentModule();
 
             CourseService.removeDependency(vm.course._id, currentModule._id, example._id, demo._id, dependency._id).then(function(response) {
-
+                CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function(response) {
+                    vm.example = response.data;
+                });
+                ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                    currentModule.examples = response.data.examples;
+                    CourseService.setCurrentModule(currentModule);
+                });
             });
         }
 
@@ -468,17 +520,27 @@
                 vm.cDependency.src = model.src;
 
                 CourseService.updateDependency(vm.course._id, currentModule._id, example._id, demo._id, dependency._id, dependency).then(function(response) {
-
+                    CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function(response) {
+                        vm.example = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
+                        currentModule.examples = response.data.examples;
+                        CourseService.setCurrentModule(currentModule);
+                    });
                 });
             });
         }
 
         function showAddDialog(confirm, cancel){
-            ngDialog.openConfirm({template: 'views/modules/add.html', scope: $scope}).then(confirm, cancel);
+            ngDialog.openConfirm({template: 'client/views/modules/add.html', scope: $scope}).then(confirm, cancel);
         }
 
         function showUpdateDialog(confirm, cancel){
-            ngDialog.openConfirm({template: 'views/modules/update.html', scope: $scope}).then(confirm, cancel);
+            ngDialog.openConfirm({template: 'client/views/modules/update.html', scope: $scope}).then(confirm, cancel);
+        }
+
+        function showRemoveDialog(confirm, cancel){
+            ngDialog.openConfirm({template: 'client/views/modules/delete.html', scope: $scope}).then(confirm, cancel);
         }
 
         function viewOverview() {

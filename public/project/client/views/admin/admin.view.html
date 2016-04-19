@@ -4,42 +4,44 @@
     <!--Courses-->
     <div class="panel panel-default">
         <div class="panel-heading"><b><u>Courses</u></b></div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Number</th>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Title</th>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Timing</th>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Location</th>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Instructor</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><input ng-model="model.selectedCourse.number" class="form-control" placeholder="number"/></td>
-                <td><input ng-model="model.selectedCourse.title" class="form-control" placeholder="title"/></td>
-                <td><input ng-model="model.selectedCourse.timing" class="form-control" placeholder="timing"/></td>
-                <td><input ng-model="model.selectedCourse.location" class="form-control" placeholder="location"/></td>
-                <td><input ng-model="model.selectedCourse.instructor" class="form-control" placeholder="instructor"/></td>
-                <td>
-                    <a ng-click="model.addCourse()"><i class="fa fa-plus-circle"></i></a>&emsp;
-                    <a ng-click="model.updateCourse()"><i class="fa fa-floppy-o"></i></a>
-                </td>
-            </tr>
-            <tr ng-repeat="course in model.courses">
-                <td>{{course.number}}</td>
-                <td>{{course.title}}</td>
-                <td>{{course.timing}}</td>
-                <td>{{course.location}}</td>
-                <td>{{course.instructor}}</td>
-                <td>
-                    <a ng-click="model.deleteCourse($index)"><i class="fa fa-times-circle"></i></a>&emsp;
-                    <a ng-click="model.selectCourse($index)"><i class="fa fa-pencil"></i></a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div style="overflow-x:auto;">
+            <table class="table table-striped table-responsive">
+                <thead>
+                <tr>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Number</th>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Title</th>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Timing</th>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Location</th>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Instructor</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input ng-model="model.selectedCourse.number" class="form-control" placeholder="number"/></td>
+                    <td><input ng-model="model.selectedCourse.title" class="form-control" placeholder="title"/></td>
+                    <td><input ng-model="model.selectedCourse.timing" class="form-control" placeholder="timing"/></td>
+                    <td><input ng-model="model.selectedCourse.location" class="form-control" placeholder="location"/></td>
+                    <td><input ng-model="model.selectedCourse.instructor" class="form-control" placeholder="instructor"/></td>
+                    <td>
+                        <a ng-click="model.addCourse()"><i class="fa fa-plus-circle"></i></a>&emsp;
+                        <a ng-click="model.updateCourse()"><i class="fa fa-floppy-o"></i></a>
+                    </td>
+                </tr>
+                <tr ng-repeat="course in model.courses">
+                    <td>{{course.number}}</td>
+                    <td>{{course.title}}</td>
+                    <td>{{course.timing}}</td>
+                    <td>{{course.location}}</td>
+                    <td>{{course.instructor}}</td>
+                    <td>
+                        <a ng-click="model.deleteCourse($index)"><i class="fa fa-times-circle"></i></a>&emsp;
+                        <a ng-click="model.selectCourse($index)"><i class="fa fa-pencil"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <hr/>
@@ -47,28 +49,30 @@
     <!--Users-->
     <div class="panel panel-default">
         <div class="panel-heading"><b><u>Users</u></b></div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Username</th>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Name</th>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Email</th>
-                <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Roles</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="user in model.users">
-                <td>{{user.username}}</td>
-                <td>{{user.firstName}} {{user.lastName}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.roles.join(', ')}}</td>
-                <td>
-                    <button class="btn btn-primary" ng-disabled="user.roles.indexOf('admin') >= 0" ng-click="model.makeAdmin($index)"><i class="fa fa-adn"></i> Make Admin</button>
-                    <button class="btn btn-danger" ng-disabled="currentUser.username == user.username || user.roles.indexOf('admin') >= 0" ng-click="model.deleteUser($index)"><i class="fa fa-trash-o"></i></button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div style="overflow-x:auto;">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Username</th>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Name</th>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Email</th>
+                    <th><span class="glyphicon glyphicon-triangle-bottom">&nbsp;</span>Roles</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="user in model.users">
+                    <td>{{user.username}}</td>
+                    <td>{{user.firstName}} {{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.roles.join(', ')}}</td>
+                    <td class="text-nowrap">
+                        <button class="btn btn-primary" ng-disabled="user.roles.indexOf('admin') >= 0" ng-click="model.makeAdmin($index)"><i class="fa fa-adn"></i> Make Admin</button>
+                        <button class="btn btn-danger" ng-disabled="currentUser.username == user.username || user.roles.indexOf('admin') >= 0" ng-click="model.deleteUser($index)"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

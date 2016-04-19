@@ -49,33 +49,39 @@
                 controller: "BrochureController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId", {
                 templateUrl: "client/views/courses/course.view.html",
                 controller: "CourseController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    catalogLoggedIn: checkCatalogCurrentUser
+                }
             })
             .when("/course/:courseId/edit", {
                 templateUrl: "client/views/courses/course.edit.view.html",
                 controller: "CourseController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogAdmin
                 }
             })
             .when("/course/:courseId/module", {
                 templateUrl: "client/views/modules/module.view.html",
                 controller: "ModuleController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    catalogLoggedIn: checkCatalogCurrentUser
+                }
             })
             .when("/course/:courseId/module/:moduleId", {
                 templateUrl: "client/views/modules/detail.view.html",
                 controller: "ModuleController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId/module/:moduleId/lecture", {
@@ -83,7 +89,7 @@
                 controller: "ModuleController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId/module/:moduleId/lecture/:id", {
@@ -91,7 +97,7 @@
                 controller: "ModuleController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId/module/:moduleId/example", {
@@ -99,7 +105,7 @@
                 controller: "ModuleController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId/module/:moduleId/example/:id", {
@@ -107,7 +113,7 @@
                 controller: "ModuleController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId/module/:moduleId/assignment", {
@@ -115,7 +121,7 @@
                 controller: "ModuleController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId/module/:moduleId/assignment/:id", {
@@ -123,7 +129,7 @@
                 controller: "ModuleController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId/syllabus", {
@@ -131,7 +137,7 @@
                 controller: "CourseController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/course/:courseId/agenda", {
@@ -139,7 +145,7 @@
                 controller: "CourseController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogLoggedIn
+                    catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
             .when("/:username/course", {
@@ -164,6 +170,8 @@
             if (user !== '0' && user.roles.indexOf('admin') != -1) {
                 $rootScope.currentUser = user;
                 deferred.resolve();
+            } else {
+                $location.path('/home');
             }
         });
 
@@ -180,7 +188,7 @@
                 $rootScope.currentUser = user;
                 deferred.resolve();
             } else {
-                $rootScope.errorMessage = 'You need to be logged in to view this.';
+                $rootScope.errorMessage = 'You need to be logged in to view this';
                 deferred.reject();
                 $location.url('/login');
             }

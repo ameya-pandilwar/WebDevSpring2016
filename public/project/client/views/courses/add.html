@@ -4,6 +4,6 @@
     <input class="form-control" type="text" placeholder="{{model.addingType}} title" ng-model="model.title" />
 </div>
 <div class="ngdialog-buttons" style="padding-top:20px;">
-    <button type="button" class="ngdialog-button ngdialog-button-secondary"  ng-click=closeThisDialog("Cancel")>Cancel</button>
-    <button ng-disabled="!(model.number && model.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)>Confirm</button>
+    <button type="button" class="ngdialog-button ngdialog-button-secondary"  ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+    <button ng-disabled="!(model.number && model.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model)><i class="fa fa-check-circle"></i>&emsp;Confirm</button>
 </div>

@@ -20,7 +20,7 @@
     <table style="width: 100%">
         <tr>
             <td><h3 class="page-header">Example</h3></td>
-            <td align="right">
+            <td align="right" ng-show="currentUser.roles.indexOf('admin') >= 0">
                 <a ng-click="model.addExample()"><span class="glyphicon glyphicon-plus"></span></a>
             </td>
         </tr>
@@ -40,31 +40,63 @@
         </div>
     </div>
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default" ng-repeat="demo in model.example.demos">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">
-                        {{demo.title}}
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    {{demo.base}}<br>
-                    {{demo.src}}<br>
-                    Dependencies - <br>
-                    <div ng-repeat="dependency in demo.dependencies">
-                        {{dependency.src}}
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div>
+        <h4 class="page-header">Demos</h4>
+        <select class="form-control" ng-options="d as d.title for d in model.example.demos" ng-model="selected"></select>
     </div>
+
+    <br/>
+
+    <a
+            style="position:relative;right:3px;"
+            href="{{selected.base + selected.src}}"
+            class="pull-right"
+            title="Full screen"
+            target="_blank">
+        <span class="glyphicon glyphicon-new-window"></span>
+    </a>
+    <br/><br/><br/>
+
+    <div>
+    <iframe
+            style="margin-top:-30px;border:1px solid #ddd;width:100%;height:300px;font-size:20px;"
+            ng-src="{{selected.base + selected.src}}">
+    </iframe>
+    </div>
+
+    <!--<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">-->
+        <!--<div class="panel panel-default" ng-repeat="demo in model.example.demos">-->
+            <!--<div class="panel-heading" role="tab" id="headingOne">-->
+                <!--<h4 class="panel-title">-->
+                    <!--<a role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">-->
+                        <!--{{demo.title}}-->
+                    <!--</a>-->
+                <!--</h4>-->
+            <!--</div>-->
+            <!--<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">-->
+                <!--<div class="panel-body">-->
+                    <!--{{demo.base}}<br>-->
+                    <!--{{demo.src}}<br>-->
+                    <!--Dependencies - <br>-->
+                    <!--<div ng-repeat="dependency in demo.dependencies">-->
+                        <!--{{dependency.src}}-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <br>
 
-    <div class="list-group">
+    <!--<div>-->
+        <!--<h4 class="page-header">Source</h4>-->
+    <!--<textarea style="font-size:20px;border:1px solid #ddd;width:100%;height:300px;background-color: #eee;font-family: monospace;" id="html" ng-show="selected.dependencies == null">-->
+  <!--</textarea>-->
+        <!--</div>-->
+
+    <br ng-show="currentUser.roles.indexOf('admin') >= 0">
+
+    <div class="list-group" ng-show="currentUser.roles.indexOf('admin') >= 0">
         <div class="list-group-item" ng-repeat="example in currentModule.examples">
             <table style="width: 100%">
                 <tr>

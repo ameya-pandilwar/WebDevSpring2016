@@ -76,15 +76,15 @@
         }
 
         function showAddDialog(confirm, cancel){
-            ngDialog.openConfirm({template: 'views/courses/add.html', scope: $scope}).then(confirm, cancel);
+            ngDialog.openConfirm({template: 'client/views/courses/add.html', scope: $scope}).then(confirm, cancel);
         }
 
         function showRemoveDialog(confirm, cancel){
-            ngDialog.openConfirm({template: 'views/courses/delete.html', scope: $scope}).then(confirm, cancel);
+            ngDialog.openConfirm({template: 'client/views/courses/delete.html', scope: $scope}).then(confirm, cancel);
         }
 
         function showUpdateDialog(confirm, cancel){
-            ngDialog.openConfirm({template: 'views/courses/update.html', scope: $scope}).then(confirm, cancel);
+            ngDialog.openConfirm({template: 'client/views/courses/update.html', scope: $scope}).then(confirm, cancel);
         }
     }
 }());

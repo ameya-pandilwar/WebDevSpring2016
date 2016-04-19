@@ -8,8 +8,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} description" ng-model="model.cModule.description" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="module">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary"  ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.cModule.title && model.cModule.description)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cModule)>Update</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary"  ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.cModule.title && model.cModule.description)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cModule)><i class="fa fa-check-circle"></i>&emsp;Update</button>
     </div>
 
     <!--lecture-->
@@ -22,8 +22,8 @@
         <textarea ui-tinymce="model.tinymceOptions" ng-model="model.cLecture.overview"></textarea>
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="lecture">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.cLecture.title && model.cLecture.overview)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cLecture)>Update</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.cLecture.title && model.cLecture.overview)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cLecture)><i class="fa fa-check-circle"></i>&emsp;Update</button>
     </div>
 
     <!--learning element-->
@@ -39,11 +39,12 @@
             <option value="HTML">HTML</option>
             <option value="IFRAME">iFrame</option>
         </select>
-        <input class="form-control" type="text" placeholder="{{model.element}} src" ng-model="model.cLE.src" />
+        <input class="form-control" type="text" placeholder="{{model.element}} src" ng-hide="model.cLE.type == 'HTML'" ng-model="model.cLE.src" />
+        <div ng-hide="!(model.cLE.type == 'HTML')"><textarea ui-tinymce="model.tinymceOptions" ng-model="model.cLE.src"></textarea></div>
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="learning element">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.cLE.title && model.cLE.type && model.cLE.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cLE)>Update</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.cLE.title && model.cLE.type && model.cLE.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cLE)><i class="fa fa-check-circle"></i>&emsp;Update</button>
     </div>
 
     <!--assignment-->
@@ -54,8 +55,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} src" ng-model="model.cAssignment.src" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="assignment">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.cAssignment.title && model.cAssignment.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cAssignment)>Update</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.cAssignment.title && model.cAssignment.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cAssignment)><i class="fa fa-check-circle"></i>&emsp;Update</button>
     </div>
 
     <!--example-->
@@ -65,8 +66,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} title" ng-model="model.cExample.title" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="example">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.cExample.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cExample)>Update</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.cExample.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cExample)><i class="fa fa-check-circle"></i>&emsp;Update</button>
     </div>
 
     <!--demo-->
@@ -78,8 +79,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} src" ng-model="model.cDemo.src" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="demo">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.cDemo.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cDemo)>Update</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.cDemo.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cDemo)><i class="fa fa-check-circle"></i>&emsp;Update</button>
     </div>
 
     <!--dependency-->
@@ -89,8 +90,8 @@
         <input class="form-control" type="text" placeholder="{{model.element}} src" ng-model="model.cDependency.src" />
     </div>
     <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="dependency">
-        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
-        <button ng-disabled="!(model.cDependency.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cDependency)>Update</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.cDependency.src)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.cDependency)><i class="fa fa-check-circle"></i>&emsp;Update</button>
     </div>
 
 </div>
