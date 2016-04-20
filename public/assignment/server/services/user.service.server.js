@@ -3,35 +3,33 @@
  */
 
 module.exports = function(app, userModel) {
-    //var passport      = require('passport');
-    //var LocalStrategy = require('passport-local').Strategy;
-    //var auth = authorized;
-    //passport.use('assignment', new LocalStrategy(localStrategy));
-    //passport.serializeUser(serializeUser);
-    //passport.deserializeUser(deserializeUser);
-    //
-    //var bcrypt = require("bcrypt-nodejs");
-    //
-    //app.post('/api/assignment/login', passport.authenticate('assignment'), login);
-    //app.post('/api/assignment/logout', logout);
-    //app.get('/api/assignment/loggedin', loggedin);
-    //app.post('/api/assignment/register', register);
-    //app.get('/api/assignment/user', findUser);
-    //app.get('/api/assignment/user/:id', findUserById);
-    //app.put('/api/assignment/user/:id', updateUserById);
-    //app.delete('/api/assignment/user/:id', deleteUserById);
-    //
-    //app.post("/api/assignment/admin/user", auth, createUser);
-    //app.get("/api/assignment/admin/user", auth, findUser);
-    //app.get("/api/assignment/admin/user/:id", findUserById);
-    //app.put("/api/assignment/admin/user/:id", auth, updateUserById);
-    //app.delete("/api/assignment/admin/user/:id", auth, deleteUserById);
+    var passport      = require('passport');
+    var LocalStrategy = require('passport-local').Strategy;
+    var auth = authorized;
+    passport.use('assignment', new LocalStrategy(assignmentLocalStrategy));
+
+    var bcrypt = require("bcrypt-nodejs");
+
+    app.post('/api/assignment/login', passport.authenticate('assignment'), login);
+    app.post('/api/assignment/logout', logout);
+    app.get('/api/assignment/loggedin', loggedin);
+    app.post('/api/assignment/register', register);
+    app.get('/api/assignment/user', findUser);
+    app.get('/api/assignment/user/:id', findUserById);
+    app.put('/api/assignment/user/:id', updateUserById);
+    app.delete('/api/assignment/user/:id', deleteUserById);
+
+    app.post("/api/assignment/admin/user", auth, createUser);
+    app.get("/api/assignment/admin/user", auth, findUser);
+    app.get("/api/assignment/admin/user/:id", findUserById);
+    app.put("/api/assignment/admin/user/:id", auth, updateUserById);
+    app.delete("/api/assignment/admin/user/:id", auth, deleteUserById);
 
     function login(req, res) {
         res.json(req.user);
     }
 
-    function localStrategy(username, password, done){
+    function assignmentLocalStrategy(username, password, done){
         userModel.findUserByUsername(username).then(function (user) {
             if(user && bcrypt.compareSync(password, user.password)) {
                 return done(null, user);
@@ -42,18 +40,6 @@ module.exports = function(app, userModel) {
             if (err) {
                 return done(err);
             }
-        });
-    }
-
-    function serializeUser(user, done) {
-        done(null, user);
-    }
-
-    function deserializeUser(user, done) {
-        userModel.findUserById(user._id).then(function(user) {
-            done(null, user);
-        }, function(err) {
-            done(err, null);
         });
     }
 

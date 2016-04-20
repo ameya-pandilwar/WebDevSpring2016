@@ -5,7 +5,6 @@ var multer          = require('multer')
 var session         = require('express-session');
 var mongoose        = require('mongoose');
 var passport        = require('passport');
-var localStrategy   = require('passport-local');
 
 var app = express();
 
@@ -53,7 +52,10 @@ app.get('/project', function(req, res){
     res.sendfile(public_folder + '/project/client/index.html');
 });
 
-require("./public/assignment/server/app.js")(app, db, mongoose);
-require("./public/project/server/app.js")(app, db, mongoose);
+var aUser = require("./public/assignment/server/models/user.model.js")(db, mongoose);
+var cUser = require("./public/project/server/models/user.model.js")(db, mongoose);
+
+require("./public/assignment/server/app.js")(app, db, mongoose, aUser, cUser, passport);
+require("./public/project/server/app.js")(app, db, mongoose, aUser, cUser, passport);
 
 app.listen(port, ipaddress);
