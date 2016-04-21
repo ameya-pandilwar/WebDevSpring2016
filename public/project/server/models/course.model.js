@@ -218,16 +218,13 @@ module.exports = function(db, mongoose) {
     function updateCourseById(id, course) {
         var deferred = q.defer();
 
-        CourseModel.update(
-            {_id: id},
-            {$set: course},
-            function (err, res) {
-                if (err) {
-                    deferred.reject(err);
-                } else {
-                    deferred.resolve(res);
-                }
+        delete course._id;
+
+        CourseModel.update({_id: id}, course, function(err, response) {
+            getCourseById(id).then(function(course) {
+                deferred.resolve(course);
             });
+        });
 
         return deferred.promise;
     }

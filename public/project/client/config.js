@@ -65,7 +65,7 @@
                 controller: "CourseController",
                 controllerAs: "model",
                 resolve: {
-                    catalogLoggedIn: checkCatalogAdmin
+                    catalogLoggedIn: checkCatalogLoggedIn
                 }
             })
             .when("/course/:courseId/module", {
