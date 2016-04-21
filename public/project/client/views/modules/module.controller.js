@@ -80,7 +80,7 @@
                         vm.lecture = getLecture(response.data.lectures, lectureId);
                     } else if (exampleId) {
                         vm.example = getExample(response.data.examples, exampleId);
-                        $scope.selected = vm.example.demos[0];
+                        $scope.selected = vm.example ? vm.example.demos[0] : null;
                     } else if (assignmentId) {
                         vm.assignment = getAssignment(response.data.assignments, assignmentId);
                     }

@@ -8,7 +8,7 @@
         .module("CatalogApp")
         .controller("UserController", UserController);
 
-    function UserController($location, UserService, CourseService) {
+    function UserController($scope, $location, UserService, CourseService, ngDialog) {
         var vm = this;
         vm.error = null;
         vm.message = null;
@@ -62,19 +62,28 @@
         }
 
         function removeCourse(course) {
-            UserService.disenrollUserFromCourse(vm.currentUser._id, course.number).then(function(response) {
-                UserService.setCurrentUser(response.data);
-                vm.currentUser = UserService.getCurrentUser();
-                vm.currentUser.courses = response.data.courses;
-            });
+            vm.title = course.title;
+            vm.element = "course";
+            vm.keyword = "disenroll"
+            showRemoveDialog(function() {
+                UserService.disenrollUserFromCourse(vm.currentUser._id, course.number).then(function (response) {
+                    UserService.setCurrentUser(response.data);
+                    vm.currentUser = UserService.getCurrentUser();
+                    vm.currentUser.courses = response.data.courses;
+                });
 
-            CourseService.deregisterUserFromCourse(vm.currentUser.username, course._id).then(function(response) {
+                CourseService.deregisterUserFromCourse(vm.currentUser.username, course._id).then(function (response) {
 
+                });
             });
         }
 
         function viewCourse(course) {
             $location.url('/course/' + course.number);
+        }
+
+        function showRemoveDialog(confirm, cancel){
+            ngDialog.openConfirm({template: 'client/views/modules/delete.html', scope: $scope}).then(confirm, cancel);
         }
     }
 }());
