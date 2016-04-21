@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div ng-show="model.example">
+    <div ng-show="model.example.demos.length > 0 || model.isVisible(currentUser)">
         <table style="width: 100%">
             <tr>
                 <td><h4 class="page-header">Demos</h4></td>
