@@ -22,7 +22,7 @@
             <td><h3 class="page-header">Lecture</h3></td>
             <td align="right">
                 <a ng-click="model.addLecture()" ng-show="model.isVisible(currentUser)">
-                    <span class="glyphicon glyphicon-plus"></span>
+                    <span class="glyphicon glyphicon-plus-sign"></span>
                 </a>
             </td>
         </tr>
@@ -38,23 +38,39 @@
 
     <div class="panel panel-primary" ng-show="model.lecture">
         <div class="panel-heading">
-            <h3 class="panel-title">{{model.lecture.number}} | {{model.lecture.title}}</h3>
+            <table style="width: 100%">
+                <tr>
+                    <td><h3 class="panel-title">{{model.lecture.number}} | {{model.lecture.title}}</h3></td>
+                    <td align="right" ng-show="model.isVisible(currentUser)">
+                        <a ng-click="model.editLecture(model.lecture)"><span class="glyphicon glyphicon-edit" style="color: white;"></span></a>&emsp;
+                        <a ng-click="model.deleteLecture(model.lecture)"><span class="glyphicon glyphicon-remove-sign" style="color: white;"></span></a>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="panel-body" ng-bind-html="model.renderHtml(model.lecture.overview)"></div>
+        <div class="panel-body" ng-show="model.isVisible(currentUser)">
+            <span class="glyphicon glyphicon-plus-sign"></span>&emsp;<a ng-click="model.addLearningElement(model.lecture)">New Learning Element</a>
+        </div>
     </div>
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel-group" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default" ng-repeat="learningElement in model.lecture.learningElements">
-            <div class="panel-heading" role="tab" id="headingOne">
+            <div class="panel-heading" role="tab">
                 <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">
-                        {{learningElement.title}}
-                    </a>
+                    <table style="width: 100%">
+                        <tr>
+                            <td><h3 class="panel-title">{{learningElement.title}}</h3></td>
+                            <td align="right" ng-show="model.isVisible(currentUser)">
+                                <a ng-click="model.editLearningElement(model.lecture, learningElement)"><span class="glyphicon glyphicon-edit"></span></a>&emsp;
+                                <a ng-click="model.deleteLearningElement(model.lecture, learningElement)"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                            </td>
+                        </tr>
+                    </table>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-collapse collapse in" role="tabpanel">
                 <div class="panel-body" ng-switch on="learningElement.type">
-                    <embed ng-switch-when="PDF" ng-src="learningElement.src" width="100%" height="100%" type='application/pdf'></embed>
                     <iframe ng-switch-when="VIDEO" src="{{learningElement.src | trustUrl}}" width="100%" height="486" frameborder="0" allowfullscreen></iframe>
                     <iframe ng-switch-when="SLIDE" src="{{learningElement.src | trustUrl}}" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
                     <a ng-switch-when="LINK" href="{{learningElement.src | trustUrl}}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
@@ -65,35 +81,35 @@
         </div>
     </div>
 
-    <br ng-show="model.isVisible(currentUser)">
+    <!--<br ng-show="model.isVisible(currentUser)">-->
 
-    <div class="list-group" ng-show="model.isVisible(currentUser)">
-        <div class="list-group-item" ng-repeat="lecture in currentModule.lectures">
-            <table style="width: 100%">
-                <tr>
-                    <td><h3 class="list-group-item-heading"><a ng-click="model.viewLecture(lecture)">{{lecture.title}}</a></h3></td>
-                    <td align="right">
-                        <a ng-click="model.editLecture(lecture)"><span class="glyphicon glyphicon-edit"></span></a>&emsp;
-                        <a ng-click="model.deleteLecture(lecture)"><span class="glyphicon glyphicon-remove-circle"></span></a>
-                    </td>
-                </tr>
-                <tr><td colspan="2" class="list-group-item-text" ng-bind-html="model.renderHtml(lecture.overview)"></td></tr>
-                <tr><td class="list-group-item-text">&emsp;</td></tr>
-                <tr ng-repeat="learningElement in lecture.learningElements">
-                    <td class="list-group-item-text">
-                        <a ng-click="model.editLearningElement(lecture, learningElement)"><span class="glyphicon glyphicon-edit"></span></a>&emsp;
-                        <a ng-click="model.deleteLearningElement(lecture, learningElement)"><span class="glyphicon glyphicon-remove-circle"></span></a>&emsp;
-                        {{learningElement.title}}
-                    </td>
-                </tr>
-                <tr><td class="list-group-item-text">&emsp;</td></tr>
-                <tr>
-                    <td colspan="2" class="list-group-item-text">
-                        <span class="glyphicon glyphicon-plus-sign"></span>&emsp;<a ng-click="model.addLearningElement(lecture)">New Learning Element</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
+    <!--<div class="list-group" ng-show="model.isVisible(currentUser)">-->
+        <!--<div class="list-group-item" ng-repeat="lecture in currentModule.lectures">-->
+            <!--<table style="width: 100%">-->
+                <!--<tr>-->
+                    <!--<td><h3 class="list-group-item-heading"><a ng-click="model.viewLecture(lecture)">{{lecture.title}}</a></h3></td>-->
+                    <!--<td align="right">-->
+                        <!--<a ng-click="model.editLecture(lecture)"><span class="glyphicon glyphicon-edit"></span></a>&emsp;-->
+                        <!--<a ng-click="model.deleteLecture(lecture)"><span class="glyphicon glyphicon-remove-sign"></span></a>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr><td colspan="2" class="list-group-item-text" ng-bind-html="model.renderHtml(lecture.overview)"></td></tr>-->
+                <!--<tr><td class="list-group-item-text">&emsp;</td></tr>-->
+                <!--<tr ng-repeat="learningElement in lecture.learningElements">-->
+                    <!--<td class="list-group-item-text">-->
+                        <!--<a ng-click="model.editLearningElement(lecture, learningElement)"><span class="glyphicon glyphicon-edit"></span></a>&emsp;-->
+                        <!--<a ng-click="model.deleteLearningElement(lecture, learningElement)"><span class="glyphicon glyphicon-remove-sign"></span></a>&emsp;-->
+                        <!--{{learningElement.title}}-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr><td class="list-group-item-text">&emsp;</td></tr>-->
+                <!--<tr>-->
+                    <!--<td colspan="2" class="list-group-item-text">-->
+                        <!--<span class="glyphicon glyphicon-plus-sign"></span>&emsp;<a ng-click="model.addLearningElement(lecture)">New Learning Element</a>-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</table>-->
+        <!--</div>-->
+    <!--</div>-->
 
 </div>

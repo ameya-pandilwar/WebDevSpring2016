@@ -65,6 +65,7 @@
             UserService.disenrollUserFromCourse(vm.currentUser._id, course.number).then(function(response) {
                 UserService.setCurrentUser(response.data);
                 vm.currentUser = UserService.getCurrentUser();
+                vm.currentUser.courses = response.data.courses;
             });
 
             CourseService.deregisterUserFromCourse(vm.currentUser.username, course._id).then(function(response) {

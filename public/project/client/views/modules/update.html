@@ -1,5 +1,17 @@
 <div ng-switch on="model.element">
 
+    <!--course-->
+
+    <div class="ngdialog-message" ng-switch-when="course">
+        <h4><u>{{model.element}} details</u> | <small>update</small></h4>
+        <input class="form-control" type="text" placeholder="{{model.element}} number" ng-model="model.course.number" />
+        <input class="form-control" type="text" placeholder="{{model.element}} title" ng-model="model.course.title" />
+    </div>
+    <div class="ngdialog-buttons" style="padding-top:20px;" ng-switch-when="course">
+        <button type="button" class="ngdialog-button ngdialog-button-secondary"  ng-click=closeThisDialog("Cancel")><i class="fa fa-times-circle"></i>&emsp;Cancel</button>
+        <button ng-disabled="!(model.course.number && model.course.title)" type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm(model.course)><i class="fa fa-check-circle"></i>&emsp;Update</button>
+    </div>
+
     <!--module-->
 
     <div class="ngdialog-message" ng-switch-when="module">

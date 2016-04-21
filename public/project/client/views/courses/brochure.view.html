@@ -3,7 +3,7 @@
         <tr>
             <td><h1 class="page-header"><i class="fa fa-home"></i> Courses</h1></td>
             <td align="right" ng-show="model.isVisible(currentUser)">
-                <a ng-click="model.newCourse()"><span class="glyphicon glyphicon-plus-sign" style="color:green"></span></a>
+                <a ng-click="model.newCourse()"><span class="glyphicon glyphicon-plus-sign"></span></a>
             </td>
         </tr>
     </table>
@@ -30,13 +30,13 @@
 
     <div class="row">
         <div class="col-sm-6 col-md-4" ng-repeat="course in model.courses">
-            <div class="thumbnail">
+            <div class="thumbnail course-card">
                 <div class="caption">
                     <table style="width: 100%">
                         <tr>
                             <td align="right" ng-show="model.isVisible(currentUser)">
-                                <a ng-click="model.modifyCourse($index)"><span class="glyphicon glyphicon-edit" style="color:saddlebrown"></span></a>&emsp;
-                                <a ng-click="model.removeCourse($index)"><span class="glyphicon glyphicon-minus-sign" style="color:lightcoral"></span></a>
+                                <a ng-click="model.modifyCourse($index)"><span class="glyphicon glyphicon-edit"></span></a>&emsp;
+                                <a ng-click="model.removeCourse($index)"><span class="glyphicon glyphicon-remove-sign"></span></a>
                             </td>
                         </tr>
                     </table>

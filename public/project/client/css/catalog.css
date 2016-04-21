@@ -2,7 +2,21 @@
 
 .page-header { font-family: 'Crushed', sans-serif !important; }
 
-body { font-family: 'Belgrano', sans-serif !important; }
+.dialog-header { font-family: 'Belgrano', sans-serif !important; }
+
+body { 
+    font-family: 'Belgrano', sans-serif !important;
+    background-image: url('../img/small-tiles.jpg');
+    background-repeat: repeat;
+}
+
+.sidebar {
+    background-image: url('../img/bright-squares.png');
+}
+
+.course-card {
+    background-image: url('../img/course-card.png');
+}
 
 .ngdialog.ngdialog-theme-default .ngdialog-button.ngdialog-button-primary {
     font-family: 'Belgrano';
@@ -59,4 +73,16 @@ a {
     color: #0000cc;
     font-weight: bold;
     text-decoration: underline;
+}
+
+.glyphicon-edit {
+    color: darkgoldenrod;
+}
+
+.glyphicon-remove-sign {
+    color: lightcoral;
+}
+
+.glyphicon-plus-sign {
+    color: green;
 }

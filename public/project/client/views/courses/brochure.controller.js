@@ -34,7 +34,7 @@
         }
 
         function newCourse() {
-            vm.addingType = "course";
+            vm.element = "course";
             showAddDialog(function(model){
                 var course = {
                     "number": model.number,
@@ -54,6 +54,7 @@
 
         function removeCourse(index) {
             vm.title = vm.courses[index].title;
+            vm.element = "course";
             showRemoveDialog(function(){
                 CourseService.deleteCourseById(vm.courses[index]._id).then(function(response) {
                     CourseService.findAllCourses().then(function(response) {
@@ -64,7 +65,7 @@
         }
 
         function modifyCourse(index) {
-            vm.addingType = "course";
+            vm.element = "course";
             vm.course = vm.courses[index];
             showUpdateDialog(function(model){
                 selectedCourse = vm.course;
@@ -93,15 +94,15 @@
         }
 
         function showAddDialog(confirm, cancel){
-            ngDialog.openConfirm({template: 'client/views/courses/add.html', scope: $scope}).then(confirm, cancel);
+            ngDialog.openConfirm({template: 'client/views/modules/add.html', scope: $scope}).then(confirm, cancel);
         }
 
         function showRemoveDialog(confirm, cancel){
-            ngDialog.openConfirm({template: 'client/views/courses/delete.html', scope: $scope}).then(confirm, cancel);
+            ngDialog.openConfirm({template: 'client/views/modules/delete.html', scope: $scope}).then(confirm, cancel);
         }
 
         function showUpdateDialog(confirm, cancel){
-            ngDialog.openConfirm({template: 'client/views/courses/update.html', scope: $scope}).then(confirm, cancel);
+            ngDialog.openConfirm({template: 'client/views/modules/update.html', scope: $scope}).then(confirm, cancel);
         }
 
         function isVisible(user) {

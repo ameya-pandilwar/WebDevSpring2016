@@ -92,7 +92,7 @@
                     catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
-            .when("/course/:courseId/module/:moduleId/lecture/:id", {
+            .when("/course/:courseId/module/:moduleId/lecture/:lectureId", {
                 templateUrl: "client/views/modules/lecture.view.html",
                 controller: "ModuleController",
                 controllerAs: "model",
@@ -108,7 +108,7 @@
                     catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
-            .when("/course/:courseId/module/:moduleId/example/:id", {
+            .when("/course/:courseId/module/:moduleId/example/:exampleId", {
                 templateUrl: "client/views/modules/example.view.html",
                 controller: "ModuleController",
                 controllerAs: "model",
@@ -124,7 +124,7 @@
                     catalogLoggedIn: checkCatalogCurrentUser
                 }
             })
-            .when("/course/:courseId/module/:moduleId/assignment/:id", {
+            .when("/course/:courseId/module/:moduleId/assignment/:assignmentId", {
                 templateUrl: "client/views/modules/assignment.view.html",
                 controller: "ModuleController",
                 controllerAs: "model",

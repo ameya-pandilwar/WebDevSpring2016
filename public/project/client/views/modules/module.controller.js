@@ -64,6 +64,10 @@
         var courseId = $routeParams.courseId;
         var moduleId = $routeParams.moduleId;
 
+        var lectureId = $routeParams.lectureId;
+        var exampleId = $routeParams.exampleId;
+        var assignmentId = $routeParams.assignmentId;
+
         if (courseId && moduleId) {
             CourseService.getCourseByNumber(courseId).then(function(response) {
                 vm.course = response.data;
@@ -71,6 +75,15 @@
 
                 ModuleService.getModuleByNumber(courseId, moduleId).then(function(response) {
                     ModuleService.setCurrentModule(response.data);
+
+                    if (lectureId) {
+                        vm.lecture = getLecture(response.data.lectures, lectureId);
+                    } else if (exampleId) {
+                        vm.example = getExample(response.data.examples, exampleId);
+                        $scope.selected = vm.example.demos[0];
+                    } else if (assignmentId) {
+                        vm.assignment = getAssignment(response.data.assignments, assignmentId);
+                    }
                 });
             });
         } else if (courseId) {
@@ -143,6 +156,7 @@
 
         function deleteModule(module) {
             vm.title = module.title;
+            vm.element = "module";
             showRemoveDialog(function() {
                 CourseService.deleteModuleFromCourse(vm.course._id, module._id).then(function (response) {
                     vm.course.modules = response.data;
@@ -178,18 +192,22 @@
 
                 CourseService.addLecture(vm.course._id, currentModule._id, lecture).then(function(response) {
                     currentModule.lectures = response.data;
+                    viewLecture(0);
                 });
             });
         }
 
         function deleteLecture(lecture) {
-            var currentModule = ModuleService.getCurrentModule();
+            vm.title = lecture.title;
+            vm.element = "lecture";
+            showRemoveDialog(function() {
+                var currentModule = ModuleService.getCurrentModule();
 
-            CourseService.removeLecture(vm.course._id, currentModule._id, lecture._id).then(function(response) {
-                currentModule.lectures = response.data;
+                CourseService.removeLecture(vm.course._id, currentModule._id, lecture._id).then(function (response) {
+                    currentModule.lectures = response.data;
+                    viewLecture(0);
+                });
             });
-
-            viewLecture(0);
         }
 
         function editLecture(lecture) {
@@ -217,6 +235,10 @@
             } else {
                 vm.lecture = null;
             }
+
+            if (lecture > 1) {
+                lectureId = lecture;
+            }
             ModuleService.setCurrentLecture(vm.lecture);
 
             $location.url("/course/" + vm.course.number + "/module/" + currentModule.number + "/lecture/" + lectureId);
@@ -240,18 +262,22 @@
 
                 CourseService.addExample(vm.course._id, currentModule._id, example).then(function(response) {
                     currentModule.examples = response.data;
+                    viewExample(0);
                 });
             });
         }
 
         function deleteExample(example) {
-            var currentModule = ModuleService.getCurrentModule();
+            vm.title = example.title;
+            vm.element = "example";
+            showRemoveDialog(function() {
+                var currentModule = ModuleService.getCurrentModule();
 
-            CourseService.removeExample(vm.course._id, currentModule._id, example._id).then(function(response) {
-                currentModule.examples = response.data;
+                CourseService.removeExample(vm.course._id, currentModule._id, example._id).then(function (response) {
+                    currentModule.examples = response.data;
+                    viewExample(0);
+                });
             });
-
-            viewExample(0);
         }
 
         function editExample(example) {
@@ -268,15 +294,19 @@
             });
         }
 
-        function viewExample(index) {
+        function viewExample(example) {
             var currentModule = ModuleService.getCurrentModule();
             var exampleId = 1;
 
             if (currentModule.examples.length > 0) {
-                vm.example = currentModule.examples[index];
+                vm.example = example != 0 ? example : currentModule.examples[0];
                 exampleId = vm.example.number;
             } else {
                 vm.example = null;
+            }
+
+            if (example > 1) {
+                exampleId = example;
             }
             ModuleService.setCurrentExample(vm.example);
 
@@ -302,18 +332,22 @@
 
                 CourseService.addAssignment(vm.course._id, currentModule._id, assignment).then(function(response) {
                     currentModule.assignments = response.data;
+                    viewAssignment(0);
                 });
             });
         }
 
         function deleteAssignment(assignment) {
-            var currentModule = ModuleService.getCurrentModule();
+            vm.title = assignment.title;
+            vm.element = "assignment";
+            showRemoveDialog(function() {
+                var currentModule = ModuleService.getCurrentModule();
 
-            CourseService.removeAssignment(vm.course._id, currentModule._id, assignment._id).then(function(response) {
-                currentModule.assignments = response.data;
+                CourseService.removeAssignment(vm.course._id, currentModule._id, assignment._id).then(function (response) {
+                    currentModule.assignments = response.data;
+                    viewAssignment(0);
+                });
             });
-
-            viewAssignment(0);
         }
 
         function editAssignment(assignment) {
@@ -341,6 +375,10 @@
             } else {
                 vm.assignment = null;
             }
+
+            if (assignment > 1) {
+                assignmentId = assignment;
+            }
             ModuleService.setCurrentAssignment(vm.assignment);
 
             $location.url("/course/" + vm.course.number + "/module/" + currentModule.number + "/assignment/" + assignmentId);
@@ -352,7 +390,7 @@
             var currentModule = ModuleService.getCurrentModule();
 
             vm.element = "learning element";
-            vm.type = "PDF";
+            vm.type = "VIDEO";
             vm.title = "";
             vm.overview = "";
 
@@ -377,15 +415,19 @@
         }
 
         function deleteLearningElement(lecture, le) {
-            var currentModule = ModuleService.getCurrentModule();
+            vm.title = le.title;
+            vm.element = "learning element";
+            showRemoveDialog(function() {
+                var currentModule = ModuleService.getCurrentModule();
 
-            CourseService.removeLearningElement(vm.course._id, currentModule._id, lecture._id, le._id).then(function(response) {
-                CourseService.getLectureById(vm.course._id, currentModule._id, lecture._id).then(function(response) {
-                    vm.lecture = response.data;
-                });
-                ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
-                    currentModule.lectures = response.data.lectures;
-                    CourseService.setCurrentModule(currentModule);
+                CourseService.removeLearningElement(vm.course._id, currentModule._id, lecture._id, le._id).then(function (response) {
+                    CourseService.getLectureById(vm.course._id, currentModule._id, lecture._id).then(function (response) {
+                        vm.lecture = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function (response) {
+                        currentModule.lectures = response.data.lectures;
+                        CourseService.setCurrentModule(currentModule);
+                    });
                 });
             });
         }
@@ -431,22 +473,28 @@
                     });
                     ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
                         currentModule.examples = response.data.examples;
-                        CourseService.setCurrentModule(currentModule);
+                        ModuleService.setCurrentModule(currentModule);
+                        $scope.selected = vm.example.demos[0];
                     });
                 });
             });
         }
 
         function deleteDemo(example, demo) {
-            var currentModule = ModuleService.getCurrentModule();
+            vm.title = demo.title;
+            vm.element = "demo";
+            showRemoveDialog(function() {
+                var currentModule = ModuleService.getCurrentModule();
 
-            CourseService.removeDemo(vm.course._id, currentModule._id, example._id, demo._id).then(function(response) {
-                CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function(response) {
-                    vm.example = response.data;
-                });
-                ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
-                    currentModule.examples = response.data.examples;
-                    CourseService.setCurrentModule(currentModule);
+                CourseService.removeDemo(vm.course._id, currentModule._id, example._id, demo._id).then(function (response) {
+                    CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function (response) {
+                        vm.example = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function (response) {
+                        currentModule.examples = response.data.examples;
+                        ModuleService.setCurrentModule(currentModule);
+                        $scope.selected = vm.example.demos[0];
+                    });
                 });
             });
         }
@@ -467,7 +515,8 @@
                     });
                     ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
                         currentModule.examples = response.data.examples;
-                        CourseService.setCurrentModule(currentModule);
+                        ModuleService.setCurrentModule(currentModule);
+                        $scope.selected = vm.example.demos[0];
                     });
                 });
             });
@@ -492,22 +541,26 @@
                     });
                     ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
                         currentModule.examples = response.data.examples;
-                        CourseService.setCurrentModule(currentModule);
+                        ModuleService.setCurrentModule(currentModule);
                     });
                 });
             });
         }
 
         function deleteDependency(example, demo, dependency) {
-            var currentModule = ModuleService.getCurrentModule();
+            vm.title = dependency.title;
+            vm.element = "dependency";
+            showRemoveDialog(function() {
+                var currentModule = ModuleService.getCurrentModule();
 
-            CourseService.removeDependency(vm.course._id, currentModule._id, example._id, demo._id, dependency._id).then(function(response) {
-                CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function(response) {
-                    vm.example = response.data;
-                });
-                ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
-                    currentModule.examples = response.data.examples;
-                    CourseService.setCurrentModule(currentModule);
+                CourseService.removeDependency(vm.course._id, currentModule._id, example._id, demo._id, dependency._id).then(function (response) {
+                    CourseService.getExampleById(vm.course._id, currentModule._id, example._id).then(function (response) {
+                        vm.example = response.data;
+                    });
+                    ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function (response) {
+                        currentModule.examples = response.data.examples;
+                        ModuleService.setCurrentModule(currentModule);
+                    });
                 });
             });
         }
@@ -526,7 +579,7 @@
                     });
                     ModuleService.getModuleByNumber(vm.course.number, currentModule.number).then(function(response) {
                         currentModule.examples = response.data.examples;
-                        CourseService.setCurrentModule(currentModule);
+                        ModuleService.setCurrentModule(currentModule);
                     });
                 });
             });
@@ -547,6 +600,30 @@
         function viewOverview() {
             var currentModule = ModuleService.getCurrentModule();
             $location.url("/course/" + vm.course.number + "/module/" + currentModule.number);
+        }
+
+        function getLecture(lectures, id) {
+            for (var l in lectures) {
+                if (lectures[l].number == id) {
+                    return lectures[l];
+                }
+            }
+        }
+
+        function getExample(examples, id) {
+            for (var e in examples) {
+                if (examples[e].number == id) {
+                    return examples[e];
+                }
+            }
+        }
+
+        function getAssignment(assignments, id) {
+            for (var a in assignments) {
+                if (assignments[a].number == id) {
+                    return assignments[a];
+                }
+            }
         }
 
         function renderHtml(text) {
