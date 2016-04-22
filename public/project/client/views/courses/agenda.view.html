@@ -3,11 +3,11 @@
 
     <h3 class="page-header">Agenda</h3>
 
-    <h2>
+    <div>
         <a href="{{model.course.agenda | trustUrl}}" target="_blank">
             <span class="glyphicon glyphicon-new-window pull-right"></span>
         </a>
-    </h2>
+    </div>
 
     <iframe width="100%" class="no-borders" height="1000px" src="{{model.course.agenda | trustUrl}}"></iframe>
 </div>

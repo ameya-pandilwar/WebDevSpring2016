@@ -392,7 +392,7 @@
             vm.element = "learning element";
             vm.type = "VIDEO";
             vm.title = "";
-            vm.overview = "";
+            vm.src = "";
 
             showAddDialog(function(model) {
                 var le = {
@@ -461,10 +461,14 @@
 
             vm.element = "demo";
             vm.title = "";
+            vm.base = "";
+            vm.src = "";
 
             showAddDialog(function(model) {
                 var demo = {
-                    "title": model.title
+                    "title": model.title,
+                    "base": model.base,
+                    "src": model.src
                 };
 
                 CourseService.addDemo(vm.course._id, currentModule._id, example._id, demo).then(function(response) {

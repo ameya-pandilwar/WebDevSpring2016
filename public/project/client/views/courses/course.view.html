@@ -31,26 +31,34 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
+        <div class="col-sm-6 col-md-3">
+            <div class="thumbnail course-card">
                 <div class="caption">
-                    <h3><i class="fa fa-clock-o"></i>&emsp;<u>Timing & Location</u></h3>
-                    <p>{{model.course.location}} | {{model.course.timing}}</p>
+                    <h4><i class="fa fa-clock-o"></i>&emsp;<u>Timing</u></h4>
+                    <p>{{model.course.timing}}</p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
+        <div class="col-sm-6 col-md-3">
+            <div class="thumbnail course-card">
                 <div class="caption">
-                    <h3><i class="fa fa-file-text-o"></i>&emsp;<u>Syllabus</u></h3>
+                    <h4><i class="fa fa-map-signs"></i>&emsp;<u>Location</u></h4>
+                    <p>{{model.course.location}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="thumbnail course-card">
+                <div class="caption">
+                    <h4><i class="fa fa-file-text-o"></i>&emsp;<u>Syllabus</u></h4>
                     <p><a href="#/course/{{model.course.number}}/syllabus">View Syllabus</a></p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
+        <div class="col-sm-6 col-md-3">
+            <div class="thumbnail course-card">
                 <div class="caption">
-                    <h3><i class="fa fa-user"></i>&emsp;<u>Instructor</u></h3>
+                    <h4><i class="fa fa-user"></i>&emsp;<u>Instructor</u></h4>
                     <p>{{model.course.instructor}}</p>
                 </div>
             </div>
@@ -58,7 +66,7 @@
     </div>
 
     <div class="table responsive">
-        <h4><u>Modules:</u></h4>
+        <h4><span class="glyphicon glyphicon-tags">&emsp;</span><u><a href="#/course/{{model.course.number}}/module">Modules:</a></u></h4>
         <ul ng-repeat="module in model.course.modules">
             <li><a ng-click="model.viewModule($index)">{{module.title}}</a></li>
         </ul>
