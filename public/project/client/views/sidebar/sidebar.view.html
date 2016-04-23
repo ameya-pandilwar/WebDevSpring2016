@@ -1,7 +1,7 @@
 <div class="col-sm-3 col-md-2 sidebar" ng-controller="SidebarController as model">
     <ul class="nav nav-sidebar">
         <li><a href="#/course"><span class="glyphicon glyphicon-home"></span>&emsp;Courses</a></li>
-        <li ng-show="currentUser.roles.indexOf('student') >= 0" ng-class="{'active': $location.url() == '/' + currentUser.username + '/courses'}">
+        <li ng-show="currentUser.roles.indexOf('student') >= 0" ng-class="{'active': $location.url() == '/' + currentUser.username + '/course'}">
             <a href="#/{{currentUser.username}}/course"><span class="glyphicon glyphicon-align-justify"></span>&emsp;My Courses</a>
         </li>
     </ul>
